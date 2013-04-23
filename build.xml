@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="geppetto" default="grammar" basedir="."> 
+	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" />
+	
+    <target name ="makejar" description="Create a jar for the project">
+    	<echo>Building jar file...</echo>
+        <jar jarfile="geppetto.jar" includes="*.class" basedir="bin"/>
+    </target>
+	
+    <target name="grammar">
+        <echo>Generatting grammar files...</echo>
+    	<jflex file="src/org/geppetto/parser/lexer.flex" destdir="src"/>
+
+    	<exec osfamily="windows" executable="tools/byaccj/win32/yacc.exe" dir="src/org/geppetto/parser/generated" resolveexecutable="true">
+    		<arg line="-d -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
+    	</exec>
+    		
+        <exec osfamily="unix" executable="tools/byaccj/win32/linux/yacc.linux" dir="tools/byaccj/linux" resolveexecutable="true">
+        	<arg line="-Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
+        </exec>
+    </target>
+
+</project>
