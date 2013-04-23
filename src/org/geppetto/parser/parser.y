@@ -26,9 +26,9 @@
 %{
   import java.io.IOException;
   import java.io.Reader;
-  import org.geppetto.domain.Phrase;
-  import org.geppetto.domain.Tree;
-  import org.geppetto.domain.TreeNode;
+  import org.geppetto.parser.Phrase;
+  import org.geppetto.parser.Tree;
+  import org.geppetto.parser.TreeNode;
  
 %}
       

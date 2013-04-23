@@ -1,7 +1,6 @@
-package org.geppetto.domain;
+package org.geppetto.parser;
 
 import java.util.LinkedList;
-import org.geppetto.domain.Phrase;
 
 public class TreeNode {
    LinkedList<TreeNode> children;

@@ -1,4 +1,4 @@
-package org.geppetto.domain;
+package org.geppetto.parser;
 
 public class Tree {
    TreeNode root;

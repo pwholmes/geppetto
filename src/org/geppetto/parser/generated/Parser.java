@@ -20,9 +20,9 @@ package org.geppetto.parser.generated;
 //#line 27 "../../../../../src/org/geppetto/parser/parser.y"
   import java.io.IOException;
   import java.io.Reader;
-  import org.geppetto.domain.Phrase;
-  import org.geppetto.domain.Tree;
-  import org.geppetto.domain.TreeNode;
+  import org.geppetto.parser.Phrase;
+  import org.geppetto.parser.Tree;
+  import org.geppetto.parser.TreeNode;
  
 //#line 24 "Parser.java"
 

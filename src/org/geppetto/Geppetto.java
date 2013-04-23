@@ -1,8 +1,9 @@
-package org.geppetto.domain;
+package org.geppetto;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.geppetto.parser.Tree;
 import org.geppetto.parser.generated.Parser;
 
 public class Geppetto {

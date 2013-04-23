@@ -1,4 +1,4 @@
-package org.geppetto.domain;
+package org.geppetto.parser;
 
 public enum Phrase {
    PRGM, INPUT, LINE, NL, EXP, NUM, PLUS, MINUS, MULT, DIV, NEG, POW, LPAREN, RPAREN;
