@@ -18,3 +18,26 @@ So for now some manual configuration is necessary for the build.xml to work:
   f. Click OK on each of the parent dialogs.
   There will still be a warning in build.xml about an unrecognized jar file, but the build will work.
 
+
+Coding conventions:
+1. Use the code-format.xml in the project root.  (Right-click the project name, select "Properties",
+   expand "Java Code Style", select "Formatter", enable "Enable Project Specific Settings", click "Import...",
+   and select the code-format.xml file.)  To format your code with the formatter, press Ctrl-Shift-F.
+
+2. Make names descriptive.  Don't abbreviate names to acronyms.  It costs nothing to have a fully
+   descriptive name and makes the code much more readable.  For example, instead of naming a variable "AST",
+   name it "abstractSyntaxTree".  (The name "AST" also violates capitalization conventions, but that's another 
+   issue.)  If you find it an onerous task to type out long variable names, learn to make use of Eclipse's 
+   auto-completion feature, activated by Ctrl-space. 
+
+3. Make use of private default constructors.  A lot of times you only want a class to be constructed using a
+   parameterized constructor, or via a factory method.  In that case you want to prevent anyone from creating 
+   the class using the default constructor (the one that has no parameters.)  To do that, just define it as 
+   private and give it an empty body.  (e.g., "private MyClass() {}")
+  
+4. Use the domain package.  This is where you should place classes that implement app-specific objects: "things"
+   as opposed to "functionality".  For example, in our app, the Attribute, Entity and Rule classes go here.  The 
+   use of a domain package is a common paradigm when you're working with frameworks list Struts, but I've found 
+   it makes sense just about anywhere.
+
+ 
