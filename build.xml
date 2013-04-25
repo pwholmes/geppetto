@@ -15,7 +15,7 @@
     		<arg line="-d -v -t -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
     	</exec>
     		
-    	<exec osfamily="unix" executable="tools/byaccj/win32/linux/yacc.linux" dir="tools/byaccj/linux" resolveexecutable="true">
+    	<exec osfamily="unix" executable="tools/byaccj/linux/yacc.linux" dir="src/org/geppetto/parser/generated" resolveexecutable="true">
         	<arg line="-d -v -t -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
         </exec>
     </target>
