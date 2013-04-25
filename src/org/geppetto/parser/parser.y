@@ -2,7 +2,7 @@
   import java.io.IOException;
   import java.io.Reader;
   import java.util.ArrayList;
-  import java.util.LinkedList;
+  import java.util.HashSet;
   import org.geppetto.domain.Attribute;
   import org.geppetto.domain.Entity;
   import org.geppetto.domain.Property;
@@ -60,11 +60,11 @@
  */
 
 program:
-    definitionList                                  { System.out.println("Parsing program"); } 
+    definitionList                                  {  } 
     ;
 
 definitionList:
-    propertyDeclarationList entityDeclarationList   { System.out.println("Parsing definitions"); }
+    propertyDeclarationList entityDeclarationList   {  }
     ; 
 
 propertyDeclarationList:
@@ -77,34 +77,43 @@ propertyDeclaration:
     ;
 
 attributeList:
-    attribute                                       { LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+    attribute                                       { ArrayList<Attribute> attributes = new ArrayList<Attribute>();
                                                       attributes.add((Attribute) $1.obj); 
                                                       $$.obj = attributes; }
-    | attributeList ',' attribute                   { LinkedList<Attribute> attributes = (LinkedList<Attribute>) $1.obj;
+    | attributeList ',' attribute                   { ArrayList<Attribute> attributes = (ArrayList<Attribute>) $1.obj;
                                                       attributes.add((Attribute) $3.obj); }
     ;
 
 attribute:
-    typeSpecifier identifier '{' attributeLegalValues '}'  { $$.obj = new Attribute(yylval.sval, 0); }
+    typeSpecifier identifier                        { $$.obj = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival)); }
+    | typeSpecifier identifier '{' attributeConstraint '}'  { $$.obj = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival)); }
     ;
 
-attributeLegalValues:
-    stringList                                      { }
-    | integerList                                   { }
-    | integerRange                                  { }
-    | floatList                                     { }
-    | floatRange                                    { }
-    |                                               { }
+attributeConstraint:
+    stringList                                      { $$.obj = $1.obj; }
+    | integerList                                   { $$.obj = $1.obj; }
+    | integerRange                                  { $$.obj = $1.obj; }
+    | floatList                                     { $$.obj = $1.obj; }
+    | floatRange                                    { $$.obj = $1.obj; }
+    |
     ;
 
 stringList:
-    STRING_LITERAL                                  { }
-    | stringList ',' STRING_LITERAL                 { }
+    STRING_LITERAL                                  { HashSet<String> stringSet = new HashSet<String>(); 
+                                                      stringSet.add(symbolTable.get($1.ival)); 
+                                                      $$.obj = stringSet; }
+    | stringList ',' STRING_LITERAL                 { HashSet<String> stringSet = (HashSet<String>) $1.obj;
+                                                      stringSet.add(symbolTable.get($3.ival)); 
+                                                      $$.obj = stringSet; }
     ;
     
 integerList:
-    INTEGER_LITERAL                                 { }
-    | integerList ',' INTEGER_LITERAL               { }
+    INTEGER_LITERAL                                 { HashSet<Integer> intSet = new HashSet<Integer>(); 
+                                                      intSet.add(new Integer($1.ival)); 
+                                                      $$.obj = intSet; }
+    | integerList ',' INTEGER_LITERAL               { HashSet<Integer> intSet = (HashSet<Integer>) $1.obj; 
+                                                      intSet.add(new Integer($3.ival)); 
+                                                      $$.obj = intSet; }
     ;
     
 integerRange:
@@ -112,8 +121,12 @@ integerRange:
     ;
     
 floatList:
-    FLOAT_LITERAL                                   { }
-    | floatList ',' FLOAT_LITERAL                   { }
+    FLOAT_LITERAL                                   { HashSet<Float> floatSet = new HashSet<Float>(); 
+                                                      floatSet.add(new Float($1.dval)); 
+                                                      $$.obj = floatSet; }
+    | floatList ',' FLOAT_LITERAL                   { HashSet<Float> floatSet = (HashSet<Float>) $1.obj; 
+                                                      floatSet.add(new Float($3.dval)); 
+                                                      $$.obj = floatSet; }
     ;
 
 floatRange:
@@ -131,10 +144,10 @@ entityDeclaration:
     ;    
 
 propertyList:
-    property                                        { LinkedList<Property> properties = new LinkedList<Property>();
+    property                                        { ArrayList<Property> properties = new ArrayList<Property>();
                                                       properties.add((Property) $1.obj); 
                                                       $$.obj = properties;}
-    | propertyList ',' property                     { LinkedList<Property> properties = (LinkedList<Property>) $1.obj;
+    | propertyList ',' property                     { ArrayList<Property> properties = (ArrayList<Property>) $1.obj;
                                                       properties.add((Property) $3.obj); 
                                                       $$.obj = properties; }
     ;
@@ -144,8 +157,12 @@ property:
     ;
 
 attributeInitializerList:
-    attributeInitializer                            { } 
-    | attributeInitializerList ',' attributeInitializer  { }
+    attributeInitializer                            { ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+                                                      attributes.add((Attribute) $1.obj);
+                                                      $$.obj = attributes; } 
+    | attributeInitializerList ',' attributeInitializer  { ArrayList<Attribute> attributes = (ArrayList<Attribute>) $1.obj;
+                                                      attributes.add((Attribute) $3.obj);
+                                                      $$.obj = attributes; }
     ;
 
 attributeInitializer:
@@ -153,22 +170,22 @@ attributeInitializer:
     ;
     
 initialValue:
-    INTEGER_LITERAL                                 { }
-    | FLOAT_LITERAL                                 { }
-    | STRING_LITERAL                                { }
-    | TRUE                                          { }
-    | FALSE                                         { }
+    INTEGER_LITERAL                                 { $$.obj = new Integer($1.ival); }
+    | FLOAT_LITERAL                                 { $$.obj = new Float($1.dval); }
+    | STRING_LITERAL                                { $$.obj = new String(symbolTable.get($1.ival)); }
+    | TRUE                                          { $$.obj = new Boolean(true); }
+    | FALSE                                         { $$.obj = new Boolean(false); }
     ; 
 
 identifier:
-    IDENTIFIER                                  { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
+    IDENTIFIER                                      { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
     ;
     
 typeSpecifier:
-    INT                                         { $$.obj = VariableType.INT; }
-    | FLOAT                                     { $$.obj = VariableType.FLOAT; }
-    | STRING                                    { $$.obj = VariableType.STRING; }
-    | BOOLEAN                                   { $$.obj = VariableType.BOOLEAN; }
+    INT                                             { $$.obj = VariableType.INT; }
+    | FLOAT                                         { $$.obj = VariableType.FLOAT; }
+    | STRING                                        { $$.obj = VariableType.STRING; }
+    | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
     ;
 
 %%
@@ -180,9 +197,9 @@ private Yylex lexer;
 public ArrayList<String> symbolTable = new ArrayList<String>();
 
 /* Collections of declared data types */
-public LinkedList<Property> properties = new LinkedList<Property>();
-public LinkedList<Entity> entities = new LinkedList<Entity>();
-public LinkedList<Rule> rules = new LinkedList<Rule>();
+public ArrayList<Property> properties = new ArrayList<Property>();
+public ArrayList<Entity> entities = new ArrayList<Entity>();
+public ArrayList<Rule> rules = new ArrayList<Rule>();
 
 
 /**
