@@ -26,6 +26,9 @@
    type is in the appropriate yylval data member. */ 
 %token INTEGER_LITERAL FLOAT_LITERAL STRING_LITERAL
 
+/* Meta types */
+%token IDENTIFIER
+
 /* Reserved words */
 /* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
    new keywords when you have to define a token ID for each one.  But IMO that's a trifling
@@ -77,14 +80,46 @@ attributeList:
     attribute                                       { LinkedList<Attribute> attributes = new LinkedList<Attribute>();
                                                       attributes.add((Attribute) $1.obj); 
                                                       $$.obj = attributes; }
-    | attributeList attribute                       { LinkedList<Attribute> attributes = (LinkedList<Attribute>) $1.obj;
-                                                      attributes.add((Attribute) $2.obj); }
+    | attributeList ',' attribute                   { LinkedList<Attribute> attributes = (LinkedList<Attribute>) $1.obj;
+                                                      attributes.add((Attribute) $3.obj); }
     ;
 
 attribute:
-    typeSpecifier identifier                        { $$.obj = new Attribute(yylval.sval, 0); }
+    typeSpecifier identifier '{' attributeLegalValues '}'  { $$.obj = new Attribute(yylval.sval, 0); }
+    ;
+
+attributeLegalValues:
+    stringList                                      { }
+    | integerList                                   { }
+    | integerRange                                  { }
+    | floatList                                     { }
+    | floatRange                                    { }
+    |                                               { }
+    ;
+
+stringList:
+    STRING_LITERAL                                  { }
+    | stringList ',' STRING_LITERAL                 { }
     ;
     
+integerList:
+    INTEGER_LITERAL                                 { }
+    | integerList ',' INTEGER_LITERAL               { }
+    ;
+    
+integerRange:
+    INTEGER_LITERAL '-' INTEGER_LITERAL             { }
+    ;
+    
+floatList:
+    FLOAT_LITERAL                                   { }
+    | floatList ',' FLOAT_LITERAL                   { }
+    ;
+
+floatRange:
+    FLOAT_LITERAL '-' FLOAT_LITERAL                 { }
+    ;
+
 entityDeclarationList:
     entityDeclaration                               { entities.add((Entity) $1.obj); }
     | entityDeclarationList entityDeclaration       { entities.add((Entity) $2.obj); }
@@ -126,7 +161,7 @@ initialValue:
     ; 
 
 identifier:
-    STRING_LITERAL                              { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
+    IDENTIFIER                                  { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
     ;
     
 typeSpecifier:
@@ -204,7 +239,11 @@ private int yylex () {
            have one, but we need it avoid NPEs in BYACCJ. */
         /*yylval = new ParserVal(0);*/ 
         rv = lexer.yylex();
-        System.out.println("ID: " + rv + "; Token: " + tokenToString(yylval));
+        
+        /* debug code */
+        String tokenName = (rv > 0) ? yyname[rv] : String.valueOf(rv);
+        System.out.println("ID: " + tokenName + "; Token: " + tokenToString(yylval));
+        
     } catch (IOException e) {
         System.err.println("IO error :" + e);
     }

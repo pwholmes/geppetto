@@ -24,7 +24,7 @@ import org.geppetto.parser.generated.Parser;
 [ \t]+                  { } /* ignore */
 
 /* newline */
-\n | \r | \r\n          { return Parser.NEWLINE; }
+\n | \r | \r\n          { } /* ignore as whitespace */
 
 /* symbols and operators */
 /* JFlex crashes on startup if I try to put these symbols into a bracketed regexp: [+/-*^(),;] */ 
@@ -35,6 +35,9 @@ import org.geppetto.parser.generated.Parser;
 "^" | 
 "(" | 
 ")" |
+"=" |
+"{" |
+"}" |
 "," |
 ";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
@@ -43,6 +46,9 @@ import org.geppetto.parser.generated.Parser;
 
 /* integer literals */
 [0-9]+                  { yyparser.yylval = new ParserVal(Integer.valueOf(yytext())); return Parser.INTEGER_LITERAL; }
+
+/* string literals */
+\".*\"                  { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
 
 /* reserved words */
 boolean                 { return Parser.BOOLEAN; }
@@ -61,8 +67,8 @@ string                  { return Parser.STRING; }
 true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }
 
-/* string literals (generally identifiers) */
-[a-zA-Z][a-zA-Z0-9]*    { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
+/* identifiers */
+[a-zA-Z][a-zA-Z0-9]*    { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.IDENTIFIER; }  
 
 /* error fallback */
 [^]                     { System.err.println("Error: unexpected character '" + yytext() + "'"); return -1; }

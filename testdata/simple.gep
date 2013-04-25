@@ -1,2 +1,2 @@
-property mood(string m {“happy”, “sad”});
-entity bob {mood(m=”happy”)};
+property mood(string m {"happy", "sad"});
+entity bob {mood(m="happy")};
