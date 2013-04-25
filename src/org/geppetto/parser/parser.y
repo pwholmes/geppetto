@@ -1,103 +1,182 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (C) 2001 Gerwin Klein <lsf@jflex.de>                          *
- * All rights reserved.                                                    *
- *                                                                         *
- * This is a modified version of the example from                          *
- *   http://www.lincom-asg.com/~rjamison/byacc/                            *
- *                                                                         *
- * Thanks to Larry Bell and Bob Jamison for suggestions and comments.      *
- *                                                                         *
- * This program is free software; you can redistribute it and/or modify    *
- * it under the terms of the GNU General Public License. See the file      *
- * COPYRIGHT for more information.                                         *
- *                                                                         *
- * This program is distributed in the hope that it will be useful,         *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
- * GNU General Public License for more details.                            *
- *                                                                         *
- * You should have received a copy of the GNU General Public License along *
- * with this program; if not, write to the Free Software Foundation, Inc., *
- * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                 *
- *                                                                         *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-
-	
 %{
   import java.io.IOException;
   import java.io.Reader;
-  import org.geppetto.parser.Phrase;
+  import java.util.List;
+  import java.util.ArrayList;
+  import java.util.LinkedList;
+  import org.geppetto.domain.Attribute;
+  import org.geppetto.domain.Entity;
+  import org.geppetto.domain.Property;
+  import org.geppetto.domain.Rule;
+  import org.geppetto.domain.Condition;
+  import org.geppetto.domain.Behavior;
+  import org.geppetto.domain.VariableType;
   import org.geppetto.parser.Tree;
   import org.geppetto.parser.TreeNode;
- 
+  import org.geppetto.parser.TreeNodeType;
 %}
-      
-%token NL          /* newline  */
-%token <dval> NUM  /* a number */
 
-%type <obj> exp
-%type <obj> prgm
+/* Symbols */
+%token NEWLINE TERMINATOR
 
-%left '-' '+'
-%left '*' '/'
-%left NEG          /* negation--unary minus */
-%right '^'         /* exponentiation        */
-      
+/* Primitive data types */
+/* The suffix _VALUE is added to differentiate these token IDs from the token IDs used for  
+   the keywords used to *declare* these types (INT, FLOAT, BOOLEAN and STRING), listed below. 
+   Note that we don't need a token for BOOLEAN_VALUE because that's covered by the tokens for
+   reserved words TRUE and FALSE. */ 
+%token INTEGER_VALUE FLOAT_VALUE STRING_VALUE
+
+/* Reserved words */
+/* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
+   new keywords when you have to define a token ID for each one.  But IMO that's a trifling
+   inconvenience, and it makes the grammar so much easier to read. */
+%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY STRING TRUE WHILE
+
+/* Type definitions */
+/* It seems that if you declare a type for *any* symbol in the grammar, BYACCJ decides that you need
+ * to declare a type for *every* symbol in the grammar.  This is why you may see the error "$$ is untyped" 
+ * suddenly popping up where something previously worked.  This seems like a potentially serious bug in
+ * BYACCJ, but I think we can work around it.  Let's try to avoid typing the tokens and symbols.
+ * Prof. Aho said he's never had to do it, so I don't think it should be necessary. */
+/*
+%type <obj> program
+%type <obj> attributeList
+%type <obj> attribute
+%type <obj> typeSpecifier
+*/
+
 %%
 
-prgm : exp					{ AST = new Tree( new TreeNode(Phrase.PRGM, "", $1) ); } 
-	;
+/*
+program:
+    definitionList                              { System.out.println("Parsing program"); } 
+    ;
 
-exp:     NUM                { $$ = new TreeNode(Phrase.NUM, $1); }
-       | exp '+' exp        { $$ = new TreeNode(Phrase.EXP, "", $1, new TreeNode(Phrase.PLUS, "+"), $3); }
-       | exp '-' exp        { $$ = new TreeNode(Phrase.EXP, "", $1, new TreeNode(Phrase.MINUS, "-"), $3); }						
-       | exp '*' exp        { $$ = new TreeNode(Phrase.EXP, "", $1, new TreeNode(Phrase.MULT, "*"), $3); }
-       | exp '/' exp        { $$ = new TreeNode(Phrase.EXP, "", $1, new TreeNode(Phrase.DIV, "/"), $3); }						
+definitionList:
+    attributeList entityList                    { System.out.println("Parsing definitions"); }
+    ; 
+*/
 
-/*      							
-       | '-' exp  %prec NEG { $$ = -$2; }
-       | exp '^' exp        { $$ = Math.pow($1, $3); }
-       | '(' exp ')'        { $$ = $2; }
- */
-       ;
+attributeList:
+    attribute                                   { attributes.add((Attribute) $1.obj); }
+    | attributeList attribute                   { attributes.add((Attribute) $2.obj); }
+    ;
+
+attribute:
+    typeSpecifier identifier                    { $$.obj = new Attribute(yylval.sval, 0); }
+    ;
+    
+identifier:
+    STRING_VALUE                                { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
+    ;
+    
+typeSpecifier:
+    INT                                         { $$.obj = VariableType.INT; }
+    | FLOAT                                     { $$.obj = VariableType.FLOAT; }
+    | STRING                                    { $$.obj = VariableType.STRING; }
+    | BOOLEAN                                   { $$.obj = VariableType.BOOLEAN; }
+    ;
+    
+/*
+entityList:
+    entity                                      { entities.add((Entity) $1; }
+    | entityList entity                         { entities.add((Entity) $2; }
+    |                                           { }
+    ;
+
+entity:
+    'entity' identifier '{' proprtyList '}'     { }
+    ;    
+
+propertyList:
+    propertyEntry                               { }
+    | propertyList ',' propertyEntry            { }
+    ;
+*/
 
 %%
 
-/* necessary functions. mainly overhead - shouldnt need to edit below
-here */
+/* Yylex is the lexer generated by JFlex */
+private Yylex lexer;
 
-  private Yylex lexer;
-  boolean interactive;
-	public Tree AST;	
+/* Symbol table, for identifiers */
+public ArrayList<String> symbolTable = new ArrayList<String>();
+
+/* Collections of declared data types */
+public LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+public LinkedList<Entity> entities = new LinkedList<Entity>();
+public LinkedList<Rule> rules = new LinkedList<Rule>();
 
 
-  private int yylex () {
-    int yyl_return = -1;
+/**
+ * parse() is called explicitly by the Geppetto main program to start off 
+ * the parsing process. 
+ **/
+public void parse(Reader inputReader) {
+    /* Instantiate the lexer.  Yylex is the class generated by JFlex from lexer.flex.  
+       We supply our own constructor so we can give it whatever parameters we want. 
+       Here we pass it the Reader that supplies the input we're going to parse, a 
+       pointer to this class (necessary so the lexer can access the parser's member 
+       variable's, such as yylval), and a pointer to the symbol table. */
+    lexer = new Yylex(inputReader, this, symbolTable); 
+    
+    /* Start parsing the input.  BYACCJ will call yylex as necessary to retrieve
+       the next token. */    
+    yyparse();
+}
+
+/**
+ * yylex() is called by the BYACCJ parser to retrieve the next token.
+ * It should return <0 on an error and 0 on end-of-input.
+ *
+ * Here we use the JFlex lexer to get the next token.
+ * yylval is a member variable of the class generated from this file (Parser).
+ * Each time this function is called, we create a new instance of the data type
+ * used to store a token value (ParserVal) and set yylval to point to it.
+ * Then we call the lexer's yylex() function.  It is the lexer's responsibility
+ * to populate yylval appropriately and return an appropriate token ID as its
+ * return value.  Token IDs are defined (by us) at the top of this file via
+ * the %token directive.  In the lexer they are referenced as "Parser.TOKENID",
+ * where TOKENID is an ID defined in the %token directive.
+ *
+ * ParserVal is "mutable" in that it has members that hold four different data types:
+ *  ival holds integer values
+ *  dval holds double values
+ *  sval holds strings,
+ *  obj holds object references
+ * In most cases the lexer should probably only be setting only ONE of these members. 
+ * 
+ * So for instance, if the next token encountered by the lexer is an integer, 
+ * it should set yylval.ival to the value of the integer and return a token ID
+ * that indicates an integer value.  In our case we have defined a token called INTEGER.
+ * Be careful not to confuse this with the INT token, which is returned by the lexer
+ * to indicate that it has encountered the "int" reserved keyword.
+ **/
+private int yylex () {
+    int rv = -1;
     try {
-      yylval = new ParserVal(0);
-      yyl_return = lexer.yylex();
+        /* Create a default ParserVal for tokens that don't create one of their own
+           (e.g., keywords).  This is inefficient because it will just be thrown away 
+           half the time, and when it isn't that's because it isn't even necessary to 
+           have one, but we need it avoid NPEs in BYACCJ. */
+        /*yylval = new ParserVal(0);*/ 
+        rv = lexer.yylex();
+        System.out.println("ID: " + rv + "; Token: " + tokenToString(yylval));
+    } catch (IOException e) {
+        System.err.println("IO error :" + e);
     }
-    catch (IOException e) {
-      System.err.println("IO error :"+e);
-    }
-    return yyl_return;
-  }
+    return rv;
+}
 
-
-  public void yyerror (String error) {
+public void yyerror (String error) {
     System.err.println ("Error: " + error);
-  }
+}
 
-
-  public Parser(boolean interactive, Reader r) {
-  	this.interactive = interactive;
-    lexer = new Yylex(r, this);
-    //AST = new Tree();
-  }
-
-	public Tree makeAST() {
-		yyparse();
-		return AST;
-	}
-
-
+private String tokenToString(ParserVal pv) {
+    String s = null;
+    if (pv == null)
+        s = "null";
+    else
+        s = "ival: " + pv.ival + "; dval: " + pv.dval + "; sval: " + pv.sval + "; obj: " + pv.obj;
+    return s;
+    } 

@@ -1,26 +1,6 @@
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * Copyright (C) 2000 Gerwin Klein <lsf@jflex.de>                          *
- * All rights reserved.                                                    *
- *                                                                         *
- * Thanks to Larry Bell and Bob Jamison for suggestions and comments.      *
- *                                                                         *
- * This program is free software; you can redistribute it and/or modify    *
- * it under the terms of the GNU General Public License. See the file      *
- * COPYRIGHT for more information.                                         *
- *                                                                         *
- * This program is distributed in the hope that it will be useful,         *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of          *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           *
- * GNU General Public License for more details.                            *
- *                                                                         *
- * You should have received a copy of the GNU General Public License along *
- * with this program; if not, write to the Free Software Foundation, Inc., *
- * 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA                 *
- *                                                                         *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
- 
 package org.geppetto.parser.generated;
 
+import java.util.List;
 import org.geppetto.parser.generated.Parser;
 
 %%
@@ -29,15 +9,14 @@ import org.geppetto.parser.generated.Parser;
 
 %{
   private Parser yyparser;
+  private List symbolTable;
 
-  public Yylex(java.io.Reader r, Parser yyparser) {
+  public Yylex(java.io.Reader r, Parser yyparser, List symbolTable) {
     this(r);
     this.yyparser = yyparser;
+    this.symbolTable = symbolTable;
   }
 %}
-
-NUM = [0-9]+ ("." [0-9]+)?
-NL  = \n | \r | \r\n
 
 %%
 
@@ -48,20 +27,42 @@ NL  = \n | \r | \r\n
 "/" | 
 "^" | 
 "(" | 
-")"    { return (int) yycharat(0); }
+")"                     { return (int) yycharat(0); }
 
 /* newline */
-{NL}   { return Parser.NL; }
+\n | \r | \r\n          { return Parser.NEWLINE; }
 
 /* float */
-{NUM}  { yyparser.yylval = new ParserVal(Double.parseDouble(yytext()));
-         return Parser.NUM; }
+[0-9]+"."[0-9]+         { yyparser.yylval = new ParserVal(Double(yytext())); return Parser.FLOAT_VALUE; }
+
+/* integer */
+[0-9]+                  { yyparser.yylval = new ParserVal(Integer(yytext())); return Parser.INTEGER_VALUE; }
 
 /* whitespace */
 [ \t]+ { }
 
-\b     { System.err.println("Sorry, backspace doesn't work"); }
+/* line terminator */
+";"                     { return Parser.TERMINATOR; }
 
+/* reserved words */
+boolean                 { return Parser.BOOLEAN; }
+else                    { return Parser.ELSE; }
+end                     { return Parser.END; }
+entity                  { return Parser.ENTITY; }
+false                   { return Parser.FALSE; }
+float                   { return Parser.FLOAT; }
+for                     { return Parser.FOR; }
+global                  { return Parser.GLOBAL; }
+input                   { return Parser.INPUT; }
+int                     { return Parser.INT; }
+print                   { return Parser.PRINT; }
+property                { return Parser.PROPERTY; }
+string                  { return Parser.STRING; }
+true                    { return Parser.TRUE; }
+while                   { return Parser.WHILE; }
+
+/* string values (generally identifiers) */
+[a-zA-Z][a-zA-Z0-9]*    { symbolTable.Add(yytext()); yyparser.yylval = symbolTable.indexOf(yytext()); return Parser.STRING_VALUE; }  
 
 /* error fallback */
-[^]    { System.err.println("Error: unexpected character '"+yytext()+"'"); return -1; }
+[^]                     { System.err.println("Error: unexpected character '" + yytext() + "'"); return -1; }

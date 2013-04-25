@@ -17,14 +17,23 @@ package org.geppetto.parser.generated;
 
 
 
-//#line 27 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 2 "../../../../../src/org/geppetto/parser/parser.y"
   import java.io.IOException;
   import java.io.Reader;
-  import org.geppetto.parser.Phrase;
+  import java.util.List;
+  import java.util.ArrayList;
+  import java.util.LinkedList;
+  import org.geppetto.domain.Attribute;
+  import org.geppetto.domain.Entity;
+  import org.geppetto.domain.Property;
+  import org.geppetto.domain.Rule;
+  import org.geppetto.domain.Condition;
+  import org.geppetto.domain.Behavior;
+  import org.geppetto.domain.VariableType;
   import org.geppetto.parser.Tree;
   import org.geppetto.parser.TreeNode;
- 
-//#line 24 "Parser.java"
+  import org.geppetto.parser.TreeNodeType;
+//#line 33 "Parser.java"
 
 
 
@@ -165,62 +174,48 @@ final ParserVal dup_yyval(ParserVal val)
 //#### end semantic value section ####
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    1,    1,    1,    1,    1,
+    0,    0,    1,    3,    2,    2,    2,    2,
 };
 final static short yylen[] = {                            2,
-    1,    1,    3,    3,    3,    3,
+    1,    2,    2,    1,    1,    1,    1,    1,
 };
 final static short yydefred[] = {                         0,
-    2,    0,    0,    0,    0,    0,    0,    0,    0,    5,
-    6,
+    8,    6,    5,    7,    0,    1,    0,    2,    4,    3,
 };
-final static short yydgoto[] = {                          2,
-    3,
+final static short yydgoto[] = {                          5,
+    6,    7,   10,
 };
-final static short yysindex[] = {                      -251,
-    0,    0,  -39, -251, -251, -251, -251,  -42,  -42,    0,
-    0,
+final static short yysindex[] = {                      -262,
+    0,    0,    0,    0, -262,    0, -260,    0,    0,    0,
 };
 final static short yyrindex[] = {                         0,
-    0,    0,   13,    0,    0,    0,    0,    1,    2,    0,
-    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
 };
 final static short yygindex[] = {                         0,
-    5,
+   -3,    0,    0,
 };
-final static int YYTABLESIZE=47;
+final static int YYTABLESIZE=12;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                          6,
-    4,    3,    6,    5,    7,    4,    1,    7,    8,    9,
-   10,   11,    1,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    4,    3,    4,    3,
+yytable = new short[]{                          1,
+    9,    8,    0,    0,    2,    0,    0,    0,    3,    0,
+    0,    4,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
-yycheck = new short[] {                         42,
-    0,    0,   42,   43,   47,   45,  258,   47,    4,    5,
-    6,    7,    0,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   43,   43,   45,   45,
+yycheck = new short[] {                        262,
+  261,    5,   -1,   -1,  267,   -1,   -1,   -1,  271,   -1,
+   -1,  274,
 };
 }
-final static short YYFINAL=2;
-final static short YYMAXTOKEN=259;
+final static short YYFINAL=5;
+final static short YYMAXTOKEN=276;
 final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,null,null,null,null,null,null,null,null,null,"'*'","'+'",null,
-"'-'",null,"'/'",null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,"'^'",null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -230,59 +225,114 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,null,null,null,"NL","NUM","NEG",
+null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
+null,null,null,"NEWLINE","TERMINATOR","INTEGER_VALUE","FLOAT_VALUE",
+"STRING_VALUE","BOOLEAN","ELSE","END","ENTITY","FALSE","FLOAT","FOR","GLOBAL",
+"INPUT","INT","PRINT","PROPERTY","STRING","TRUE","WHILE",
 };
 final static String yyrule[] = {
-"$accept : prgm",
-"prgm : exp",
-"exp : NUM",
-"exp : exp '+' exp",
-"exp : exp '-' exp",
-"exp : exp '*' exp",
-"exp : exp '/' exp",
+"$accept : attributeList",
+"attributeList : attribute",
+"attributeList : attributeList attribute",
+"attribute : typeSpecifier identifier",
+"identifier : STRING_VALUE",
+"typeSpecifier : INT",
+"typeSpecifier : FLOAT",
+"typeSpecifier : STRING",
+"typeSpecifier : BOOLEAN",
 };
 
-//#line 65 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 98 "../../../../../src/org/geppetto/parser/parser.y"
 
-/* necessary functions. mainly overhead - shouldnt need to edit below
-here */
+/* Yylex is the lexer generated by JFlex */
+private Yylex lexer;
 
-  private Yylex lexer;
-  boolean interactive;
-	public Tree AST;	
+/* Symbol table, for identifiers */
+public ArrayList<String> symbolTable = new ArrayList<String>();
+
+/* Collections of declared data types */
+public LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+public LinkedList<Entity> entities = new LinkedList<Entity>();
+public LinkedList<Rule> rules = new LinkedList<Rule>();
 
 
-  private int yylex () {
-    int yyl_return = -1;
+/**
+ * parse() is called explicitly by the Geppetto main program to start off 
+ * the parsing process. 
+ **/
+public void parse(Reader inputReader) {
+    /* Instantiate the lexer.  Yylex is the class generated by JFlex from lexer.flex.  
+       We supply our own constructor so we can give it whatever parameters we want. 
+       Here we pass it the Reader that supplies the input we're going to parse, a 
+       pointer to this class (necessary so the lexer can access the parser's member 
+       variable's, such as yylval), and a pointer to the symbol table. */
+    lexer = new Yylex(inputReader, this, symbolTable); 
+    
+    /* Start parsing the input.  BYACCJ will call yylex as necessary to retrieve
+       the next token. */    
+    yyparse();
+}
+
+/**
+ * yylex() is called by the BYACCJ parser to retrieve the next token.
+ * It should return <0 on an error and 0 on end-of-input.
+ *
+ * Here we use the JFlex lexer to get the next token.
+ * yylval is a member variable of the class generated from this file (Parser).
+ * Each time this function is called, we create a new instance of the data type
+ * used to store a token value (ParserVal) and set yylval to point to it.
+ * Then we call the lexer's yylex() function.  It is the lexer's responsibility
+ * to populate yylval appropriately and return an appropriate token ID as its
+ * return value.  Token IDs are defined (by us) at the top of this file via
+ * the %token directive.  In the lexer they are referenced as "Parser.TOKENID",
+ * where TOKENID is an ID defined in the %token directive.
+ *
+ * ParserVal is "mutable" in that it has members that hold four different data types:
+ *  ival holds integer values
+ *  dval holds double values
+ *  sval holds strings,
+ *  obj holds object references
+ * In most cases the lexer should probably only be setting only ONE of these members. 
+ * 
+ * So for instance, if the next token encountered by the lexer is an integer, 
+ * it should set yylval.ival to the value of the integer and return a token ID
+ * that indicates an integer value.  In our case we have defined a token called INTEGER.
+ * Be careful not to confuse this with the INT token, which is returned by the lexer
+ * to indicate that it has encountered the "int" reserved keyword.
+ **/
+private int yylex () {
+    int rv = -1;
     try {
-      yylval = new ParserVal(0);
-      yyl_return = lexer.yylex();
+        /* Create a default ParserVal for tokens that don't create one of their own
+           (e.g., keywords).  This is inefficient because it will just be thrown away 
+           half the time, and when it isn't that's because it isn't even necessary to 
+           have one, but we need it avoid NPEs in BYACCJ. */
+        /*yylval = new ParserVal(0);*/ 
+        rv = lexer.yylex();
+        System.out.println("ID: " + rv + "; Token: " + tokenToString(yylval));
+    } catch (IOException e) {
+        System.err.println("IO error :" + e);
     }
-    catch (IOException e) {
-      System.err.println("IO error :"+e);
-    }
-    return yyl_return;
-  }
+    return rv;
+}
 
-
-  public void yyerror (String error) {
+public void yyerror (String error) {
     System.err.println ("Error: " + error);
-  }
+}
 
-
-  public Parser(boolean interactive, Reader r) {
-  	this.interactive = interactive;
-    lexer = new Yylex(r, this);
-    //AST = new Tree();
-  }
-
-	public Tree makeAST() {
-		yyparse();
-		return AST;
-	}
-
-
-//#line 215 "Parser.java"
+private String tokenToString(ParserVal pv) {
+    String s = null;
+    if (pv == null)
+        s = "null";
+    else
+        s = "ival: " + pv.ival + "; dval: " + pv.dval + "; sval: " + pv.sval + "; obj: " + pv.obj;
+    return s;
+    } 
+//#line 282 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -437,30 +487,38 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 48 "../../../../../src/org/geppetto/parser/parser.y"
-{ AST = new Tree( new TreeNode(Phrase.PRGM, "", val_peek(0).obj) ); }
+//#line 61 "../../../../../src/org/geppetto/parser/parser.y"
+{ attributes.add((Attribute) val_peek(0).obj); }
 break;
 case 2:
-//#line 51 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new TreeNode(Phrase.NUM, val_peek(0).dval); }
+//#line 62 "../../../../../src/org/geppetto/parser/parser.y"
+{ attributes.add((Attribute) val_peek(0).obj); }
 break;
 case 3:
-//#line 52 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new TreeNode(Phrase.EXP, "", val_peek(2).obj, new TreeNode(Phrase.PLUS, "+"), val_peek(0).obj); }
+//#line 66 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new Attribute(yylval.sval, 0); }
 break;
 case 4:
-//#line 53 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new TreeNode(Phrase.EXP, "", val_peek(2).obj, new TreeNode(Phrase.MINUS, "-"), val_peek(0).obj); }
+//#line 70 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval = val_peek(0); }
 break;
 case 5:
-//#line 54 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new TreeNode(Phrase.EXP, "", val_peek(2).obj, new TreeNode(Phrase.MULT, "*"), val_peek(0).obj); }
+//#line 74 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = VariableType.INT; }
 break;
 case 6:
-//#line 55 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new TreeNode(Phrase.EXP, "", val_peek(2).obj, new TreeNode(Phrase.DIV, "/"), val_peek(0).obj); }
+//#line 75 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = VariableType.FLOAT; }
 break;
-//#line 388 "Parser.java"
+case 7:
+//#line 76 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = VariableType.STRING; }
+break;
+case 8:
+//#line 77 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = VariableType.BOOLEAN; }
+break;
+//#line 463 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

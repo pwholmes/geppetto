@@ -3,49 +3,47 @@ package org.geppetto.parser;
 import java.util.LinkedList;
 
 public class TreeNode {
-   LinkedList<TreeNode> children;
-   Phrase               phrase;
+   private LinkedList<TreeNode> children;
+   private TreeNodeType         type;
    // int ival;
    // double dval;
    // String sval;
    // char cval;
-   Object               data;
+   private Object               data;
 
-   public TreeNode(Phrase phrase) {
+   public TreeNode(TreeNodeType type) {
       children = new LinkedList<TreeNode>();
-      this.phrase = phrase;
+      this.type = type;
    }
 
-   public TreeNode(Phrase phrase, Object data) {
-      this(phrase);
+   public TreeNode(TreeNodeType type, Object data) {
+      this(type);
       this.data = data;
    }
 
-   public TreeNode(Phrase phrase, Object data, Object child1) {
-      this(phrase);
+   public TreeNode(TreeNodeType type, Object data, Object child1) {
+      this(type);
       this.data = data;
       addChild(child1);
    }
 
-   public TreeNode(Phrase phrase, Object data, Object child1, Object child2) {
-      this(phrase);
+   public TreeNode(TreeNodeType type, Object data, Object child1, Object child2) {
+      this(type);
       this.data = data;
       addChild(child1);
       addChild(child2);
    }
 
-   public TreeNode(Phrase phrase, Object data, Object child1, Object child2,
-         Object child3) {
-      this(phrase);
+   public TreeNode(TreeNodeType type, Object data, Object child1, Object child2, Object child3) {
+      this(type);
       this.data = data;
       addChild(child1);
       addChild(child2);
       addChild(child3);
    }
 
-   public TreeNode(Phrase phrase, Object data, Object child1, Object child2,
-         Object child3, Object child4) {
-      this(phrase);
+   public TreeNode(TreeNodeType type, Object data, Object child1, Object child2, Object child3, Object child4) {
+      this(type);
       this.data = data;
       addChild(child1);
       addChild(child2);
@@ -86,7 +84,7 @@ public class TreeNode {
    }
 
    public void print(String s) {
-      System.out.print(phrase.name());
+      System.out.print(type.name());
       if (data != null) {
          System.out.print(", " + data);
       }

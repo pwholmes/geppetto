@@ -12,12 +12,12 @@
     	<jflex file="src/org/geppetto/parser/lexer.flex" destdir="src"/>
 
     	<exec osfamily="windows" executable="tools/byaccj/win32/yacc.exe" dir="src/org/geppetto/parser/generated" resolveexecutable="true">
-    		<arg line="-d -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
+    		<arg line="-d -v -t -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
     	</exec>
     		
-        <exec osfamily="unix" executable="tools/byaccj/win32/linux/yacc.linux" dir="tools/byaccj/linux" resolveexecutable="true">
-        	<arg line="-Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
+    	<exec osfamily="unix" executable="tools/byaccj/win32/linux/yacc.linux" dir="tools/byaccj/linux" resolveexecutable="true">
+        	<arg line="-d -v -t -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
         </exec>
     </target>
-
+	
 </project>
