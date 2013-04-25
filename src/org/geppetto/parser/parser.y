@@ -1,7 +1,6 @@
 %{
   import java.io.IOException;
   import java.io.Reader;
-  import java.util.List;
   import java.util.ArrayList;
   import java.util.LinkedList;
   import org.geppetto.domain.Attribute;
@@ -17,14 +16,15 @@
 %}
 
 /* Symbols */
-%token NEWLINE TERMINATOR
-
-/* Primitive data types */
-/* The suffix _VALUE is added to differentiate these token IDs from the token IDs used for  
+%token NEWLINE
+ 
+/* Literal data types */
+/* The suffix _LITERAL is added to differentiate these token IDs from the token IDs used for  
    the keywords used to *declare* these types (INT, FLOAT, BOOLEAN and STRING), listed below. 
    Note that we don't need a token for BOOLEAN_VALUE because that's covered by the tokens for
-   reserved words TRUE and FALSE. */ 
-%token INTEGER_VALUE FLOAT_VALUE STRING_VALUE
+   reserved words TRUE and FALSE.  Remember, when we get one of these, the actual VALUE of the
+   type is in the appropriate yylval data member. */ 
+%token INTEGER_LITERAL FLOAT_LITERAL STRING_LITERAL
 
 /* Reserved words */
 /* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
@@ -47,27 +47,86 @@
 
 %%
 
-/*
+/**
+ * In several places we have list definitions.  Note that allowing lists to be empty introduces
+ * the possibility of shift/reduce conflicts; for example, if we have two lists in a row and either
+ * one can be empty, the the parser can't tell which one is which.  For now I've resolved  that by
+ * simply not allowing those lists to be empty.  So for instance, the propertyDeclarationList and 
+ * entityDeclarationList MUST each have at least one entry.  But I that's OK because we can't have 
+ * a program without at least one of each of those things.
+ */
+
 program:
-    definitionList                              { System.out.println("Parsing program"); } 
+    definitionList                                  { System.out.println("Parsing program"); } 
     ;
 
 definitionList:
-    attributeList entityList                    { System.out.println("Parsing definitions"); }
+    propertyDeclarationList entityDeclarationList   { System.out.println("Parsing definitions"); }
     ; 
-*/
+
+propertyDeclarationList:
+    propertyDeclaration                             { properties.add((Property) $1.obj); }
+    | propertyDeclarationList propertyDeclaration   { properties.add((Property) $2.obj); }
+    ;
+
+propertyDeclaration:
+    PROPERTY identifier '(' attributeList ')' ';'   { $$.obj = new Property(symbolTable.get($2.ival)); }
+    ;
 
 attributeList:
-    attribute                                   { attributes.add((Attribute) $1.obj); }
-    | attributeList attribute                   { attributes.add((Attribute) $2.obj); }
+    attribute                                       { LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+                                                      attributes.add((Attribute) $1.obj); 
+                                                      $$.obj = attributes; }
+    | attributeList attribute                       { LinkedList<Attribute> attributes = (LinkedList<Attribute>) $1.obj;
+                                                      attributes.add((Attribute) $2.obj); }
     ;
 
 attribute:
-    typeSpecifier identifier                    { $$.obj = new Attribute(yylval.sval, 0); }
+    typeSpecifier identifier                        { $$.obj = new Attribute(yylval.sval, 0); }
     ;
     
+entityDeclarationList:
+    entityDeclaration                               { entities.add((Entity) $1.obj); }
+    | entityDeclarationList entityDeclaration       { entities.add((Entity) $2.obj); }
+    ;
+
+entityDeclaration:
+    ENTITY identifier '{' propertyList '}' ';'      { Entity entity = new Entity(symbolTable.get($2.ival));
+                                                      $$.obj = entity; }
+    ;    
+
+propertyList:
+    property                                        { LinkedList<Property> properties = new LinkedList<Property>();
+                                                      properties.add((Property) $1.obj); 
+                                                      $$.obj = properties;}
+    | propertyList ',' property                     { LinkedList<Property> properties = (LinkedList<Property>) $1.obj;
+                                                      properties.add((Property) $3.obj); 
+                                                      $$.obj = properties; }
+    ;
+
+property:
+    identifier '(' attributeInitializerList ')'     { Property property = new Property(symbolTable.get($1.ival)); }
+    ;
+
+attributeInitializerList:
+    attributeInitializer                            { } 
+    | attributeInitializerList ',' attributeInitializer  { }
+    ;
+
+attributeInitializer:
+    identifier '=' initialValue                     { }
+    ;
+    
+initialValue:
+    INTEGER_LITERAL                                 { }
+    | FLOAT_LITERAL                                 { }
+    | STRING_LITERAL                                { }
+    | TRUE                                          { }
+    | FALSE                                         { }
+    ; 
+
 identifier:
-    STRING_VALUE                                { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
+    STRING_LITERAL                              { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
     ;
     
 typeSpecifier:
@@ -76,23 +135,6 @@ typeSpecifier:
     | STRING                                    { $$.obj = VariableType.STRING; }
     | BOOLEAN                                   { $$.obj = VariableType.BOOLEAN; }
     ;
-    
-/*
-entityList:
-    entity                                      { entities.add((Entity) $1; }
-    | entityList entity                         { entities.add((Entity) $2; }
-    |                                           { }
-    ;
-
-entity:
-    'entity' identifier '{' proprtyList '}'     { }
-    ;    
-
-propertyList:
-    propertyEntry                               { }
-    | propertyList ',' propertyEntry            { }
-    ;
-*/
 
 %%
 
@@ -103,7 +145,7 @@ private Yylex lexer;
 public ArrayList<String> symbolTable = new ArrayList<String>();
 
 /* Collections of declared data types */
-public LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+public LinkedList<Property> properties = new LinkedList<Property>();
 public LinkedList<Entity> entities = new LinkedList<Entity>();
 public LinkedList<Rule> rules = new LinkedList<Rule>();
 
@@ -148,9 +190,10 @@ public void parse(Reader inputReader) {
  * 
  * So for instance, if the next token encountered by the lexer is an integer, 
  * it should set yylval.ival to the value of the integer and return a token ID
- * that indicates an integer value.  In our case we have defined a token called INTEGER.
- * Be careful not to confuse this with the INT token, which is returned by the lexer
- * to indicate that it has encountered the "int" reserved keyword.
+ * that indicates an integer value.  In our case we have defined a token called 
+ * INTEGER_LITERAL.  Be careful not to confuse this with the INT token, which is 
+ * returned by the lexer to indicate that it has encountered the "int" reserved 
+ * keyword.
  **/
 private int yylex () {
     int rv = -1;
@@ -172,11 +215,15 @@ public void yyerror (String error) {
     System.err.println ("Error: " + error);
 }
 
+/*
+ * This is just to aid in debugging.  It prints out the value of a token returned
+ * from the lexer to the console.
+ */
 private String tokenToString(ParserVal pv) {
     String s = null;
     if (pv == null)
-        s = "null";
+        s = "null"; /* should never happen */
     else
         s = "ival: " + pv.ival + "; dval: " + pv.dval + "; sval: " + pv.sval + "; obj: " + pv.obj;
     return s;
-    } 
+}

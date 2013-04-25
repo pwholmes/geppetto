@@ -1,1 +1,2 @@
-int test
+property mood(string m {“happy”, “sad”});
+entity bob {mood(m=”happy”)};

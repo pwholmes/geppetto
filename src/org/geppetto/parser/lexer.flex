@@ -9,9 +9,9 @@ import org.geppetto.parser.generated.Parser;
 
 %{
   private Parser yyparser;
-  private List symbolTable;
+  private List<String> symbolTable;
 
-  public Yylex(java.io.Reader r, Parser yyparser, List symbolTable) {
+  public Yylex(java.io.Reader r, Parser yyparser, List<String> symbolTable) {
     this(r);
     this.yyparser = yyparser;
     this.symbolTable = symbolTable;
@@ -20,29 +20,29 @@ import org.geppetto.parser.generated.Parser;
 
 %%
 
-/* operators */
+/* whitespace */
+[ \t]+                  { } /* ignore */
+
+/* newline */
+\n | \r | \r\n          { return Parser.NEWLINE; }
+
+/* symbols and operators */
+/* JFlex crashes on startup if I try to put these symbols into a bracketed regexp: [+/-*^(),;] */ 
 "+" | 
 "-" | 
 "*" | 
 "/" | 
 "^" | 
 "(" | 
-")"                     { return (int) yycharat(0); }
+")" |
+"," |
+";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
-/* newline */
-\n | \r | \r\n          { return Parser.NEWLINE; }
+/* float literals */
+[0-9]+"."[0-9]+         { yyparser.yylval = new ParserVal(Double.valueOf(yytext())); return Parser.FLOAT_LITERAL; }
 
-/* float */
-[0-9]+"."[0-9]+         { yyparser.yylval = new ParserVal(Double(yytext())); return Parser.FLOAT_VALUE; }
-
-/* integer */
-[0-9]+                  { yyparser.yylval = new ParserVal(Integer(yytext())); return Parser.INTEGER_VALUE; }
-
-/* whitespace */
-[ \t]+ { }
-
-/* line terminator */
-";"                     { return Parser.TERMINATOR; }
+/* integer literals */
+[0-9]+                  { yyparser.yylval = new ParserVal(Integer.valueOf(yytext())); return Parser.INTEGER_LITERAL; }
 
 /* reserved words */
 boolean                 { return Parser.BOOLEAN; }
@@ -61,8 +61,8 @@ string                  { return Parser.STRING; }
 true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }
 
-/* string values (generally identifiers) */
-[a-zA-Z][a-zA-Z0-9]*    { symbolTable.Add(yytext()); yyparser.yylval = symbolTable.indexOf(yytext()); return Parser.STRING_VALUE; }  
+/* string literals (generally identifiers) */
+[a-zA-Z][a-zA-Z0-9]*    { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
 
 /* error fallback */
 [^]                     { System.err.println("Error: unexpected character '" + yytext() + "'"); return -1; }
