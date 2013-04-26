@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Property {
    public String                 name;
-   private LinkedList<Attribute> attributes;
+   private LinkedList<Attribute> attributes = new LinkedList<Attribute>();
 
    @SuppressWarnings("unused")
    private Property() {
@@ -21,6 +21,10 @@ public class Property {
    
    public void addAttribute(Attribute attribute) {
       attributes.add(attribute);
+   }
+   
+   public void addAttributes(List<Attribute> attributes) {
+      this.attributes.addAll(attributes);
    }
    
    public List<Attribute> getAttributes() {

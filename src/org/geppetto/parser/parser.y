@@ -3,7 +3,15 @@
   import java.io.Reader;
   import java.util.ArrayList;
   import java.util.HashSet;
+  import java.util.List;
+  import java.util.Set;
   import org.geppetto.domain.Attribute;
+  import org.geppetto.domain.AttributeConstraint;
+  import org.geppetto.domain.AttributeConstraintFloatRange;
+  import org.geppetto.domain.AttributeConstraintFloatSet;
+  import org.geppetto.domain.AttributeConstraintIntegerRange;
+  import org.geppetto.domain.AttributeConstraintIntegerSet;
+  import org.geppetto.domain.AttributeConstraintStringSet;
   import org.geppetto.domain.Entity;
   import org.geppetto.domain.Property;
   import org.geppetto.domain.Rule;
@@ -35,19 +43,6 @@
    inconvenience, and it makes the grammar so much easier to read. */
 %token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY STRING TRUE WHILE
 
-/* Type definitions */
-/* It seems that if you declare a type for *any* symbol in the grammar, BYACCJ decides that you need
- * to declare a type for *every* symbol in the grammar.  This is why you may see the error "$$ is untyped" 
- * suddenly popping up where something previously worked.  This seems like a potentially serious bug in
- * BYACCJ, but I think we can work around it.  Let's try to avoid typing the tokens and symbols.
- * Prof. Aho said he's never had to do it, so I don't think it should be necessary. */
-/*
-%type <obj> program
-%type <obj> attributeList
-%type <obj> attribute
-%type <obj> typeSpecifier
-*/
-
 %%
 
 /**
@@ -73,7 +68,9 @@ propertyDeclarationList:
     ;
 
 propertyDeclaration:
-    PROPERTY identifier '(' attributeList ')' ';'   { $$.obj = new Property(symbolTable.get($2.ival)); }
+    PROPERTY identifier '(' attributeList ')' ';'   { Property property = new Property(symbolTable.get($2.ival));
+                                                      property.addAttributes((ArrayList<Attribute>) $4.obj);
+                                                      $$.obj = property; }
     ;
 
 attributeList:
@@ -81,20 +78,23 @@ attributeList:
                                                       attributes.add((Attribute) $1.obj); 
                                                       $$.obj = attributes; }
     | attributeList ',' attribute                   { ArrayList<Attribute> attributes = (ArrayList<Attribute>) $1.obj;
-                                                      attributes.add((Attribute) $3.obj); }
+                                                      attributes.add((Attribute) $3.obj); 
+                                                      $$.obj = attributes; }
     ;
 
 attribute:
     typeSpecifier identifier                        { $$.obj = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival)); }
-    | typeSpecifier identifier '{' attributeConstraint '}'  { $$.obj = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival)); }
+    | typeSpecifier identifier '{' attributeConstraint '}'  { Attribute attribute = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival));
+                                                              attribute.setConstraint((AttributeConstraint) $4.obj); 
+                                                              $$.obj = attribute;}
     ;
 
 attributeConstraint:
-    stringList                                      { $$.obj = $1.obj; }
-    | integerList                                   { $$.obj = $1.obj; }
-    | integerRange                                  { $$.obj = $1.obj; }
-    | floatList                                     { $$.obj = $1.obj; }
-    | floatRange                                    { $$.obj = $1.obj; }
+    stringList                                      { $$.obj = new AttributeConstraintStringSet((Set<String>) $1.obj); }
+    | integerList                                   { $$.obj = new AttributeConstraintIntegerSet((Set<Integer>) $1.obj); }
+    | integerRange                                  { $$.obj = new AttributeConstraintIntegerRange((ArrayList<Integer>)$1.obj); }
+    | floatList                                     { $$.obj = new AttributeConstraintFloatSet((Set<Float>)$1.obj); }
+    | floatRange                                    { $$.obj = new AttributeConstraintFloatRange((ArrayList<Float>)$1.obj); }
     |
     ;
 
@@ -117,7 +117,10 @@ integerList:
     ;
     
 integerRange:
-    INTEGER_LITERAL '-' INTEGER_LITERAL             { }
+    INTEGER_LITERAL '-' INTEGER_LITERAL             { ArrayList<Integer> intList = new ArrayList<Integer>();
+                                                      intList.add($1.ival);
+                                                      intList.add($2.ival);
+                                                      $$.obj = intList; }
     ;
     
 floatList:
@@ -130,7 +133,10 @@ floatList:
     ;
 
 floatRange:
-    FLOAT_LITERAL '-' FLOAT_LITERAL                 { }
+    FLOAT_LITERAL '-' FLOAT_LITERAL                 { ArrayList<Float> floatList = new ArrayList<Float>();
+                                                      floatList.add(new Float($1.dval));
+                                                      floatList.add(new Float($2.dval));
+                                                      $$.obj = floatList; }
     ;
 
 entityDeclarationList:
@@ -153,7 +159,9 @@ propertyList:
     ;
 
 property:
-    identifier '(' attributeInitializerList ')'     { Property property = new Property(symbolTable.get($1.ival)); }
+    identifier '(' attributeInitializerList ')'     { Property property = new Property(symbolTable.get($1.ival)); 
+                                                      property.addAttributes((List<Attribute>)$3.obj); 
+                                                      $$.obj = property; }
     ;
 
 attributeInitializerList:
@@ -178,7 +186,8 @@ initialValue:
     ; 
 
 identifier:
-    IDENTIFIER                                      { $$ = $1; } /* remember that this is an index into the symbol table, not the string itself */ 
+    IDENTIFIER                                      { debug("** IDENTIFIER: ID: " + $1.ival + "; symb table entry: " + symbolTable.get($1.ival)); 
+                                                      $$.ival = $1.ival; } /* remember that this is an index into the symbol table, not the string itself */ 
     ;
     
 typeSpecifier:
@@ -220,32 +229,35 @@ public void parse(Reader inputReader) {
 }
 
 /**
- * yylex() is called by the BYACCJ parser to retrieve the next token.
+ * yylex() is called by the BYACCJ parser to retrieve the next input token.
  * It should return <0 on an error and 0 on end-of-input.
  *
  * Here we use the JFlex lexer to get the next token.
  * yylval is a member variable of the class generated from this file (Parser).
- * Each time this function is called, we create a new instance of the data type
- * used to store a token value (ParserVal) and set yylval to point to it.
- * Then we call the lexer's yylex() function.  It is the lexer's responsibility
- * to populate yylval appropriately and return an appropriate token ID as its
- * return value.  Token IDs are defined (by us) at the top of this file via
- * the %token directive.  In the lexer they are referenced as "Parser.TOKENID",
- * where TOKENID is an ID defined in the %token directive.
+ * Each time this function is called, we call the lexer's yylex() function.  
+ * It is the lexer's responsibility to create and properly populate a new
+ * ParserVal() instance to hold the token data, and to return one of the token IDs
+ * defined in the %token directives above to indicate the meaning of the data in
+ * the ParserVal object.  Note that before calling the lexer, we create a default 
+ * ParserVal object and set yylval to point to it, but that object should only be 
+ * considered a failsafe in case something goes wrong in the lexer, or if the token 
+ * being parsed doesn't need to return any token data (for example, if the token is 
+ * a keyword like "else", that token doesn't have any data associated with it; 
+ * the lexer just needs to return the ELSE token ID and no ParserVal object is
+ * required).
  *
  * ParserVal is "mutable" in that it has members that hold four different data types:
  *  ival holds integer values
  *  dval holds double values
  *  sval holds strings,
  *  obj holds object references
- * In most cases the lexer should probably only be setting only ONE of these members. 
+ * In most cases the lexer should only be setting only ONE of these members. 
  * 
  * So for instance, if the next token encountered by the lexer is an integer, 
  * it should set yylval.ival to the value of the integer and return a token ID
- * that indicates an integer value.  In our case we have defined a token called 
- * INTEGER_LITERAL.  Be careful not to confuse this with the INT token, which is 
- * returned by the lexer to indicate that it has encountered the "int" reserved 
- * keyword.
+ * that indicates an integer value, which in our case is the token ID INTEGER_LITERAL.
+ * Be careful not to confuse this with the INT token, which is returned by the lexer 
+ * to indicate that it has encountered the "int" reserved keyword.
  **/
 private int yylex () {
     int rv = -1;
@@ -259,8 +271,8 @@ private int yylex () {
         
         /* debug code */
         String tokenName = (rv > 0) ? yyname[rv] : String.valueOf(rv);
-        System.out.println("ID: " + tokenName + "; Token: " + tokenToString(yylval));
-        
+        debug("ID: " + tokenName + "; Token: " + tokenToString(yylval));
+
     } catch (IOException e) {
         System.err.println("IO error :" + e);
     }

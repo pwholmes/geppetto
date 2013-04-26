@@ -1,5 +1,7 @@
 package org.geppetto.domain;
 
+import java.util.List;
+
 public class AttributeConstraintIntegerRange implements AttributeConstraint {
    private int minValue;
    private int maxValue;
@@ -9,6 +11,11 @@ public class AttributeConstraintIntegerRange implements AttributeConstraint {
       this.maxValue = maxValue;
    }
    
+   public AttributeConstraintIntegerRange(List<Integer> intList) {
+      this.minValue = intList.get(0);
+      this.maxValue = intList.get(1);
+   }
+
    @Override
    public boolean violatesConstraint(Object value) {
       if (value.getClass() != Integer.class)

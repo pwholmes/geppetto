@@ -42,13 +42,13 @@ import org.geppetto.parser.generated.Parser;
 ";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
 /* float literals */
-[0-9]+"."[0-9]+         { yyparser.yylval = new ParserVal(Double.valueOf(yytext())); return Parser.FLOAT_LITERAL; }
+[0-9]+"."[0-9]+         { yyparser.yylval = new ParserVal(Double.parseDouble(yytext())); return Parser.FLOAT_LITERAL; }
 
 /* integer literals */
-[0-9]+                  { yyparser.yylval = new ParserVal(Integer.valueOf(yytext())); return Parser.INTEGER_LITERAL; }
+[0-9]+                  { yyparser.yylval = new ParserVal(Integer.parseInt(yytext())); return Parser.INTEGER_LITERAL; }
 
 /* string literals */
-\".*\"                  { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
+\"[^\"]*\"              { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
 
 /* reserved words */
 boolean                 { return Parser.BOOLEAN; }
@@ -68,7 +68,7 @@ true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }
 
 /* identifiers */
-[a-zA-Z][a-zA-Z0-9]*    { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.IDENTIFIER; }  
+[a-zA-Z][a-zA-Z0-9]*    { symbolTable.add(yytext()); yyparser.yylval = new ParserVal(symbolTable.indexOf(yytext())); return Parser.IDENTIFIER; }  
 
 /* error fallback */
 [^]                     { System.err.println("Error: unexpected character '" + yytext() + "'"); return -1; }
