@@ -12,11 +12,14 @@
   import org.geppetto.domain.AttributeConstraintIntegerRange;
   import org.geppetto.domain.AttributeConstraintIntegerSet;
   import org.geppetto.domain.AttributeConstraintStringSet;
+  import org.geppetto.domain.AttributeInitializer;
+  import org.geppetto.domain.Behavior;
+  import org.geppetto.domain.Condition;
   import org.geppetto.domain.Entity;
+  import org.geppetto.domain.GeppettoProgram;
   import org.geppetto.domain.Property;
   import org.geppetto.domain.Rule;
-  import org.geppetto.domain.Condition;
-  import org.geppetto.domain.Behavior;
+  import org.geppetto.domain.Variable;
   import org.geppetto.domain.VariableType;
   import org.geppetto.parser.Tree;
   import org.geppetto.parser.TreeNode;
@@ -41,7 +44,7 @@
 /* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
    new keywords when you have to define a token ID for each one.  But IMO that's a trifling
    inconvenience, and it makes the grammar so much easier to read. */
-%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY STRING TRUE WHILE
+%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RULE STRING TRUE WHILE
 
 %%
 
@@ -54,17 +57,38 @@
  * a program without at least one of each of those things.
  */
 
+/* We probably need to add something to the end of the grammar for "program" to account for "other code"
+   not in a rule (e.g., if we define an additional function that a rule calls).  But I'm not quite sure
+   what that should be just yet... */   
 program:
-    definitionList                                  {  } 
-    ;
-
-definitionList:
-    propertyDeclarationList entityDeclarationList   {  }
+    variableDeclarationList propertyDeclarationList entityDeclarationList ruleDeclarationList  {
+                                                      ArrayList<Variable> globalVariables = (ArrayList<Variable>) $1.obj;
+                                                      ArrayList<Property> properties = (ArrayList<Property>) $2.obj;
+                                                      ArrayList<Entity> entities =  (ArrayList<Entity>) $3.obj;
+                                                      ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj; 
+                                                      geppettoProgram = new GeppettoProgram(globalVariables, properties, entities, rules); }
     ; 
 
+variableDeclarationList:
+    variableDeclarationList variableDeclaration;  { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
+                                                      if (variables == null)
+                                                         variables = new ArrayList<Variable>();
+                                                      variables.add((Variable) $1.obj); 
+                                                      $$.obj = variables; } 
+    |                                               { $$.obj = new ArrayList<Variable>(); }
+    ;
+
+variableDeclaration:
+    typeSpecifier identifier '=' literalValue ';'   { $$.obj = new Variable((VariableType) $1.obj, symbolTable.get($2.ival), $4.obj); }
+    ;
+
 propertyDeclarationList:
-    propertyDeclaration                             { properties.add((Property) $1.obj); }
-    | propertyDeclarationList propertyDeclaration   { properties.add((Property) $2.obj); }
+    propertyDeclaration                             { ArrayList<Property> properties = new ArrayList<Property>();
+                                                      properties.add((Property) $1.obj); 
+                                                      $$.obj = properties; }
+    | propertyDeclarationList propertyDeclaration   { ArrayList<Property> properties = (ArrayList<Property>) $1.obj;
+                                                      properties.add((Property) $2.obj); 
+                                                      $$.obj = properties; }
     ;
 
 propertyDeclaration:
@@ -140,8 +164,12 @@ floatRange:
     ;
 
 entityDeclarationList:
-    entityDeclaration                               { entities.add((Entity) $1.obj); }
-    | entityDeclarationList entityDeclaration       { entities.add((Entity) $2.obj); }
+    entityDeclaration                               { ArrayList<Entity> entities = new ArrayList<Entity>();  
+                                                      entities.add((Entity) $1.obj); 
+                                                      $$.obj = entities; }
+    | entityDeclarationList entityDeclaration       { ArrayList<Entity> entities = (ArrayList<Entity>) $1.obj;  
+                                                      entities.add((Entity) $2.obj); 
+                                                      $$.obj = entities; }
     ;
 
 entityDeclaration:
@@ -160,30 +188,51 @@ propertyList:
 
 property:
     identifier '(' attributeInitializerList ')'     { Property property = new Property(symbolTable.get($1.ival)); 
-                                                      property.addAttributes((List<Attribute>)$3.obj); 
+                                                      property.addAttributeInitializers((List<AttributeInitializer>)$3.obj); 
                                                       $$.obj = property; }
     ;
 
 attributeInitializerList:
-    attributeInitializer                            { ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-                                                      attributes.add((Attribute) $1.obj);
-                                                      $$.obj = attributes; } 
-    | attributeInitializerList ',' attributeInitializer  { ArrayList<Attribute> attributes = (ArrayList<Attribute>) $1.obj;
-                                                      attributes.add((Attribute) $3.obj);
-                                                      $$.obj = attributes; }
+    attributeInitializer                            { ArrayList<AttributeInitializer> attributeInitializers = new ArrayList<AttributeInitializer>();
+                                                      attributeInitializers.add((AttributeInitializer) $1.obj);
+                                                      $$.obj = attributeInitializers; } 
+    | attributeInitializerList ',' attributeInitializer  { ArrayList<AttributeInitializer> attributeInitiazers = (ArrayList<AttributeInitializer>) $1.obj;
+                                                      attributeInitiazers.add((AttributeInitializer) $3.obj);
+                                                      $$.obj = attributeInitiazers; }
     ;
 
 attributeInitializer:
-    identifier '=' initialValue                     { }
+    identifier '=' literalValue                     { $$.obj = new AttributeInitializer(symbolTable.get($1.ival), $3.obj); }
     ;
     
-initialValue:
+literalValue:
     INTEGER_LITERAL                                 { $$.obj = new Integer($1.ival); }
     | FLOAT_LITERAL                                 { $$.obj = new Float($1.dval); }
     | STRING_LITERAL                                { $$.obj = new String(symbolTable.get($1.ival)); }
     | TRUE                                          { $$.obj = new Boolean(true); }
     | FALSE                                         { $$.obj = new Boolean(false); }
     ; 
+    
+ruleDeclarationList:
+    rule                                            { ArrayList<Rule> rules = new ArrayList<Rule>();  
+                                                      rules.add((Rule) $1.obj); 
+                                                      $$.obj = rules; }
+    | ruleDeclarationList rule                      { ArrayList<Rule> rules = (ArrayList<Rule>) $1.obj;  
+                                                      rules.add((Rule) $2.obj); 
+                                                      $$.obj = rules; }
+    ;
+    
+rule:
+    RULE condition '-' '>' behavior ';'             { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
+    ;
+    
+condition:
+    booleanExpression                               { $$.obj = new Condition(); }
+    ;
+
+behavior:
+    statement                                       { $$.obj = new Behavior(); }
+    ;
 
 identifier:
     IDENTIFIER                                      { debug("** IDENTIFIER: ID: " + $1.ival + "; symb table entry: " + symbolTable.get($1.ival)); 
@@ -197,6 +246,16 @@ typeSpecifier:
     | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
     ;
 
+booleanExpression:
+    TRUE                                            { $$.ival = 1; }
+    | FALSE                                         { $$.ival = 0; }
+    ;
+    
+statement:
+    PRINT                                           { $$.obj = new Tree(new TreeNode(TreeNodeType.STATEMENT)); }
+    | END                                           { $$.obj = new Tree(new TreeNode(TreeNodeType.STATEMENT)); }
+    ;
+
 %%
 
 /* Yylex is the lexer generated by JFlex */
@@ -205,11 +264,8 @@ private Yylex lexer;
 /* Symbol table, for identifiers */
 public ArrayList<String> symbolTable = new ArrayList<String>();
 
-/* Collections of declared data types */
-public ArrayList<Property> properties = new ArrayList<Property>();
-public ArrayList<Entity> entities = new ArrayList<Entity>();
-public ArrayList<Rule> rules = new ArrayList<Rule>();
-
+/* The top-level data type; figuratively, this the root of the AST, though it isn't really a tree. */ 
+public GeppettoProgram geppettoProgram = null;
 
 /**
  * parse() is called explicitly by the Geppetto main program to start off 
@@ -226,6 +282,8 @@ public void parse(Reader inputReader) {
     /* Start parsing the input.  BYACCJ will call yylex as necessary to retrieve
        the next token. */    
     yyparse();
+    
+    
 }
 
 /**

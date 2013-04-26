@@ -27,7 +27,7 @@ import org.geppetto.parser.generated.Parser;
 \n | \r | \r\n          { } /* ignore as whitespace */
 
 /* symbols and operators */
-/* JFlex crashes on startup if I try to put these symbols into a bracketed regexp: [\+\*\^-/(){}=,;] */ 
+/* JFlex crashes on startup if I try to put these symbols into a bracketed regexp: [\+\*\^\/-(){}=,;] */ 
 "+" | 
 "-" | 
 "*" | 
@@ -35,9 +35,14 @@ import org.geppetto.parser.generated.Parser;
 "^" | 
 "(" | 
 ")" |
-"=" |
 "{" |
 "}" |
+"=" |
+">" |
+"<" |
+"!" |
+"|" |
+"&" |
 "," |
 ";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
@@ -63,6 +68,7 @@ input                   { return Parser.INPUT; }
 int                     { return Parser.INT; }
 print                   { return Parser.PRINT; }
 property                { return Parser.PROPERTY; }
+rule                    { return Parser.RULE; }
 string                  { return Parser.STRING; }
 true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }

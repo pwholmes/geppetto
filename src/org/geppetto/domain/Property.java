@@ -1,11 +1,12 @@
 package org.geppetto.domain;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Property {
    public String                 name;
-   private LinkedList<Attribute> attributes = new LinkedList<Attribute>();
+   private ArrayList<Attribute> attributes = new ArrayList<Attribute>();
+   private ArrayList<AttributeInitializer> attributeInitializers = new ArrayList<AttributeInitializer>();
 
    @SuppressWarnings("unused")
    private Property() {
@@ -30,4 +31,17 @@ public class Property {
    public List<Attribute> getAttributes() {
       return attributes;
    }
+   
+   public void addAttributeInitializer(AttributeInitializer attributeInitializer) {
+      attributeInitializers.add(attributeInitializer);
+   }
+   
+   public void addAttributeInitializers(List<AttributeInitializer> attributeInitializers) {
+      this.attributeInitializers.addAll(attributeInitializers);
+   }
+   
+   public List<AttributeInitializer> getAttributeInitializers() {
+      return attributeInitializers;
+   }
+   
 }

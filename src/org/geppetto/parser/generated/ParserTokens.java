@@ -17,7 +17,8 @@ public final static short INPUT=270;
 public final static short INT=271;
 public final static short PRINT=272;
 public final static short PROPERTY=273;
-public final static short STRING=274;
-public final static short TRUE=275;
-public final static short WHILE=276;
+public final static short RULE=274;
+public final static short STRING=275;
+public final static short TRUE=276;
+public final static short WHILE=277;
 }
