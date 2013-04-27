@@ -12,13 +12,16 @@
   import org.geppetto.domain.AttributeConstraintIntegerRange;
   import org.geppetto.domain.AttributeConstraintIntegerSet;
   import org.geppetto.domain.AttributeConstraintStringSet;
+  import org.geppetto.domain.AttributeDefinition;
   import org.geppetto.domain.AttributeInitializer;
   import org.geppetto.domain.Behavior;
   import org.geppetto.domain.Condition;
   import org.geppetto.domain.Entity;
   import org.geppetto.domain.GeppettoProgram;
   import org.geppetto.domain.Property;
+  import org.geppetto.domain.PropertyDefinition;
   import org.geppetto.domain.Rule;
+  import org.geppetto.domain.Value;
   import org.geppetto.domain.Variable;
   import org.geppetto.domain.VariableType;
   import org.geppetto.parser.Tree;
@@ -61,12 +64,12 @@
    not in a rule (e.g., if we define an additional function that a rule calls).  But I'm not quite sure
    what that should be just yet... */   
 program:
-    variableDeclarationList propertyDeclarationList entityDeclarationList ruleDeclarationList  {
+    variableDeclarationList propertyDefinitionList entityDeclarationList ruleDeclarationList  {
                                                       ArrayList<Variable> globalVariables = (ArrayList<Variable>) $1.obj;
-                                                      ArrayList<Property> properties = (ArrayList<Property>) $2.obj;
+                                                      ArrayList<PropertyDefinition> propertyDefinitions = (ArrayList<PropertyDefinition>) $2.obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) $3.obj;
                                                       ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj; 
-                                                      geppettoProgram = new GeppettoProgram(globalVariables, properties, entities, rules); }
+                                                      geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules); }
     ; 
 
 variableDeclarationList:
@@ -82,35 +85,35 @@ variableDeclaration:
     typeSpecifier identifier '=' literalValue ';'   { $$.obj = new Variable((VariableType) $1.obj, symbolTable.get($2.ival), $4.obj); }
     ;
 
-propertyDeclarationList:
-    propertyDeclaration                             { ArrayList<Property> properties = new ArrayList<Property>();
-                                                      properties.add((Property) $1.obj); 
-                                                      $$.obj = properties; }
-    | propertyDeclarationList propertyDeclaration   { ArrayList<Property> properties = (ArrayList<Property>) $1.obj;
-                                                      properties.add((Property) $2.obj); 
-                                                      $$.obj = properties; }
+propertyDefinitionList:
+    propertyDefinition                              { propertyDefinitions = new ArrayList<PropertyDefinition>();
+                                                      propertyDefinitions.add((PropertyDefinition) $1.obj); 
+                                                      $$.obj = propertyDefinitions; }
+    | propertyDefinitionList propertyDefinition     { ArrayList<PropertyDefinition> propertyDefs = (ArrayList<PropertyDefinition>) $1.obj;
+                                                      propertyDefs.add((PropertyDefinition) $2.obj); 
+                                                      $$.obj = propertyDefs; }
     ;
 
-propertyDeclaration:
-    PROPERTY identifier '(' attributeList ')' ';'   { Property property = new Property(symbolTable.get($2.ival));
-                                                      property.addAttributes((ArrayList<Attribute>) $4.obj);
-                                                      $$.obj = property; }
+propertyDefinition:
+    PROPERTY identifier '(' attributeDefinitionList ')' ';'   { PropertyDefinition propertyDef = new PropertyDefinition(symbolTable.get($2.ival));
+                                                      propertyDef.addAttributeDefinitions((ArrayList<AttributeDefinition>) $4.obj);
+                                                      $$.obj = propertyDef; }
     ;
 
-attributeList:
-    attribute                                       { ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-                                                      attributes.add((Attribute) $1.obj); 
-                                                      $$.obj = attributes; }
-    | attributeList ',' attribute                   { ArrayList<Attribute> attributes = (ArrayList<Attribute>) $1.obj;
-                                                      attributes.add((Attribute) $3.obj); 
-                                                      $$.obj = attributes; }
+attributeDefinitionList:
+    attributeDefinition                             { ArrayList<AttributeDefinition> attributeDefs = new ArrayList<AttributeDefinition>();
+                                                      attributeDefs.add((AttributeDefinition) $1.obj); 
+                                                      $$.obj = attributeDefs; }
+    | attributeDefinitionList ',' attributeDefinition  { ArrayList<AttributeDefinition> attributeDefs = (ArrayList<AttributeDefinition>) $1.obj;
+                                                      attributeDefs.add((AttributeDefinition) $3.obj); 
+                                                      $$.obj = attributeDefs; }
     ;
 
-attribute:
-    typeSpecifier identifier                        { $$.obj = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival)); }
-    | typeSpecifier identifier '{' attributeConstraint '}'  { Attribute attribute = new Attribute((VariableType)$1.obj, symbolTable.get($2.ival));
-                                                              attribute.setConstraint((AttributeConstraint) $4.obj); 
-                                                              $$.obj = attribute;}
+attributeDefinition:
+    typeSpecifier identifier                        { $$.obj = new AttributeDefinition((VariableType)$1.obj, symbolTable.get($2.ival)); }
+    | typeSpecifier identifier '{' attributeConstraint '}'  { AttributeDefinition attributeDef = new AttributeDefinition((VariableType)$1.obj, symbolTable.get($2.ival));
+                                                      attributeDef.setConstraint((AttributeConstraint) $4.obj); 
+                                                      $$.obj = attributeDef; }
     ;
 
 attributeConstraint:
@@ -188,8 +191,16 @@ propertyList:
     ;
 
 property:
-    identifier '(' attributeInitializerList ')'     { Property property = new Property(symbolTable.get($1.ival)); 
-                                                      property.addAttributeInitializers((List<AttributeInitializer>)$3.obj); 
+    identifier '(' attributeInitializerList ')'     { String propertyName = symbolTable.get($1.ival);
+                                                      PropertyDefinition propertyDef = null;
+                                                      for (PropertyDefinition def : propertyDefinitions) {
+                                                          if (def.getName().equals(propertyName))
+                                                              propertyDef = def;
+                                                          }
+                                                      if (propertyDef == null)
+                                                          throw new IllegalArgumentException("Unknown property: " + propertyName);
+                                                      Property property = new Property(propertyName, propertyDef); 
+                                                      property.setAttributeValues((List<AttributeInitializer>)$3.obj); 
                                                       $$.obj = property; }
     ;
 
@@ -203,15 +214,15 @@ attributeInitializerList:
     ;
 
 attributeInitializer:
-    identifier '=' literalValue                     { $$.obj = new AttributeInitializer(symbolTable.get($1.ival), $3.obj); }
+    identifier '=' literalValue                     { $$.obj = new AttributeInitializer(symbolTable.get($1.ival), (Value)$3.obj); }
     ;
     
 literalValue:
-    INTEGER_LITERAL                                 { $$.obj = new Integer($1.ival); }
-    | FLOAT_LITERAL                                 { $$.obj = new Float($1.dval); }
-    | STRING_LITERAL                                { $$.obj = new String(symbolTable.get($1.ival)); }
-    | TRUE                                          { $$.obj = new Boolean(true); }
-    | FALSE                                         { $$.obj = new Boolean(false); }
+    INTEGER_LITERAL                                 { $$.obj = new Value($1.ival); }
+    | FLOAT_LITERAL                                 { Float fval = new Float($1.dval); $$.obj = new Value(fval); }
+    | STRING_LITERAL                                { $$.obj = new Value(symbolTable.get($1.ival)); }
+    | TRUE                                          { $$.obj = new Value(true); }
+    | FALSE                                         { $$.obj = new Value(false); }
     ; 
     
 ruleDeclarationList:
@@ -267,6 +278,9 @@ public ArrayList<String> symbolTable = new ArrayList<String>();
 
 /* The top-level data type; figuratively, this the root of the AST, though it isn't really a tree. */ 
 public GeppettoProgram geppettoProgram = null;
+
+/* Need this as its own global variable because the definitions are needed to validate subsequent declarations */ 
+public ArrayList<PropertyDefinition> propertyDefinitions = null;
 
 /**
  * parse() is called explicitly by the Geppetto main program to start off 

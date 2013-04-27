@@ -2,11 +2,11 @@ package org.geppetto.domain;
 
 public class AttributeInitializer {
    public String name;
-   public Object initialValue;
+   public Value value;
    
-   public AttributeInitializer(String name, Object initialValue) {
+   public AttributeInitializer(String name, Value value) {
       this.name = name;
-      this.initialValue = initialValue;
+      this.value = value;
    }
 
    public String getName() {
@@ -17,12 +17,12 @@ public class AttributeInitializer {
       this.name = name;
    }
 
-   public Object getInitialValue() {
-      return initialValue;
+   public Value getValue() {
+      return value;
    }
 
-   public void setInitialValue(Object initialValue) {
-      this.initialValue = initialValue;
+   public void setInitialValue(Value value) {
+      this.value = value;
    }
    
    public String toString() {
@@ -30,7 +30,7 @@ public class AttributeInitializer {
       
       sb.append(getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-      sb.append("; initialValue: ").append(getInitialValue());
+      sb.append("; initialValue: ").append(getValue());
       
       return sb.toString();
    }

@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class GeppettoProgram {
    private ArrayList<Variable> globalVariables;
-   private ArrayList<Property> properties;
+   private ArrayList<PropertyDefinition> propertyDefinitions;
    private ArrayList<Entity>   entities;
    private ArrayList<Rule>     rules;
 
    public GeppettoProgram(ArrayList<Variable> globalVariables,
-         ArrayList<Property> properties, ArrayList<Entity> entities,
+         ArrayList<PropertyDefinition> propertyDefinitions, ArrayList<Entity> entities,
          ArrayList<Rule> rules) {
       this.globalVariables = globalVariables;
-      this.properties = properties;
+      this.propertyDefinitions = propertyDefinitions;
       this.entities = entities;
       this.rules = rules;
    }
@@ -21,8 +21,8 @@ public class GeppettoProgram {
       return globalVariables;
    }
 
-   public ArrayList<Property> getProperties() {
-      return properties;
+   public ArrayList<PropertyDefinition> getPropertyDefinitions() {
+      return propertyDefinitions;
    }
 
    public ArrayList<Entity> getEntities() {
@@ -32,7 +32,15 @@ public class GeppettoProgram {
    public ArrayList<Rule> getRules() {
       return rules;
    }
-
+   
+   public PropertyDefinition getPropertyDefinition(String propertyName) {
+      for (PropertyDefinition propertyDef : propertyDefinitions) {
+         if (propertyDef.getName().equals(propertyName))
+            return propertyDef;
+      }
+      return null;
+   }
+   
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
@@ -49,14 +57,14 @@ public class GeppettoProgram {
       }
       sb.append("}\n");
       
-      sb.append("properties: {");
+      sb.append("propertyDefinitions: {");
       first = true;
-      for (Property property : properties) {
+      for (PropertyDefinition propertyDef : propertyDefinitions) {
          if (first)
             first = false;
          else
             sb.append(", ");
-         sb.append(property);
+         sb.append(propertyDef);
       }
       sb.append("}\n");
       

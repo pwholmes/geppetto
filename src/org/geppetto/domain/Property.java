@@ -4,52 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Property {
-   public String                 name;
+   private String               name;
+   private PropertyDefinition   propertyDefinition;
    private ArrayList<Attribute> attributes = new ArrayList<Attribute>();
-   private ArrayList<AttributeInitializer> attributeInitializers = new ArrayList<AttributeInitializer>();
 
    @SuppressWarnings("unused")
    private Property() {
    }
 
-   public Property(String name) {
+   public Property(String name, PropertyDefinition propertyDefinition) {
       this.name = name;
+      this.propertyDefinition = propertyDefinition;
    }
-   
+
    public String getName() {
       return name;
    }
-   
+
    public void addAttribute(Attribute attribute) {
       attributes.add(attribute);
    }
-   
+
    public void addAttributes(List<Attribute> attributes) {
       this.attributes.addAll(attributes);
    }
-   
+
    public List<Attribute> getAttributes() {
       return attributes;
    }
-   
-   public void addAttributeInitializer(AttributeInitializer attributeInitializer) {
-      attributeInitializers.add(attributeInitializer);
+
+   public void setAttributeValues(List<AttributeInitializer> attributeInitializers) {
+      for (AttributeInitializer initializer : attributeInitializers) {
+         String attributeName = initializer.getName();
+         AttributeDefinition attributeDef = propertyDefinition.getAttributeDefinition(attributeName);
+         if (attributeDef == null)
+            throw new IllegalArgumentException("Unknown attribute: " + attributeName);
+         setAttributeValue(initializer, attributeDef);
+      }
    }
-   
-   public void addAttributeInitializers(List<AttributeInitializer> attributeInitializers) {
-      this.attributeInitializers.addAll(attributeInitializers);
+
+   public void setAttributeValue(AttributeInitializer attributeInitializer, AttributeDefinition attributeDef) {
+      Value value = attributeInitializer.getValue();
+      if (value.getType() != attributeDef.getType())
+         throw new IllegalArgumentException("Invalid attribute data type; is: " + value.getType() + ", must be : " + attributeDef.getType());
+      // TODO: verify that value is within constraints
+      Attribute attribute = new Attribute(attributeInitializer.getName(), attributeInitializer.getValue());
    }
-   
-   public List<AttributeInitializer> getAttributeInitializers() {
-      return attributeInitializers;
-   }
-   
+
    public String toString() {
       StringBuilder sb = new StringBuilder();
-      
+
       sb.append(getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-      
+
       sb.append("; attributes: {");
       boolean first = true;
       for (Attribute attrib : getAttributes()) {
@@ -61,18 +68,7 @@ public class Property {
       }
       sb.append("}; ");
 
-      sb.append("; initializers: {");
-      first = true;
-      for (AttributeInitializer initializer : getAttributeInitializers()) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(initializer);
-      }
-      sb.append("}");
-
       return sb.toString();
    }
-   
+
 }
