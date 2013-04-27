@@ -49,7 +49,7 @@ public class AttributeDefinition {
       sb.append(getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
       sb.append("; type: ").append(getType().toString());
-      sb.append("; constraint: ").append(getConstraint().toString());
+      sb.append("; constraint: ").append(getConstraint());
       
       return sb.toString();
    }
