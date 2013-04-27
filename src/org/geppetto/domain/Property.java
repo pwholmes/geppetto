@@ -49,6 +49,7 @@ public class Property {
          throw new IllegalArgumentException("Invalid attribute data type; is: " + value.getType() + ", must be : " + attributeDef.getType());
       // TODO: verify that value is within constraints
       Attribute attribute = new Attribute(attributeInitializer.getName(), attributeInitializer.getValue());
+      attributes.add(attribute);
    }
 
    public String toString() {
