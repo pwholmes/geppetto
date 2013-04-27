@@ -22,6 +22,22 @@ public class Attribute {
       this.name = name;
    }
 
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   public VariableType getType() {
+      return type;
+   }
+
+   public AttributeConstraint getConstraint() {
+      return constraint;
+   }
+
    public void setValue(int value) {
       if (constraint != null && constraint.violatesConstraint(new Integer(value)))
          throw new IllegalArgumentException("Value violates attribute constraint.");
@@ -46,10 +62,6 @@ public class Attribute {
       bValue = value;
    }
 
-   public AttributeConstraint getConstraint() {
-      return constraint;
-   }
-
    public void setConstraint(AttributeConstraint constraint) {
       if (constraint != null) {
          if (type == VariableType.INT && constraint.getType() != AttributeConstraintType.INT_SET && constraint.getType() == AttributeConstraintType.INT_RANGE)
@@ -62,10 +74,6 @@ public class Attribute {
             throw new IllegalArgumentException("Constraint type does not match attribute type");
       }
       this.constraint = constraint;
-   }
-
-   public String getName() {
-      return name;
    }
 
    public int getIntValue() {
@@ -82,5 +90,20 @@ public class Attribute {
 
    public boolean getBooleanValue() {
       return bValue;
+   }
+   
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("name: ").append(getName());
+      sb.append("; type: ").append(getType().toString());
+      sb.append("; constraint: ").append(getConstraint().toString());
+      sb.append("; ivalue: ").append(getIntValue());
+      sb.append("; fvalue: ").append(getFloatValue());
+      sb.append("; svalue: ").append(getStringValue());
+      sb.append("; bvalue: ").append(getBooleanValue());
+      
+      return sb.toString();
    }
 }

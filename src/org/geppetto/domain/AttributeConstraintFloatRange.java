@@ -16,6 +16,27 @@ public class AttributeConstraintFloatRange implements AttributeConstraint {
       this.maxValue = floatList.get(1);
    }
    
+   public float getMinValue() {
+      return minValue;
+   }
+
+   public float getMaxValue() {
+      return maxValue;
+   }
+
+   public void setMinValue(float minValue) {
+      this.minValue = minValue;
+   }
+
+   public void setMaxValue(float maxValue) {
+      this.maxValue = maxValue;
+   }
+
+   @Override
+   public AttributeConstraintType getType() {
+      return AttributeConstraintType.FLOAT_RANGE;
+   }
+   
    @Override
    public boolean violatesConstraint(Object value) {
       if (value.getClass() != Float.class)
@@ -23,8 +44,13 @@ public class AttributeConstraintFloatRange implements AttributeConstraint {
       return ((Float)value < minValue || (Float)value > maxValue);
    }
 
-   @Override
-   public AttributeConstraintType getType() {
-      return AttributeConstraintType.FLOAT_RANGE;
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("minValue: ").append(getMinValue());
+      sb.append("; maxValue: ").append(getMaxValue());
+      
+      return sb.toString();
    }
 }

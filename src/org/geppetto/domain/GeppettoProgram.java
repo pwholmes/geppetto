@@ -33,4 +33,55 @@ public class GeppettoProgram {
       return rules;
    }
 
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      
+      sb.append(getClass().getSimpleName()).append(": ");
+      
+      sb.append("globalVariables: {");
+      boolean first = true;
+      for (Variable variable : globalVariables) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(variable);
+      }
+      sb.append("}\n");
+      
+      sb.append("properties: {");
+      first = true;
+      for (Property property : properties) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(property);
+      }
+      sb.append("}\n");
+      
+      sb.append("entities: {");
+      first = true;
+      for (Entity entity : entities) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(entity);
+      }
+      sb.append("}\n");
+      
+      sb.append("rules: {");
+      first = true;
+      for (Rule rule : rules) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(rule);
+      }
+      sb.append("}\n");
+      
+      return sb.toString();
+   }
 }

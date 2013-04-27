@@ -6,17 +6,9 @@ public class Variable {
    private Object value;
 
    public Variable(VariableType type, String name, Object value) {
-      this.type = type;
       this.name = name;
-      this.value = value;
-   }
-
-   public VariableType getType() {
-      return type;
-   }
-
-   public void setType(VariableType type) {
       this.type = type;
+      this.value = value;
    }
 
    public String getName() {
@@ -27,6 +19,14 @@ public class Variable {
       this.name = name;
    }
 
+   public VariableType getType() {
+      return type;
+   }
+
+   public void setType(VariableType type) {
+      this.type = type;
+   }
+
    public Object getValue() {
       return value;
    }
@@ -34,4 +34,15 @@ public class Variable {
    public void setValue(Object value) {
       this.value = value;
    }
+   
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("name: ").append(getName());
+      sb.append("; type: ").append(getType());
+      sb.append("; value: ").append(getValue());
+      
+      return sb.toString();
+   }   
 }

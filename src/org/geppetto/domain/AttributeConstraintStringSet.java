@@ -1,12 +1,26 @@
 package org.geppetto.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class AttributeConstraintStringSet implements AttributeConstraint {
-   private Set<String> values = null;
+   private Set<String> values = new HashSet<String>();
    
    public AttributeConstraintStringSet(Set<String> values) {
-      this.values = values;
+      this.values.addAll(values);
+   }
+   
+   public void addValue(String value) {
+      this.values.add(value);
+   }
+
+   public Set<String> getValues() {
+      return this.values;
+   }
+
+   @Override
+   public AttributeConstraintType getType() {
+      return AttributeConstraintType.STRING_SET;
    }
    
    @Override
@@ -16,8 +30,21 @@ public class AttributeConstraintStringSet implements AttributeConstraint {
       return !(values.contains(value));
    }
 
-   @Override
-   public AttributeConstraintType getType() {
-      return AttributeConstraintType.STRING_SET;
-   }
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("values: {");
+      boolean first = true;
+      for (String value : values) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(value);
+      }
+      sb.append("} ");
+      
+      return sb.toString();
+   }      
 }

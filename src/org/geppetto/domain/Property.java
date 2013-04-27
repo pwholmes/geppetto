@@ -44,4 +44,35 @@ public class Property {
       return attributeInitializers;
    }
    
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("name: ").append(getName());
+      
+      sb.append("; attributes: {");
+      boolean first = true;
+      for (Attribute attrib : getAttributes()) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(attrib);
+      }
+      sb.append("}; ");
+
+      sb.append("; initializers: {");
+      first = true;
+      for (AttributeInitializer initializer : getAttributeInitializers()) {
+         if (first)
+            first = false;
+         else
+            sb.append(", ");
+         sb.append(initializer);
+      }
+      sb.append("}");
+
+      return sb.toString();
+   }
+   
 }

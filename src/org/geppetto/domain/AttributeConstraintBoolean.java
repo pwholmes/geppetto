@@ -6,14 +6,23 @@ public class AttributeConstraintBoolean implements AttributeConstraint {
    }
    
    @Override
+   public AttributeConstraintType getType() {
+      return AttributeConstraintType.BOOLEAN;
+   }
+   
+   @Override
    public boolean violatesConstraint(Object value) {
       if (value.getClass() != Boolean.class)
          return true;
       return false;
    }
 
-   @Override
-   public AttributeConstraintType getType() {
-      return AttributeConstraintType.BOOLEAN;
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("true or false, duh");
+      
+      return sb.toString();
    }
 }

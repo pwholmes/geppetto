@@ -16,6 +16,27 @@ public class AttributeConstraintIntegerRange implements AttributeConstraint {
       this.maxValue = intList.get(1);
    }
 
+   public int getMinValue() {
+      return minValue;
+   }
+
+   public void setMinValue(int minValue) {
+      this.minValue = minValue;
+   }
+
+   public int getMaxValue() {
+      return maxValue;
+   }
+
+   public void setMaxValue(int maxValue) {
+      this.maxValue = maxValue;
+   }
+
+   @Override
+   public AttributeConstraintType getType() {
+      return AttributeConstraintType.INT_RANGE;
+   }
+   
    @Override
    public boolean violatesConstraint(Object value) {
       if (value.getClass() != Integer.class)
@@ -23,8 +44,13 @@ public class AttributeConstraintIntegerRange implements AttributeConstraint {
       return ((Integer)value < minValue || (Integer)value > maxValue);
    }
 
-   @Override
-   public AttributeConstraintType getType() {
-      return AttributeConstraintType.INT_RANGE;
-   }
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+
+      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("minValue: ").append(getMinValue());
+      sb.append("; maxValue: ").append(getMaxValue());
+      
+      return sb.toString();
+   }   
 }
