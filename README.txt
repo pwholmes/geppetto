@@ -1,3 +1,5 @@
+add new line
+
 This project has an Ant build.xml that uses Eclipse's build-in Ant builder.
 It's kind of a half-measure: halfway between only using Eclipse's built-in builder,
 and only using Ant.  It would be more portable and generic to use an external copy 
