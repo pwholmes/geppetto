@@ -1,3 +1,5 @@
 property mood(string m {"happy", "sad"});
-entity bob {mood(m="happy")};
-rule true -> end;
+property age(int n);
+entity bob {mood(m="happy"), age(n=35)};
+entity alice {mood(m="sad"), age(n=22)};
+rule true -> if ( true ) x = y else x = 4;
