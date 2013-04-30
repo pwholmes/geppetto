@@ -24,10 +24,23 @@
   import org.geppetto.domain.Value;
   import org.geppetto.domain.Variable;
   import org.geppetto.domain.VariableType;
+  import org.geppetto.domain.expression.AssignmentExpression;
+  import org.geppetto.domain.expression.BinaryExpression;
+  import org.geppetto.domain.expression.BooleanExpression;
+  import org.geppetto.domain.expression.Expression;
+  import org.geppetto.domain.expression.FunctionExpression;
+  import org.geppetto.domain.expression.Operator;
+  import org.geppetto.domain.expression.PrimaryExpression;
+  import org.geppetto.domain.expression.StructureExpression;
+  import org.geppetto.domain.expression.UnaryExpression;
+  import org.geppetto.domain.statement.EndStatement;
+  import org.geppetto.domain.statement.ExpressionStatement;
+  import org.geppetto.domain.statement.IterationStatement;
+  import org.geppetto.domain.statement.SelectionStatement;
+  import org.geppetto.domain.statement.Statement;
   import org.geppetto.parser.Tree;
   import org.geppetto.parser.TreeNode;
   import org.geppetto.parser.TreeNodeType;
-  import org.geppetto.expression.*;
 %}
 
 /* Symbols */
@@ -236,128 +249,147 @@ ruleDeclarationList:
     ;
     
 rule:
-    RULE condition '-' '>' behavior ';'        { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
+    RULE condition '-' '>' behavior ';'             { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
     ;
     
 condition:
-    booleanExpression      { $$.obj = new Condition(); }
+    booleanExpression                               { $$.obj = new Condition((BooleanExpression) $1.obj); }
     ;
 
 behavior:
-    statementList            { $$.obj = new Behavior(); }
+    statement                                       { $$.obj = new Behavior((Statement) $1.obj); }
     ;
 
-statementList:
-	statement		{ $$.obj = new StatementList( (Statement) $1.obj); }
-	| statementList statement    { $$.obj = new StatementList((StatementList)$1.obj, (Statement)$2.obj); }
-	;
-	
 statement:
-	expressionStatement     { $$.obj = new Statement((ExpressionStatement)$1.obj); }
-	| compoundStatement	{ $$.obj = new Statement((CompoundStatement)$1.obj); }
-	| selectionStatement	{ $$.obj = new Statement((SelectionStatement)$1.obj); }
-	| iterationStatement	{ $$.obj = new Statement((IterationStatement)$1.obj); }
-	| endStatement		{ $$.obj = new Statement((EndStatement)$1.obj); }
-	/*| declaration		{ $$.obj = new Statement((Declaration)$1.obj); } -> check if is in grammar*/
+	expressionStatement                             { $$.obj = $1.obj; }
+	| compoundStatement	                            { $$.obj = $1.obj; }
+	| selectionStatement	                        { $$.obj = $1.obj; }
+	| iterationStatement	                        { $$.obj = $1.obj; }
+	| endStatement		                            { $$.obj = $1.obj; }
+	/*| declaration		                            { $$.obj = $1.obj; } -> check if is in grammar*/
 	;
 	
 expressionStatement:
-	expression               { $$.obj = new ExpressionStatement((Expression) $1.obj); }
+	expression ';'                                  { $$.obj = new ExpressionStatement((Expression) $1.obj); }
+	| ';'
 	;
 	
 expression:
-	assignmentExpression     { $$.obj = new Expression((AssignmentExpression) $1.obj); }
+	assignmentExpression                            { $$.obj = $1.obj; }
 	;
-	
+
 assignmentExpression:
-	logicalOrExpression       { $$.obj = new AssignmentExpression((LogicalOrExpression) $1.obj); }
-	| unaryExpression '=' assignmentExpression {$$.obj = new AssignmentExpression( (UnaryExpression) $1.obj, true, (AssignmentExpression) $3.obj); }
+	booleanExpression                               { $$.obj = $1.obj; }
+	| unaryExpression '=' assignmentExpression      { $$.obj = new AssignmentExpression((Expression) $1.obj, (Expression) $3.obj); }
 	;
+
+booleanExpression:
+    logicalOrExpression                             { $$.obj = $1.obj; }
+    ;
 	
 logicalOrExpression:
-	logicalAndExpression       { $$.obj = new LogicalOrExpression((LogicalAndExpression) $1.obj); }
-	| logicalOrExpression "||" logicalAndExpression { $$.obj = new LogicalOrExpression( (LogicalOrExpression) $1.obj, true, (LogicalAndExpression) $3.obj); }
+	logicalAndExpression                            { $$.obj = $1.obj; }
+	| logicalOrExpression "||" logicalAndExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LOGICAL_OR, (Expression) $3.obj); }
 	;
 
 logicalAndExpression:
-	equalityExpression           { $$.obj = new LogicalAndExpression((EqualityExpression)$1.obj); }
-	| logicalAndExpression "&&" equalityExpression  { $$.obj = new LogicalAndExpression( (LogicalAndExpression) $1.obj, true, (EqualityExpression)$3.obj  ); }
+	equalityExpression                              { $$.obj = $1.obj; }
+	| logicalAndExpression "&&" equalityExpression  { $$.obj = new BinaryExpression( (Expression) $1.obj,  Operator.LOGICAL_AND, (Expression) $3.obj); }
 	;
 	
 equalityExpression:
-	relationalExpression         { $$.obj = new EqualityExpression((RelationalExpression)$1.obj); }
-	| equalityExpression "==" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.EQUALTO, (RelationalExpression) $3.obj);}
-	| equalityExpression "!=" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.NOT_EQUALTO, (RelationalExpression) $3.obj);}
+	relationalExpression                            { $$.obj = $1.obj; }
+	| equalityExpression "==" relationalExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.EQUAL_TO, (Expression) $3.obj); }
+	| equalityExpression "!=" relationalExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.NOT_EQUAL_TO, (Expression) $3.obj); }
 	;	
 
 relationalExpression:
-	additiveExpression            { $$.obj = new RelationalExpression((AdditiveExpression)$1.obj); }
-	| relationalExpression '>' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN, (AdditiveExpression)$3.obj);}
-	| relationalExpression '<' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN, (AdditiveExpression)$3.obj);}
-	| relationalExpression ">=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN_OR_EQUAL, (AdditiveExpression)$3.obj);}
-	| relationalExpression "<=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN_OR_EQUAL, (AdditiveExpression)$3.obj);}
+	additiveExpression                              { $$.obj = $1.obj; }
+	| relationalExpression '>' additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.GREATER_THAN, (Expression) $3.obj); }
+	| relationalExpression '<' additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LESS_THAN, (Expression) $3.obj); }
+	| relationalExpression ">=" additiveExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.GREATER_THAN_OR_EQUAL, (Expression) $3.obj); }
+	| relationalExpression "<=" additiveExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LESS_THAN_OR_EQUAL, (Expression) $3.obj); }
 	;
 	
 additiveExpression:
-	multiplicativeExpression          { $$.obj = new AdditiveExpression((MultiplicativeExpression)$1.obj); }
-	| additiveExpression '+' multiplicativeExpression {$$.obj = new AdditiveExpression((AdditiveExpression)$1.obj, AdditiveOperator.PLUS, (MultiplicativeExpression)$3.obj);}
-	| additiveExpression '-' multiplicativeExpression {$$.obj = new AdditiveExpression((AdditiveExpression)$1.obj, AdditiveOperator.MINUS, (MultiplicativeExpression)$3.obj);}
+	multiplicativeExpression                        { $$.obj = $1.obj; }
+	| additiveExpression '+' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.PLUS, (Expression) $3.obj); }
+	| additiveExpression '-' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.MINUS, (Expression) $3.obj); }
 	;
 	
 multiplicativeExpression:
-	unaryExpression                    { $$.obj = new MultiplicativeExpression((UnaryExpression)$1.obj); }
-	| multiplicativeExpression '*' unaryExpression {$$.obj = new MultiplicativeExpression((MultiplicativeExpression)$1.obj, MultiplicativeOperator.MULT, (UnaryExpression)$3.obj);}
-	| multiplicativeExpression '/' unaryExpression {$$.obj = new MultiplicativeExpression((MultiplicativeExpression)$1.obj, MultiplicativeOperator.DIV, (UnaryExpression)$3.obj);}
-	| multiplicativeExpression '%' unaryExpression {$$.obj = new MultiplicativeExpression((MultiplicativeExpression)$1.obj, MultiplicativeOperator.MOD, (UnaryExpression)$3.obj);}	
+	unaryExpression                                 { $$.obj = $1.obj; }
+	| multiplicativeExpression '*' unaryExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.MULTIPLY, (Expression) $3.obj); }
+	| multiplicativeExpression '/' unaryExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.DIVIDE, (Expression) $3.obj); }
+	| multiplicativeExpression '%' unaryExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.MODULUS, (Expression) $3.obj); }	
 	;
 	
 unaryExpression:
-	functionExpression                { $$.obj = new UnaryExpression((FunctionExpression)$1.obj); }
-	| '+' expression {$$.obj = new UnaryExpression(UnaryOperator.UNARY_PLUS ,(Expression)$1.obj);}
-	| '-' expression {$$.obj = new UnaryExpression(UnaryOperator.UNARY_MINUS ,(Expression)$1.obj);}
-	| '!' expression {$$.obj = new UnaryExpression(UnaryOperator.NOT ,(Expression)$1.obj);}
+	functionExpression                              { $$.obj = $1.obj; }
+	| '+' unaryExpression                           { $$.obj = new UnaryExpression(Operator.UNARY_PLUS, (Expression) $1.obj); }
+	| '-' unaryExpression                           { $$.obj = new UnaryExpression(Operator.UNARY_MINUS, (Expression) $1.obj); }
+	| '!' unaryExpression                           { $$.obj = new UnaryExpression(Operator.UNARY_NEGATION, (Expression) $1.obj); }
+	;
+
+functionExpression:
+	structureExpression                             { $$.obj = $1.obj; }
+	| identifier '(' ')'                            { $$.obj = new FunctionExpression(symbolTable.get($1.ival), null); }
+	| identifier '(' argumentExpressionList ')'     { $$.obj = new FunctionExpression(symbolTable.get($1.ival), (ArrayList<Expression>) $1.obj); }
 	;
 
 structureExpression:
-	identifier '.' identifier {$$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival) );}
-	| identifier '.' identifier '.' identifier {$$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival) );}
-	;
-	
-functionExpression:
-	primaryExpression                 { $$.obj = new FunctionExpression((PrimaryExpression)$1.obj); }
-	| functionExpression '(' ')'   { $$.obj = new FunctionExpression((FunctionExpression)$1.obj); }
-	| functionExpression '(' argumentExpressionList ')'   { $$.obj = new FunctionExpression((ArgumentExpressionList)$3.obj); }
+    primaryExpression                               { $$.obj = $1.obj; }
+    identifier '.' identifier                       { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
+    | identifier '.' identifier '.' identifier      { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
+    ;
+    
+argumentExpressionList:
+	argumentExpression                              { ArrayList<Expression> argList = new ArrayList<Expression>(); 
+	                                                  argList.add((Expression) $1.obj); 
+	                                                  $$.obj = argList; }
+	| argumentExpressionList ',' argumentExpression { ArrayList<Expression> argList = (ArrayList<Expression>) $1.obj; 
+	                                                  argList.add((Expression) $3.obj); 
+	                                                  $$.obj = argList; }
 	;
 
-argumentExpressionList:
-	logicalOrExpression   { $$.obj = new ArgumentExpressionList((LogicalOrExpression)$1.obj); }
-	| argumentExpressionList logicalOrExpression { $$.obj = new ArgumentExpressionList((ArgumentExpressionList) $1.obj, (LogicalOrExpression)$2.obj); }
-	;
+/* In K&R an argumentExpression is defined as an assignmentExpression, but that's because in C an expression can be a comma-delimited 
+   list of assignmentExpressions.  Geppetto doesn't support that syntax, so in our grammar expressions and assignmentExpressions are  
+   synonymous.  Therefore argumentExpressions can just be expressions, which IMO is more intuitive anyway. */
+argumentExpression:
+    expression                                      { $$.obj = $1.obj; }
+    ;
 
 primaryExpression:
-	identifier                          { $$.obj = new PrimaryExpression(symbolTable.get($1.ival)); }
-	| INTEGER_LITERAL                   { $$.obj = new PrimaryExpression($1.ival); }
-	| FLOAT_LITERAL			    { $$.obj = new PrimaryExpression($1.dval); }
-	| booleanExpression   { $$.obj = new PrimaryExpression( (BooleanExpression) $1.obj);  }
-	| '(' expression ')'                    { $$.obj = new PrimaryExpression((Expression)$1.obj); }
-	;
+    identifier                                      { $$.obj = new PrimaryExpression(symbolTable.get($1.ival)); }
+    | literalValue                                  { $$.obj = new PrimaryExpression((Value) $1.obj); }
+    | '(' expression ')'                            { $$.obj = $2.obj; }
+    ;
 
 compoundStatement:
-	'{' statementList '}'		{ $$.obj = new CompoundStatement( (StatementList)$2.obj) ;}
+	'{' statementList '}'		                    { $$.obj = $2.obj; }
 	;
+	
+statementList:
+    statement                                       { ArrayList<Statement> statementList = new ArrayList<Statement>(); 
+                                                      statementList.add((Statement) $1.obj); 
+                                                      $$.obj = statementList; }
+    | statementList statement                       { ArrayList<Statement> statementList = (ArrayList<Statement>) $1.obj; 
+                                                      statementList.add((Statement) $2.obj); 
+                                                      $$.obj = statementList; }
+    ;
 
 selectionStatement:
-	IF '(' booleanExpression ')' statement  { $$.obj = new SelectionStatement( (BooleanExpression)$3.obj, (Statement)$5.obj); }
-	| IF '(' booleanExpression ')' statement ELSE statement { $$.obj = new SelectionStatement( (BooleanExpression)$3.obj, (Statement)$5.obj, true, (Statement)$7.obj); }
+	IF '(' booleanExpression ')' statement          { $$.obj = new SelectionStatement( (BooleanExpression) $3.obj, (Statement) $5.obj); }
+	| IF '(' booleanExpression ')' statement ELSE statement { $$.obj = new SelectionStatement( (BooleanExpression) $3.obj, (Statement) $5.obj, (Statement) $7.obj); }
 	;
 
 iterationStatement:
-	WHILE '(' booleanExpression ')' statement { $$.obj = new IterationStatement((BooleanExpression)$3.obj, (Statement)$5.obj); }
-	| FOREACH identifier statement		{ $$.obj = new IterationStatement((Identifier)$2.obj, (Statement)$3.obj); }
+	WHILE '(' booleanExpression ')' statement       { $$.obj = new IterationStatement((BooleanExpression) $3.obj, (Statement) $5.obj); }
+	/* | FOREACH identifier statement		            { $$.obj = new IterationStatement((Identifier) $2.obj, (Statement) $3.obj); }  let's hold off on this one for now, it's going to be very difficult to implement*/
 	;
 
 endStatement:
-	END						{ $$.obj = new EndStatement(); }
+	END						                        { $$.obj = new EndStatement(); }
 	;
 
 identifier:
@@ -372,10 +404,6 @@ typeSpecifier:
     | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
     ;
 
-booleanExpression:
-    TRUE                                            { $$.ival = 1; }
-    | FALSE                                         { $$.ival = 0; }
-    ;
 
 %%
 
