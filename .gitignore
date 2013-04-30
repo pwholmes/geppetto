@@ -167,6 +167,6 @@ pip-log.txt
 ## Custom
 #############
 
-*.java~
+*.*~
 y.output
 yacc.*
