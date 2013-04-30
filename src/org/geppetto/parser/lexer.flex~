@@ -72,7 +72,6 @@ rule                    { return Parser.RULE; }
 string                  { return Parser.STRING; }
 true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }
-foreach                 { return Parser.FOREACH; }
 if                   	{ return Parser.IF; }
 else                    { return Parser.ELSE; }
 

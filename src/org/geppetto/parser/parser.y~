@@ -27,7 +27,6 @@
   import org.geppetto.parser.Tree;
   import org.geppetto.parser.TreeNode;
   import org.geppetto.parser.TreeNodeType;
-  import org.geppetto.expression.*;
 %}
 
 /* Symbols */
@@ -48,7 +47,7 @@
 /* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
    new keywords when you have to define a token ID for each one.  But IMO that's a trifling
    inconvenience, and it makes the grammar so much easier to read. */
-%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RULE STRING TRUE WHILE IF FOREACH
+%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RULE STRING TRUE WHILE
 
 %%
 
@@ -244,12 +243,12 @@ condition:
     ;
 
 behavior:
-    statementList            { $$.obj = new Behavior(); }
+    statementList            { $$.obj = new Behavior((StatementList)$1.obj); }
     ;
 
 statementList:
 	statement		{ $$.obj = new StatementList( (Statement) $1.obj); }
-	| statementList statement    { $$.obj = new StatementList((StatementList)$1.obj, (Statement)$2.obj); }
+	statementList statement    { $$.obj = new StatementList((StatementList)$1.obj, (Statement)$2.obj); }
 	;
 	
 statement:
@@ -258,7 +257,7 @@ statement:
 	| selectionStatement	{ $$.obj = new Statement((SelectionStatement)$1.obj); }
 	| iterationStatement	{ $$.obj = new Statement((IterationStatement)$1.obj); }
 	| endStatement		{ $$.obj = new Statement((EndStatement)$1.obj); }
-	/*| declaration		{ $$.obj = new Statement((Declaration)$1.obj); } -> check if is in grammar*/
+	| declaration		{ $$.obj = new Statement((Declaration)$1.obj); }
 	;
 	
 expressionStatement:
@@ -271,7 +270,7 @@ expression:
 	
 assignmentExpression:
 	logicalOrExpression       { $$.obj = new AssignmentExpression((LogicalOrExpression) $1.obj); }
-	| unaryExpression '=' assignmentExpression {$$.obj = new AssignmentExpression( (UnaryExpression) $1.obj, true, (AssignmentExpression) $3.obj); }
+	| unaryExpression '=' assignmentExpression {$$.obj = new AssignmentExpresion( (UnaryExpression) $1.obj, true, (AssignmentExpression) $3.obj); }
 	;
 	
 logicalOrExpression:
@@ -286,16 +285,16 @@ logicalAndExpression:
 	
 equalityExpression:
 	relationalExpression         { $$.obj = new EqualityExpression((RelationalExpression)$1.obj); }
-	| equalityExpression "==" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.EQUALTO, (RelationalExpression) $3.obj);}
-	| equalityExpression "!=" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.NOT_EQUALTO, (RelationalExpression) $3.obj);}
+	| equalityExpression "==" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.EQUALS, (RelationalExpression) $3.obj);}
+	| equalityExpression "!=" relationalExpression { $$.obj = new EqualityExpression( (EqualityExpression)$1.obj, EqualityOperator.NOTEQUALS, (RelationalExpression) $3.obj);}
 	;	
 
 relationalExpression:
 	additiveExpression            { $$.obj = new RelationalExpression((AdditiveExpression)$1.obj); }
-	| relationalExpression '>' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN, (AdditiveExpression)$3.obj);}
-	| relationalExpression '<' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN, (AdditiveExpression)$3.obj);}
-	| relationalExpression ">=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN_OR_EQUAL, (AdditiveExpression)$3.obj);}
-	| relationalExpression "<=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN_OR_EQUAL, (AdditiveExpression)$3.obj);}
+	| relationalExpression '>' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN, (AdditveExpression)$3.obj);}
+	| relationalExpression '<' additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN, (AdditveExpression)$3.obj);}
+	| relationalExpression ">=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.GREATER_THAN_OR_EQUAL, (AdditveExpression)$3.obj);}
+	| relationalExpression "<=" additiveExpression {$$.obj = new RelationalExpression( (RelationalExpression)$1.obj, RelationalOperator.LESS_THAN_OR_EQUAL, (AdditveExpression)$3.obj);}
 	;
 	
 additiveExpression:
@@ -326,20 +325,13 @@ structureExpression:
 functionExpression:
 	primaryExpression                 { $$.obj = new FunctionExpression((PrimaryExpression)$1.obj); }
 	| functionExpression '(' ')'   { $$.obj = new FunctionExpression((FunctionExpression)$1.obj); }
-	| functionExpression '(' argumentExpressionList ')'   { $$.obj = new FunctionExpression((ArgumentExpressionList)$3.obj); }
-	;
-
-argumentExpressionList:
-	logicalOrExpression   { $$.obj = new ArgumentExpressionList((LogicalOrExpression)$1.obj); }
-	| argumentExpressionList logicalOrExpression { $$.obj = new ArgumentExpressionList((ArgumentExpressionList) $1.obj, (LogicalOrExpression)$2.obj); }
 	;
 
 primaryExpression:
 	identifier                          { $$.obj = new PrimaryExpression(symbolTable.get($1.ival)); }
 	| INTEGER_LITERAL                   { $$.obj = new PrimaryExpression($1.ival); }
-	| FLOAT_LITERAL			    { $$.obj = new PrimaryExpression($1.dval); }
-	| booleanExpression   { $$.obj = new PrimaryExpression( (BooleanExpression) $1.obj);  }
-	| '(' expression ')'                    { $$.obj = new PrimaryExpression((Expression)$1.obj); }
+	| FLOAT_LITERAL			    { $$.obj = new PrimaryExpression($1.daval); }
+	| ( expression )                    { $$.obj = new PrimaryExpression((Expression)$1.obj); }
 	;
 
 compoundStatement:
@@ -347,13 +339,13 @@ compoundStatement:
 	;
 
 selectionStatement:
-	IF '(' booleanExpression ')' statement  { $$.obj = new SelectionStatement( (BooleanExpression)$3.obj, (Statement)$5.obj); }
-	| IF '(' booleanExpression ')' statement ELSE statement { $$.obj = new SelectionStatement( (BooleanExpression)$3.obj, (Statement)$5.obj, true, (Statement)$7.obj); }
+	IF '(' booleanExpression ')' statement  { $$.obj = new SelectionStatment( (BooleanExpression)$3.obj, (Statement)$5.obj); }
+	| IF '(' booleanExpression ')' statement ELSE statement { $$.obj = new SelectionStatment( (BooleanExpression)$3.obj, (Statement)$5.obj), (Statement)$7.obj); }
 	;
 
 iterationStatement:
 	WHILE '(' booleanExpression ')' statement { $$.obj = new IterationStatement((BooleanExpression)$3.obj, (Statement)$5.obj); }
-	| FOREACH identifier statement		{ $$.obj = new IterationStatement((Identifier)$2.obj, (Statement)$3.obj); }
+	FOREACH identifier statement		{ $$.obj = new IterationStatement((Identifier)$2.obj, (Statement)$3.obj); }
 	;
 
 endStatement:

@@ -21,4 +21,6 @@ public final static short RULE=274;
 public final static short STRING=275;
 public final static short TRUE=276;
 public final static short WHILE=277;
+public final static short IF=278;
+public final static short FOREACH=279;
 }

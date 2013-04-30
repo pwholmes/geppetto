@@ -1,0 +1,3 @@
+property mood(string m {"happy", "sad"});
+entity bob {mood(m="happy")};
+rule true -> if ( true ) x = y else x = 4;
