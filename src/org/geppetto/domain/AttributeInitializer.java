@@ -28,9 +28,10 @@ public class AttributeInitializer {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
       sb.append("; initialValue: ").append(getValue());
+      sb.append("}");
       
       return sb.toString();
    }

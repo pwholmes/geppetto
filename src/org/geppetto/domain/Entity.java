@@ -33,10 +33,10 @@ public class Entity {
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
 
-      sb.append("; properties: {");
+      sb.append("; properties: (");
       boolean first = true;
       for (Property property : properties) {
          if (first)
@@ -45,7 +45,7 @@ public class Entity {
             sb.append(", ");
          sb.append(property);
       }
-      sb.append("} ");
+      sb.append(")}");
 
       return sb.toString();
    }

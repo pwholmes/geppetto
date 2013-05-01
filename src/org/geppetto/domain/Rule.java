@@ -23,9 +23,10 @@ public class Rule {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("condition: ").append(getCondition());
       sb.append("; behavior: ").append(getBehavior());
+      sb.append("}");
       
       return sb.toString();
    }

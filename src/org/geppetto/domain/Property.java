@@ -55,10 +55,10 @@ public class Property {
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
 
-      sb.append("; attributes: {");
+      sb.append("; attributes: (");
       boolean first = true;
       for (Attribute attrib : getAttributes()) {
          if (first)
@@ -67,7 +67,7 @@ public class Property {
             sb.append(", ");
          sb.append(attrib);
       }
-      sb.append("}; ");
+      sb.append(")}");
 
       return sb.toString();
    }

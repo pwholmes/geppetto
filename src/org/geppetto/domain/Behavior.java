@@ -19,8 +19,9 @@ public class Behavior {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
-      sb.append("; statement: ").append(getStatement());
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
+      sb.append("statement: ").append(getStatement());
+      sb.append("}");
       
       return sb.toString();
    }

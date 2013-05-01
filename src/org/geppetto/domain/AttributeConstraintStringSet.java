@@ -33,8 +33,8 @@ public class AttributeConstraintStringSet implements AttributeConstraint {
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append(getClass().getSimpleName()).append(": ");
-      sb.append("values: {");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
+      sb.append("values: (");
       boolean first = true;
       for (String value : values) {
          if (first)
@@ -43,7 +43,7 @@ public class AttributeConstraintStringSet implements AttributeConstraint {
             sb.append(", ");
          sb.append(value);
       }
-      sb.append("} ");
+      sb.append(")}");
       
       return sb.toString();
    }      

@@ -42,10 +42,10 @@ public class PropertyDefinition {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
       
-      sb.append("; attributes: {");
+      sb.append("; attributes: (");
       boolean first = true;
       for (AttributeDefinition attribDef : getAttributeDefinitions()) {
          if (first)
@@ -54,7 +54,7 @@ public class PropertyDefinition {
             sb.append(", ");
          sb.append(attribDef);
       }
-      sb.append("}; ");
+      sb.append(")}");
 
       return sb.toString();
    }

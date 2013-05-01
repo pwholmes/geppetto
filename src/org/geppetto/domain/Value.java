@@ -1,5 +1,7 @@
 package org.geppetto.domain;
 
+import org.geppetto.domain.expression.VariableType;
+
 public class Value {
    VariableType type;
    int iValue;
@@ -70,12 +72,13 @@ public class Value {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getType());
       sb.append("; iValue: ").append(getiValue());
       sb.append("; fValue: ").append(getfValue());
       sb.append("; sValue: ").append(getsValue());
       sb.append("; bValue: ").append(getbValue());
+      sb.append("}");
       
       return sb.toString();
    }

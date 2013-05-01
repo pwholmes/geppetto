@@ -14,7 +14,7 @@ public class Geppetto {
          GeppettoProgram program = yyparser.parse(new FileReader(args[0]));
 
          /* Print entire program state to console */
-         System.out.println(program.toString());
+         System.out.println(program);
       } else {
          System.err.println("Missing argument: an input file is required.");
       }

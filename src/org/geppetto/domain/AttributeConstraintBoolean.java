@@ -20,8 +20,9 @@ public class AttributeConstraintBoolean implements AttributeConstraint {
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("true or false, duh");
+      sb.append("}");
       
       return sb.toString();
    }

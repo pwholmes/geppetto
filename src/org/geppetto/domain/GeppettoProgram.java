@@ -1,6 +1,7 @@
 package org.geppetto.domain;
 
 import java.util.ArrayList;
+import org.geppetto.domain.expression.Variable;
 
 public class GeppettoProgram {
    private ArrayList<Variable> globalVariables;
@@ -44,9 +45,9 @@ public class GeppettoProgram {
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       
-      sb.append("globalVariables: {");
+      sb.append("globalVariables: (");
       boolean first = true;
       for (Variable variable : globalVariables) {
          if (first)
@@ -55,9 +56,9 @@ public class GeppettoProgram {
             sb.append(", ");
          sb.append(variable);
       }
-      sb.append("}\n");
+      sb.append(")\n");
       
-      sb.append("propertyDefinitions: {");
+      sb.append("propertyDefinitions: (");
       first = true;
       for (PropertyDefinition propertyDef : propertyDefinitions) {
          if (first)
@@ -66,9 +67,9 @@ public class GeppettoProgram {
             sb.append(", ");
          sb.append(propertyDef);
       }
-      sb.append("}\n");
+      sb.append(")\n");
       
-      sb.append("entities: {");
+      sb.append("entities: (");
       first = true;
       for (Entity entity : entities) {
          if (first)
@@ -77,9 +78,9 @@ public class GeppettoProgram {
             sb.append(", ");
          sb.append(entity);
       }
-      sb.append("}\n");
+      sb.append(")\n");
       
-      sb.append("rules: {");
+      sb.append("rules: (");
       first = true;
       for (Rule rule : rules) {
          if (first)
@@ -88,7 +89,9 @@ public class GeppettoProgram {
             sb.append(", ");
          sb.append(rule);
       }
-      sb.append("}\n");
+      sb.append(")\n");
+      
+      sb.append("}");
       
       return sb.toString();
    }

@@ -19,6 +19,26 @@ public class Interpreter {
       this.maxCycles = maxCycles;
    }
    
+   public ArrayList<Rule> getRules() {
+      return rules;
+   }
+
+   public ArrayList<Entity> getEntities() {
+      return entities;
+   }
+
+   public ArrayList<Property> getProperties() {
+      return properties;
+   }
+
+   public int getMaxCycles() {
+      return maxCycles;
+   }
+
+   public int getCycles() {
+      return cycles;
+   }
+
    public void simulate() {
       for (Rule rule : rules) {
          processRule(rule);

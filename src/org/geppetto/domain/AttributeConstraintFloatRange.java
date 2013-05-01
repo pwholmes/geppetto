@@ -47,9 +47,10 @@ public class AttributeConstraintFloatRange implements AttributeConstraint {
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
-      sb.append(getClass().getSimpleName()).append(": ");
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("minValue: ").append(getMinValue());
       sb.append("; maxValue: ").append(getMaxValue());
+      sb.append("}");
       
       return sb.toString();
    }
