@@ -208,7 +208,7 @@ integerList:
 integerRange:
     INTEGER_LITERAL '-' INTEGER_LITERAL             { ArrayList<Integer> intList = new ArrayList<Integer>();
                                                       intList.add($1.ival);
-                                                      intList.add($2.ival);
+                                                      intList.add($3.ival);
                                                       $$.obj = intList; }
     ;
     

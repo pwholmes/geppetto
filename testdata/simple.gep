@@ -1,8 +1,12 @@
 int x = 2;
+
 property mood(string m {"happy", "sad"});
 property age(int n);
+property position(int x {0-100}, int y {0-100});
+
 entity bob {mood(m="happy"), age(n=35)};
 entity alice {mood(m="sad"), age(n=22)};
+
 rule x <= 5 -> end;
 
 int test(int x, string y) { end; end; } 
