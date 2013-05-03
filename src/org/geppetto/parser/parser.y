@@ -58,25 +58,10 @@
 %token IDENTIFIER
 
 /* Reserved words */
-/* From what I've read this is not the most efficient possible way to do this -- it's a pain to add
-   new keywords when you have to define a token ID for each one.  But IMO that's a trifling
-   inconvenience, and it makes the grammar so much easier to read. */
 %token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RULE STRING TRUE WHILE IF FOREACH
 
 %%
 
-/**
- * In several places we have list definitions.  Note that allowing lists to be empty introduces
- * the possibility of shift/reduce conflicts; for example, if we have two lists in a row and either
- * one can be empty, the the parser can't tell which one is which.  For now I've resolved  that by
- * simply not allowing those lists to be empty.  So for instance, the propertyDeclarationList and 
- * entityDeclarationList MUST each have at least one entry.  But I that's OK because we can't have 
- * a program without at least one of each of those things.
- */
-
-/* We probably need to add something to the end of the grammar for "program" to account for "other code"
-   not in a rule (e.g., if we define an additional function that a rule calls).  But I'm not quite sure
-   what that should be just yet... */   
 program:
     variableDeclarationList 
     propertyDefinitionList 
