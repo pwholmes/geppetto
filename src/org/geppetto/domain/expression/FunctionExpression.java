@@ -5,22 +5,22 @@ import org.geppetto.domain.Value;
 
 public class FunctionExpression implements Expression {
    private String                name;
-   private ArrayList<Expression> argumentList;
+   private ArrayList<Expression> arguments;
 
    protected FunctionExpression() {
    }
 
    public FunctionExpression(String name, ArrayList<Expression> argumentList) {
       this.name = name;
-      this.argumentList = argumentList;
+      this.arguments = argumentList;
    }
 
    public String getName() {
       return name;
    }
 
-   public ArrayList<Expression> getArgumentList() {
-      return argumentList;
+   public ArrayList<Expression> getArguments() {
+      return arguments;
    }
 
    @Override
@@ -34,16 +34,8 @@ public class FunctionExpression implements Expression {
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-      sb.append("; argumentList: (");
-      boolean first = true;
-      for (Expression expression : getArgumentList()) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(expression);
-      }
-      sb.append(")}");
+      sb.append("; arguments: ").append(getArguments());
+      sb.append("}");
       
       return sb.toString();
    }       

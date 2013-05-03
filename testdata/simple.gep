@@ -3,4 +3,6 @@ property mood(string m {"happy", "sad"});
 property age(int n);
 entity bob {mood(m="happy"), age(n=35)};
 entity alice {mood(m="sad"), age(n=22)};
-rule true -> end;
+rule x <= 5 -> end;
+
+int test(int x, string y) { end; end; } 
