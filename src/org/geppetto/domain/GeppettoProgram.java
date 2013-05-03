@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import org.geppetto.domain.expression.Variable;
 
 public class GeppettoProgram {
-   private ArrayList<Variable> globalVariables;
+   private ArrayList<Variable>           globalVariables;
    private ArrayList<PropertyDefinition> propertyDefinitions;
-   private ArrayList<Entity>   entities;
-   private ArrayList<Rule>     rules;
+   private ArrayList<Entity>             entities;
+   private ArrayList<Rule>               rules;
+   private ArrayList<FunctionDefinition> functionDefinitions;
 
    public GeppettoProgram(ArrayList<Variable> globalVariables,
-         ArrayList<PropertyDefinition> propertyDefinitions, ArrayList<Entity> entities,
-         ArrayList<Rule> rules) {
+         ArrayList<PropertyDefinition> propertyDefinitions,
+         ArrayList<Entity> entities, ArrayList<Rule> rules,
+         ArrayList<FunctionDefinition> functionDefinitions) {
       this.globalVariables = globalVariables;
       this.propertyDefinitions = propertyDefinitions;
       this.entities = entities;
       this.rules = rules;
+      this.functionDefinitions = functionDefinitions;
    }
 
    public ArrayList<Variable> getGlobalVariables() {
@@ -33,7 +36,11 @@ public class GeppettoProgram {
    public ArrayList<Rule> getRules() {
       return rules;
    }
-   
+
+   public ArrayList<FunctionDefinition> getFunctionDefinitions() {
+      return functionDefinitions;
+   }
+
    public PropertyDefinition getPropertyDefinition(String propertyName) {
       for (PropertyDefinition propertyDef : propertyDefinitions) {
          if (propertyDef.getName().equals(propertyName))
@@ -41,58 +48,19 @@ public class GeppettoProgram {
       }
       return null;
    }
-   
+
    public String toString() {
       StringBuilder sb = new StringBuilder();
-      
+
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      
-      sb.append("globalVariables: (");
-      boolean first = true;
-      for (Variable variable : globalVariables) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(variable);
-      }
-      sb.append(")\n");
-      
-      sb.append("propertyDefinitions: (");
-      first = true;
-      for (PropertyDefinition propertyDef : propertyDefinitions) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(propertyDef);
-      }
-      sb.append(")\n");
-      
-      sb.append("entities: (");
-      first = true;
-      for (Entity entity : entities) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(entity);
-      }
-      sb.append(")\n");
-      
-      sb.append("rules: (");
-      first = true;
-      for (Rule rule : rules) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(rule);
-      }
-      sb.append(")\n");
-      
+
+      sb.append("globalVariables: ").append(getGlobalVariables()).append("\n");
+      sb.append("propertyDefinitions: ").append(getPropertyDefinitions()).append("\n");
+      sb.append("entities: ").append(getEntities()).append("\n");
+      sb.append("rules: ").append(getRules()).append("\n");
+      sb.append("functionDefinitions: ").append(getFunctionDefinitions()).append("\n");
       sb.append("}");
-      
+
       return sb.toString();
    }
 }

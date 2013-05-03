@@ -5,6 +5,7 @@
   import java.util.HashSet;
   import java.util.List;
   import java.util.Set;
+  import org.geppetto.domain.ArgumentDeclaration;
   import org.geppetto.domain.AttributeConstraint;
   import org.geppetto.domain.AttributeConstraintFloatRange;
   import org.geppetto.domain.AttributeConstraintFloatSet;
@@ -16,6 +17,7 @@
   import org.geppetto.domain.Behavior;
   import org.geppetto.domain.Condition;
   import org.geppetto.domain.Entity;
+  import org.geppetto.domain.FunctionDefinition;
   import org.geppetto.domain.GeppettoProgram;
   import org.geppetto.domain.Property;
   import org.geppetto.domain.PropertyDefinition;
@@ -32,15 +34,17 @@
   import org.geppetto.domain.expression.UnaryExpression;
   import org.geppetto.domain.expression.Variable;
   import org.geppetto.domain.expression.VariableType;
+  import org.geppetto.domain.statement.CompoundStatement;
   import org.geppetto.domain.statement.EndStatement;
   import org.geppetto.domain.statement.ExpressionStatement;
   import org.geppetto.domain.statement.IterationStatement;
+  import org.geppetto.domain.statement.NullStatement;
   import org.geppetto.domain.statement.SelectionStatement;
   import org.geppetto.domain.statement.Statement;
 %}
 
 /* Symbols */
-%token NEWLINE INFERS
+%token NEWLINE INFERS EQUAL_TO NOT_EQUAL_TO GTE GREATER_THAN_OR_EQUAL_TO LTE LESS_THAN_OR_EQUAL_TO LOGICAL_AND LOGICAL_OR 
  
 /* Literal data types */
 /* The suffix _LITERAL is added to differentiate these token IDs from the token IDs used for  
@@ -74,16 +78,20 @@
    not in a rule (e.g., if we define an additional function that a rule calls).  But I'm not quite sure
    what that should be just yet... */   
 program:
-    variableDeclarationList propertyDefinitionList entityDeclarationList ruleDeclarationList  {
-                                                      ArrayList<Variable> globalVariables = (ArrayList<Variable>) $1.obj;
+    variableDeclarationList 
+    propertyDefinitionList 
+    entityDeclarationList 
+    ruleDeclarationList
+    functionDefinitionList                          { ArrayList<Variable> globalVariables = (ArrayList<Variable>) $1.obj;
                                                       ArrayList<PropertyDefinition> propertyDefinitions = (ArrayList<PropertyDefinition>) $2.obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) $3.obj;
-                                                      ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj; 
-                                                      geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules); }
+                                                      ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj;
+                                                      ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) $5.obj;  
+                                                      geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules, functions); }
     ; 
 
 variableDeclarationList:
-    variableDeclarationList variableDeclaration;    { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
+    variableDeclarationList variableDeclaration     { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
                                                       if (variables == null)
                                                          variables = new ArrayList<Variable>();
                                                       variables.add((Variable) $2.obj); 
@@ -124,6 +132,65 @@ attributeDefinition:
     | typeSpecifier identifier '{' attributeConstraint '}'  { AttributeDefinition attributeDef = new AttributeDefinition((VariableType)$1.obj, symbolTable.get($2.ival));
                                                       attributeDef.setConstraint((AttributeConstraint) $4.obj); 
                                                       $$.obj = attributeDef; }
+    ;
+
+entityDeclarationList:
+    entityDeclaration                               { ArrayList<Entity> entities = new ArrayList<Entity>();  
+                                                      entities.add((Entity) $1.obj); 
+                                                      $$.obj = entities; }
+    | entityDeclarationList entityDeclaration       { ArrayList<Entity> entities = (ArrayList<Entity>) $1.obj;  
+                                                      entities.add((Entity) $2.obj); 
+                                                      $$.obj = entities; }
+    ;
+
+entityDeclaration:
+    ENTITY identifier '{' propertyList '}' ';'      { Entity entity = new Entity(symbolTable.get($2.ival));
+                                                      entity.addProperties((List<Property>) $4.obj);
+                                                      $$.obj = entity; }
+    ;    
+
+functionDefinitionList:
+    functionDefinitionList functionDefinition       { ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) $1.obj;
+                                                      if (functions == null)
+                                                          functions = new ArrayList<FunctionDefinition>();
+                                                      functions.add((FunctionDefinition) $2.obj); 
+                                                      $$.obj = functions; }
+    |                                               { $$.obj = new ArrayList<FunctionDefinition>(); }
+    ; 
+
+functionDefinition:
+    typeSpecifier identifier '(' argumentDeclarationList ')' compoundStatement
+                                                    { String name = symbolTable.get($2.ival);
+                                                      VariableType type = (VariableType) $1.obj;
+                                                      ArrayList<ArgumentDeclaration> arguments = (ArrayList<ArgumentDeclaration>) $4.obj;
+                                                      CompoundStatement compoundStatement = (CompoundStatement) $6.obj; 
+                                                      $$.obj = new FunctionDefinition(name, type, arguments, compoundStatement); }
+    ;
+
+argumentDeclarationList:
+    argumentDeclaration                             { ArrayList<ArgumentDeclaration> arguments = new ArrayList<ArgumentDeclaration>();
+                                                      arguments.add((ArgumentDeclaration) $1.obj); 
+                                                      $$.obj = arguments; }
+    | argumentDeclarationList ',' argumentDeclaration  { ArrayList<ArgumentDeclaration> arguments = (ArrayList<ArgumentDeclaration>) $1.obj;
+                                                      arguments.add((ArgumentDeclaration) $3.obj); 
+                                                      $$.obj = arguments; }
+    |                                               { $$.obj = new ArrayList<ArgumentDeclaration>(); } 
+    ; 
+
+argumentDeclaration:
+    typeSpecifier identifier                        { $$.obj = new ArgumentDeclaration(symbolTable.get($2.ival), (VariableType) $1.obj); }
+
+
+identifier:
+    IDENTIFIER                                      { debug("** IDENTIFIER: ID: " + $1.ival + "; symb table entry: " + symbolTable.get($1.ival)); 
+                                                      $$.ival = $1.ival; } /* remember that this is an index into the symbol table, not the string itself */ 
+    ;
+    
+typeSpecifier:
+    INT                                             { $$.obj = VariableType.INT; }
+    | FLOAT                                         { $$.obj = VariableType.FLOAT; }
+    | STRING                                        { $$.obj = VariableType.STRING; }
+    | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
     ;
 
 attributeConstraint:
@@ -175,21 +242,6 @@ floatRange:
                                                       floatList.add(new Float($2.dval));
                                                       $$.obj = floatList; }
     ;
-
-entityDeclarationList:
-    entityDeclaration                               { ArrayList<Entity> entities = new ArrayList<Entity>();  
-                                                      entities.add((Entity) $1.obj); 
-                                                      $$.obj = entities; }
-    | entityDeclarationList entityDeclaration       { ArrayList<Entity> entities = (ArrayList<Entity>) $1.obj;  
-                                                      entities.add((Entity) $2.obj); 
-                                                      $$.obj = entities; }
-    ;
-
-entityDeclaration:
-    ENTITY identifier '{' propertyList '}' ';'      { Entity entity = new Entity(symbolTable.get($2.ival));
-                                                      entity.addProperties((List<Property>) $4.obj);
-                                                      $$.obj = entity; }
-    ;    
 
 propertyList:
     property                                        { ArrayList<Property> properties = new ArrayList<Property>();
@@ -245,7 +297,7 @@ ruleDeclarationList:
     ;
     
 rule:
-    RULE condition INFERS behavior ';'              { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
+    RULE condition INFERS behavior                  { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
     ;
     
 condition:
@@ -265,12 +317,11 @@ statement:
 	| selectionStatement	                        { $$.obj = $1.obj; }
 	| iterationStatement	                        { $$.obj = $1.obj; }
 	| endStatement		                            { $$.obj = $1.obj; }
-	/*| declaration		                            { $$.obj = $1.obj; } -> check if is in grammar*/
 	;
 	
 expressionStatement:
 	expression ';'                                  { $$.obj = new ExpressionStatement((Expression) $1.obj); }
-	| ';'
+	| ';'                                           { $$.obj = new NullStatement(); }
 	;
 	
 expression:
@@ -288,26 +339,26 @@ booleanExpression:
 	
 logicalOrExpression:
 	logicalAndExpression                            { $$.obj = $1.obj; }
-	| logicalOrExpression "||" logicalAndExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LOGICAL_OR, (Expression) $3.obj); }
+	| logicalOrExpression LOGICAL_OR logicalAndExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LOGICAL_OR, (Expression) $3.obj); }
 	;
 
 logicalAndExpression:
 	equalityExpression                              { $$.obj = $1.obj; }
-	| logicalAndExpression "&&" equalityExpression  { $$.obj = new BinaryExpression( (Expression) $1.obj,  Operator.LOGICAL_AND, (Expression) $3.obj); }
+	| logicalAndExpression LOGICAL_AND equalityExpression  { $$.obj = new BinaryExpression( (Expression) $1.obj,  Operator.LOGICAL_AND, (Expression) $3.obj); }
 	;
 	
 equalityExpression:
 	relationalExpression                            { $$.obj = $1.obj; }
-	| equalityExpression "==" relationalExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.EQUAL_TO, (Expression) $3.obj); }
-	| equalityExpression "!=" relationalExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.NOT_EQUAL_TO, (Expression) $3.obj); }
+	| equalityExpression EQUAL_TO relationalExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.EQUAL_TO, (Expression) $3.obj); }
+	| equalityExpression NOT_EQUAL_TO relationalExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.NOT_EQUAL_TO, (Expression) $3.obj); }
 	;	
 
 relationalExpression:
 	additiveExpression                              { $$.obj = $1.obj; }
 	| relationalExpression '>' additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.GREATER_THAN, (Expression) $3.obj); }
 	| relationalExpression '<' additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LESS_THAN, (Expression) $3.obj); }
-	| relationalExpression ">=" additiveExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.GREATER_THAN_OR_EQUAL, (Expression) $3.obj); }
-	| relationalExpression "<=" additiveExpression  { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LESS_THAN_OR_EQUAL, (Expression) $3.obj); }
+	| relationalExpression GTE additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.GREATER_THAN_OR_EQUAL_TO, (Expression) $3.obj); }
+	| relationalExpression LTE additiveExpression   { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LESS_THAN_OR_EQUAL_TO, (Expression) $3.obj); }
 	;
 	
 additiveExpression:
@@ -365,7 +416,7 @@ primaryExpression:
     ;
 
 compoundStatement:
-	'{' statementList '}'		                    { $$.obj = $2.obj; }
+	'{' statementList '}'		                    { $$.obj = new CompoundStatement((ArrayList<Statement>) $2.obj); }
 	;
 	
 statementList:
@@ -390,20 +441,8 @@ iterationStatement:
 	;
 
 endStatement:
-	END						                        { $$.obj = new EndStatement(); }
+	END	';'					                        { $$.obj = new EndStatement(); }
 	;
-
-identifier:
-    IDENTIFIER                                      { debug("** IDENTIFIER: ID: " + $1.ival + "; symb table entry: " + symbolTable.get($1.ival)); 
-                                                      $$.ival = $1.ival; } /* remember that this is an index into the symbol table, not the string itself */ 
-    ;
-    
-typeSpecifier:
-    INT                                             { $$.obj = VariableType.INT; }
-    | FLOAT                                         { $$.obj = VariableType.FLOAT; }
-    | STRING                                        { $$.obj = VariableType.STRING; }
-    | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
-    ;
 
 
 %%

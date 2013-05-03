@@ -51,6 +51,13 @@ public class Interpreter {
    }
    
    public void processRule(Rule rule) {
+      // If rule's condition is true, then execute rule
+      // Q: How do we evaluate a non-boolean expression?
+      // Q: Do we put the code to evaluate a rule here, or in the Rule class?  Does Rule have
+      // everything it needs to evaluate its condition?  Obviously the answer is no -- it needs the
+      // symbol table, and the list of property and entity definitions, or we wouldn't have them in the
+      // first place. 
+      // Condition may contain variables that correspond to entities
       
    }
    

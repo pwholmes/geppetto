@@ -57,17 +57,8 @@ public class Property {
 
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-
-      sb.append("; attributes: (");
-      boolean first = true;
-      for (Attribute attrib : getAttributes()) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(attrib);
-      }
-      sb.append(")}");
+      sb.append("; attributes: ").append(getAttributes());
+      sb.append("}");
 
       return sb.toString();
    }

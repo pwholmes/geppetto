@@ -34,16 +34,8 @@ public class AttributeConstraintIntegerSet implements AttributeConstraint {
       StringBuilder sb = new StringBuilder();
 
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      sb.append("values: (");
-      boolean first = true;
-      for (Integer value : values) {
-         if (first)
-            first = false;
-         else
-            sb.append(", ");
-         sb.append(value);
-      }
-      sb.append(")}");
+      sb.append("values: ").append(getValues());
+      sb.append("}");
       
       return sb.toString();
    }      

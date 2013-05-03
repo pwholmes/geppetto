@@ -27,9 +27,16 @@ import org.geppetto.parser.generated.Parser;
 \n | \r | \r\n          { } /* ignore as whitespace */
 
 /* symbols and operators */
-/* JFlex crashes on startup if I try to put these symbols into a bracketed regexp: [\+\*\^\/-(){}=,;] 
-   I'm probably missing or messing up an escape sequence, but the following works, so it's good enough: */
-"->"                    { return Parser.INFERS; } 
+/* JFlex crashes if I try to put these symbols into a bracketed regexp.
+   I'm probably missing or messing up an escape sequence, but the following works, so it's good enough.
+   The parser doesn't digest multi-character symbols properly when they're passed one char at a time. */
+"->"                    { return Parser.INFERS; }
+"=="                    { return Parser.EQUAL_TO; }
+"!="                    { return Parser.NOT_EQUAL_TO; }
+">="                    { return Parser.GTE; }
+"<="                    { return Parser.LTE; }
+"&&"                    { return Parser.LOGICAL_AND; }
+"||"                    { return Parser.LOGICAL_OR; }
 
 "+" | 
 "-" | 
@@ -44,8 +51,8 @@ import org.geppetto.parser.generated.Parser;
 ">" |
 "<" |
 "!" |
-"|" |
 "&" |
+"|" |
 "," |
 ";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
