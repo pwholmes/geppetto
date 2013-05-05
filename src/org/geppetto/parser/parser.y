@@ -405,13 +405,18 @@ statementList:
     ;
 
 selectionStatement:
-	IF '(' expression ')' statement elseClause      { $$.obj = new SelectionStatement((Expression) $3.obj, (Statement) $5.obj); }
-	;
-	
-elseClause:
-    /* ELSE statement                                  { $$.obj = $1.obj; }                                       
-    |  */                                             { $$.obj = null; }
+    matchedStatement                                { $$.obj = $1.obj; }
+    | openStatement                                 { $$.obj = $1.obj; }
     ;
+    
+matchedStatement:
+    IF '(' expression ')' matchedStatement ELSE matchedStatement { $$.obj = new SelectionStatement((Expression) $3.obj, (Statement) $5.obj, (Statement) $7.obj); }
+    ; 
+    
+openStatement:
+    IF '(' expression ')' statement                 { $$.obj = new SelectionStatement((Expression) $3.obj, (Statement) $5.obj); }
+	| IF '(' expression ')' matchedStatement ELSE openStatement { $$.obj = new SelectionStatement((Expression) $3.obj, (Statement) $5.obj, (Statement) $7.obj); }
+	;
 
 iterationStatement:
 	WHILE '(' expression ')' statement              { $$.obj = new IterationStatement((Expression) $3.obj, (Statement) $5.obj); }
