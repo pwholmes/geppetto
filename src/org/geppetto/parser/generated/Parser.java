@@ -613,7 +613,7 @@ public GeppettoProgram  parse(Reader inputReader) {
        the next token. */    
     yyparse();
     
-    return geppettoProgram;
+    return GeppettoProgram.getInstance();
 }
 
 /**
