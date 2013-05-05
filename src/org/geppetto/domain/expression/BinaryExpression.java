@@ -43,58 +43,85 @@ public class BinaryExpression implements Expression {
    public Value getValue() {
       Value value1 = operand1.getValue();
       Value value2 = operand2.getValue();
-      Value rv = null;
 
       switch (operator) {
-         case ASSIGNMENT:
+         case ASSIGNMENT: // as with C, we'll go with the convention that the value of an assignment expression is the value assigned to the lvalue
             if (!operand1.isLValue())
-               throw new IllegalArgumentException("Left operand of assignment must be a variable.");
+               throw new IllegalArgumentException("Left operand of an assignment must be a variable, is: " + operand1.getClass().getSimpleName() + ".");
             if (value1.getType() != value2.getType())
-               throw new IllegalArgumentException("Type mismatch: attempring to assign type " + value2.getType() + " to variable of type " + value1.getType() + ".");
+               throw new IllegalArgumentException("Type mismatch: attempting to assign value of type " + value2.getType() + " to variable of type " + value1.getType() + ".");
             operand1.setValue(value2.copy());
-            rv = value2.copy();
-            break;
+            return value2.copy();
+
          case DIVIDE:
-            break;
+            // TODO: DIVIDE
+            throw new IllegalArgumentException("Feature not implemented yet.");
+         
          case EQUAL_TO:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(value1.equals(value2));
+         
          case GREATER_THAN:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(value1.compareTo(value2) > 0);
+         
          case GREATER_THAN_OR_EQUAL_TO:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(value1.compareTo(value2) >= 0);
+         
          case LESS_THAN:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(value1.compareTo(value2) < 0);
+         
          case LESS_THAN_OR_EQUAL_TO:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(value1.compareTo(value2) <= 0);
+         
          case LOGICAL_AND:
-            break;
+            if (value1.getType() != VariableType.BOOLEAN)
+               throw new IllegalArgumentException("Illegal operand type " + value1.getType() + " for operator " + operator);
+            if (value2.getType() != VariableType.BOOLEAN)
+               throw new IllegalArgumentException("Illegal operand type " + value2.getType() + " for operator " + operator);
+            return new Value(value1.getbValue() && value2.getbValue());
+         
          case LOGICAL_OR:
             if (value1.getType() != VariableType.BOOLEAN)
                throw new IllegalArgumentException("Illegal operand type " + value1.getType() + " for operator " + operator);
             if (value2.getType() != VariableType.BOOLEAN)
                throw new IllegalArgumentException("Illegal operand type " + value2.getType() + " for operator " + operator);
-            rv = new Value(value1.getbValue() || value2.getbValue());
-            break;
-         case MINUS:
-            break;
+            return new Value(value1.getbValue() || value2.getbValue());
+         
+         case SUBTRACT:
+            // TODO: SUBTRACT
+            throw new IllegalArgumentException("Feature not implemented yet.");
+         
          case MODULUS:
-            break;
+            // TODO: MODULUS
+            throw new IllegalArgumentException("Feature not implemented yet.");
+
          case MULTIPLY:
-            break;
+            // TODO: MULTIPLY
+            throw new IllegalArgumentException("Feature not implemented yet.");
+         
          case NOT_EQUAL_TO:
-            break;
-         case PLUS:
-            break;
-         case UNARY_MINUS:
-            break;
-         case UNARY_NEGATION:
-            break;
-         case UNARY_PLUS:
-            break;
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
+            return new Value(!value1.equals(value2));
+         
+         case ADD:
+            // TODO: ADD
+            throw new IllegalArgumentException("Feature not implemented yet.");
+            
          default: // should never happen
-            throw new IllegalArgumentException("Unknown operator");
+            throw new IllegalArgumentException("Unknown binary operator: " + operator);
       }
-      return rv;
+      
+      // Can't get here due to default case in switch statement; adding a return results in an unreachable code error  
    }
    
    @Override

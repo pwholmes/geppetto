@@ -8,6 +8,6 @@ property position(int x {0-100}, int y {0-100});
 entity bob {mood(m="happy"), age(n=35)};
 entity alice {mood(m="sad"), age(n=22)};
 
-rule :x.state.s == "hunting" -> end;
+rule x == 2 -> end;
 
 int test(int x, string y) { end; end; } 

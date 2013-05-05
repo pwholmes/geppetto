@@ -25,7 +25,6 @@ public class UnaryExpression implements Expression {
 
    @Override
    public boolean isLValue() {
-      // TODO Auto-generated method stub
       return false;
    }
 
@@ -36,8 +35,35 @@ public class UnaryExpression implements Expression {
    
    @Override
    public Value getValue() {
-      // TODO Auto-generated method stub
-      return null;
+      Value value = operand.getValue();
+
+      switch (operator) {
+         case UNARY_MINUS:
+            if (value.getType() == VariableType.INT)
+               return new Value(-value.getiValue());
+            else if (value.getType() == VariableType.FLOAT)
+               return new Value(-value.getfValue());
+            else
+               throw new IllegalArgumentException("Illegal operand type " + value.getType() + " for operator " + operator + ".");
+   
+         case UNARY_NEGATION:
+            if (value.getType() != VariableType.BOOLEAN)
+               throw new IllegalArgumentException("Illegal operand type " + value.getType() + " for operator " + operator + ".");
+            return new Value(!value.getbValue());
+         
+         case UNARY_PLUS: // why do we even have this?
+            if (value.getType() == VariableType.INT)
+               return new Value(-value.getiValue());
+            else if (value.getType() == VariableType.FLOAT)
+               return new Value(value.getfValue());
+            else
+               throw new IllegalArgumentException("Illegal operand type " + value.getType() + " for operator " + operator + ".");
+            
+         default:
+            throw new IllegalArgumentException("Unknown unary operator: " + operator);
+      }
+
+      // Can't get here due to default case in switch statement; adding a return results in an unreachable code error  
    }
    
    @Override

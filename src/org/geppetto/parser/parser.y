@@ -75,7 +75,7 @@ program:
     ; 
 
 variableDeclarationList:
-    variableDeclarationList variableDeclaration     { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
+    variableDeclarationList variableDeclaration     { variables = (ArrayList<Variable>) $1.obj;
                                                       if (variables == null)
                                                          variables = new ArrayList<Variable>();
                                                       variables.add((Variable) $2.obj); 
@@ -340,8 +340,8 @@ relationalExpression:
 	
 additiveExpression:
 	multiplicativeExpression                        { $$.obj = $1.obj; }
-	| additiveExpression '+' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.PLUS, (Expression) $3.obj); }
-	| additiveExpression '-' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.MINUS, (Expression) $3.obj); }
+	| additiveExpression '+' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.ADD, (Expression) $3.obj); }
+	| additiveExpression '-' multiplicativeExpression {$$.obj = new BinaryExpression((Expression) $1.obj, Operator.SUBTRACT, (Expression) $3.obj); }
 	;
 	
 multiplicativeExpression:
@@ -370,7 +370,17 @@ primaryExpression:
     | ':' identifier                                { $$.obj = new Variable(symbolTable.get($1.ival)); }
     | ':' identifier '.' identifier                 { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | ':' identifier '.' identifier '.' identifier  { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
-    | identifier                                    { $$.obj = new Variable(symbolTable.get($1.ival)); }
+    | identifier                                    { String name = symbolTable.get($1.ival);
+                                                      Variable var = null;
+                                                      for (Variable v : variables) {
+                                                          if (v.getName().equals(name)) {
+                                                              var = v;
+                                                              break;
+                                                          }
+                                                      }
+                                                      if (var == null)
+                                                          throw new IllegalArgumentException("Undeclared identifier: " + name);
+                                                      $$.obj = var; }
     | identifier '.' identifier                     { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | identifier '.' identifier '.' identifier      { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
     ;
@@ -439,8 +449,10 @@ public ArrayList<String> symbolTable = new ArrayList<String>();
 /* The top-level data type; figuratively, this the root of the AST, though it isn't really a tree. */ 
 public GeppettoProgram geppettoProgram = null;
 
-/* Need this as its own global variable because the definitions are needed to validate subsequent declarations */ 
+/* Need these as their own global variables because the definitions are needed to validate subsequent declarations.
+   These variables are in essence the symbol table. */ 
 public ArrayList<PropertyDefinition> propertyDefinitions = null;
+public ArrayList<Variable> variables = null; 
 
 /**
  * parse() is called explicitly by the Geppetto main program to start off 

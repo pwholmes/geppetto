@@ -41,13 +41,12 @@ public class StructureExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      // TODO Auto-generated method stub
-      
+      // TODO setValue() for StructureExpression.  What do we want to do with this thing???
    }
 
    @Override
    public Value getValue() {
-      // TODO Auto-generated method stub
+      // TODO getValue() for StructureExpression.  What do we want to do with this thing???
       return null;
    }
    

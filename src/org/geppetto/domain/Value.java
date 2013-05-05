@@ -80,6 +80,59 @@ public class Value {
       value.sValue = getsValue();
       return value;
    }
+   
+   public boolean equals(Value value) {
+      return Value.equals(this, value);
+   }
+   
+   public static boolean equals(Value value1, Value value2) {
+      if (value1 == null || value2 == null)
+         return false; // equating anything to null is false
+      
+      if (value1.getType() != value2.getType())
+         return false; // they have to be the same type; VariableType is an enum so you can so this comparison with ==
+      
+      switch (value1.getType()) {
+         case BOOLEAN:
+            return (value1.getbValue() == value2.getbValue());
+         case FLOAT:
+            return (value1.getfValue() == value2.getfValue());
+         case INT:
+            return (value1.getiValue() == value2.getiValue());
+         case STRING:
+            return (value1.getsValue() == value2.getsValue());
+      }
+      return false; // should never get here
+   }
+   
+   public int compareTo(Value value) {
+      return Value.compare(this, value);
+   }
+   
+   /**
+    * Returns 0 if the values are equal, a value < 0 if value 1 < value2, and a value > 0 if value1 > value2.
+    * For booleans, true > false.
+    */
+   public static int compare(Value value1, Value value2) {
+      if (value1 == null || value2 == null)
+         throw new IllegalArgumentException("Cannot compare null values");
+      
+      if (value1.getType() != value2.getType())
+         throw new IllegalArgumentException("Values being compared are not of the same type.");
+
+      switch (value1.getType()) {
+         case BOOLEAN:
+            return Boolean.compare(value1.getbValue(), value2.getbValue());
+         case FLOAT:
+            return Float.compare(value1.getfValue(), value2.getfValue());
+         case INT:
+            return Integer.compare(value1.getiValue(), value2.getiValue());
+         case STRING:
+            return value1.getsValue().compareTo(value2.getsValue());
+      }
+
+      throw new IllegalArgumentException("Unknown data type: " + value1.getType()); // should never get here
+   }
 
    public String toString() {
       StringBuilder sb = new StringBuilder();

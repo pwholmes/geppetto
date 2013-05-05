@@ -10,6 +10,7 @@ public class GeppettoProgram {
    private ArrayList<Entity>             entities;
    private ArrayList<Rule>               rules;
    private ArrayList<FunctionDefinition> functionDefinitions;
+   private boolean                       debug;
 
    public static GeppettoProgram createInstance(ArrayList<Variable> variables,
          ArrayList<PropertyDefinition> propertyDefinitions,
@@ -71,7 +72,7 @@ public class GeppettoProgram {
    public ArrayList<FunctionDefinition> getFunctionDefinitions() {
       return functionDefinitions;
    }
-   
+
    public FunctionDefinition getFunctionDefinition(String name) {
       for (FunctionDefinition functionDefinition : getFunctionDefinitions()) {
          if (functionDefinition.getName().equals(name))
@@ -80,6 +81,14 @@ public class GeppettoProgram {
       return null;
    }
 
+   public void setDebug(boolean debug) {
+      this.debug = debug;
+   }
+   
+   public boolean isDebug() {
+      return debug;
+   }
+   
    public String toString() {
       StringBuilder sb = new StringBuilder();
 

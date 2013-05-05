@@ -4,7 +4,7 @@ public class NullStatement implements Statement {
 
    @Override
    public void execute() {
-      // TODO Auto-generated method stub
+      // TODO execute() for NullStatement
 
    }
 
