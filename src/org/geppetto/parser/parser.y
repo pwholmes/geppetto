@@ -66,12 +66,12 @@ program:
     propertyDefinitionList 
     entityDeclarationList 
     ruleDeclarationList
-    functionDefinitionList                          { ArrayList<Variable> globalVariables = (ArrayList<Variable>) $1.obj;
-                                                      ArrayList<PropertyDefinition> propertyDefinitions = (ArrayList<PropertyDefinition>) $2.obj;
+    functionDefinitionList                          { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
+                                                      ArrayList<PropertyDefinition> properties = (ArrayList<PropertyDefinition>) $2.obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) $3.obj;
                                                       ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj;
                                                       ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) $5.obj;  
-                                                      geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules, functions); }
+                                                      GeppettoProgram.createInstance(variables, properties, entities, rules, functions); }
     ; 
 
 variableDeclarationList:

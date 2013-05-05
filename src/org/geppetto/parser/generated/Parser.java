@@ -839,12 +839,12 @@ boolean doaction;
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
 //#line 69 "../../../../../src/org/geppetto/parser/parser.y"
-{ ArrayList<Variable> globalVariables = (ArrayList<Variable>) val_peek(4).obj;
-                                                      ArrayList<PropertyDefinition> propertyDefinitions = (ArrayList<PropertyDefinition>) val_peek(3).obj;
+{ ArrayList<Variable> variables = (ArrayList<Variable>) val_peek(4).obj;
+                                                      ArrayList<PropertyDefinition> properties = (ArrayList<PropertyDefinition>) val_peek(3).obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) val_peek(2).obj;
                                                       ArrayList<Rule> rules = (ArrayList<Rule>) val_peek(1).obj;
                                                       ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) val_peek(0).obj;  
-                                                      geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules, functions); }
+                                                      GeppettoProgram.createInstance(variables, properties, entities, rules, functions); }
 break;
 case 2:
 //#line 78 "../../../../../src/org/geppetto/parser/parser.y"
