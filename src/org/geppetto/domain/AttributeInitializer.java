@@ -1,5 +1,6 @@
 package org.geppetto.domain;
 
+
 public class AttributeInitializer {
    public String name;
    public Value value;

@@ -1,5 +1,6 @@
 package org.geppetto.domain;
 
+
 public class Attribute {
    private String              name;
    private Value              value;

@@ -25,7 +25,6 @@
   import org.geppetto.domain.Value;
   import org.geppetto.domain.expression.AssignmentExpression;
   import org.geppetto.domain.expression.BinaryExpression;
-  import org.geppetto.domain.expression.BooleanExpression;
   import org.geppetto.domain.expression.ConstantExpression;
   import org.geppetto.domain.expression.Expression;
   import org.geppetto.domain.expression.FunctionExpression;
@@ -286,9 +285,6 @@ rule:
     ;
     
 condition:
-    /* Not sure how to restrict this expression to *only* boolean expressions, since boolean expressions
-       can derive other (non-boolean) expressions. */ 
-    /* booleanExpression                               { $$.obj = new Condition((BooleanExpression) $1.obj); } */
     expression                                      { $$.obj = new Condition((Expression) $1.obj); }
     ;
 
@@ -314,14 +310,10 @@ expression:
 	;
 
 assignmentExpression:
-	booleanExpression                               { $$.obj = $1.obj; }
-	| structureExpression '=' assignmentExpression  { $$.obj = new AssignmentExpression((Expression) $1.obj, (Expression) $3.obj); }
+	logicalOrExpression                             { $$.obj = $1.obj; }
+	| primaryExpression '=' assignmentExpression    { $$.obj = new AssignmentExpression((Expression) $1.obj, (Expression) $3.obj); }
 	;
 
-booleanExpression:
-    logicalOrExpression                             { $$.obj = $1.obj; }
-    ;
-	
 logicalOrExpression:
 	logicalAndExpression                            { $$.obj = $1.obj; }
 	| logicalOrExpression LOGICAL_OR logicalAndExpression { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.LOGICAL_OR, (Expression) $3.obj); }
@@ -367,13 +359,18 @@ unaryExpression:
 	;
 
 functionExpression:
-	structureExpression                             { $$.obj = $1.obj; }
+	primaryExpression                               { $$.obj = $1.obj; }
 	| identifier '(' ')'                            { $$.obj = new FunctionExpression(symbolTable.get($1.ival), null); }
 	| identifier '(' argumentExpressionList ')'     { $$.obj = new FunctionExpression(symbolTable.get($1.ival), (ArrayList<Expression>) $1.obj); }
 	;
 
-structureExpression:
-    primaryExpression                               { $$.obj = $1.obj; }
+primaryExpression:
+    constant                                        { $$.obj = new ConstantExpression((Value) $1.obj); }
+    | '(' expression ')'                            { $$.obj = $2.obj; }
+    | ':' identifier                                { $$.obj = new Variable(symbolTable.get($1.ival)); }
+    | ':' identifier '.' identifier                 { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
+    | ':' identifier '.' identifier '.' identifier  { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
+    | identifier                                    { $$.obj = new Variable(symbolTable.get($1.ival)); }
     | identifier '.' identifier                     { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | identifier '.' identifier '.' identifier      { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
     ;
@@ -394,12 +391,6 @@ argumentExpression:
     expression                                      { $$.obj = $1.obj; }
     ;
 
-primaryExpression:
-    identifier                                      { $$.obj = new Variable(symbolTable.get($1.ival)); }
-    | constant                                      { $$.obj = new ConstantExpression((Value) $1.obj); }
-    | '(' expression ')'                            { $$.obj = $2.obj; }
-    ;
-
 compoundStatement:
 	'{' statementList '}'		                    { $$.obj = new CompoundStatement((ArrayList<Statement>) $2.obj); }
 	;
@@ -414,15 +405,17 @@ statementList:
     ;
 
 selectionStatement:
-	IF '(' booleanExpression ')' statement          { $$.obj = new SelectionStatement( (BooleanExpression) $3.obj, (Statement) $5.obj); }
-	/* need to resolve dangling else issue... how do we do that, again...?
-	| IF '(' booleanExpression ')' statement ELSE statement { $$.obj = new SelectionStatement( (BooleanExpression) $3.obj, (Statement) $5.obj, (Statement) $7.obj); }
-	*/
+	IF '(' expression ')' statement elseClause      { $$.obj = new SelectionStatement((Expression) $3.obj, (Statement) $5.obj); }
 	;
+	
+elseClause:
+    /* ELSE statement                                  { $$.obj = $1.obj; }                                       
+    |  */                                             { $$.obj = null; }
+    ;
 
 iterationStatement:
-	WHILE '(' booleanExpression ')' statement       { $$.obj = new IterationStatement((BooleanExpression) $3.obj, (Statement) $5.obj); }
-	/* | FOREACH identifier statement		            { $$.obj = new IterationStatement((Identifier) $2.obj, (Statement) $3.obj); }  let's hold off on this one for now, it's going to be very difficult to implement*/
+	WHILE '(' expression ')' statement              { $$.obj = new IterationStatement((Expression) $3.obj, (Statement) $5.obj); }
+	/* | FOREACH identifier statement		        { $$.obj = new IterationStatement((Identifier) $2.obj, (Statement) $3.obj); }  let's hold off on this one for now, it's going to be very difficult to implement*/
 	;
 
 endStatement:

@@ -1,23 +1,23 @@
 package org.geppetto.domain.statement;
 
-import org.geppetto.domain.expression.BooleanExpression;
+import org.geppetto.domain.expression.Expression;
 
 public class IterationStatement implements Statement {
 
-   private BooleanExpression booleanExpression;
-   private Statement         statement;
+   private Expression expression;
+   private Statement  statement;
 
    @SuppressWarnings("unused")
    private IterationStatement() {
    }
 
-   public IterationStatement(BooleanExpression booleanExpression, Statement statement) {
-      this.booleanExpression = booleanExpression;
+   public IterationStatement(Expression expression, Statement statement) {
+      this.expression = expression;
       this.statement = statement;
    }
 
-   public BooleanExpression getBooleanExpression() {
-      return booleanExpression;
+   public Expression getExpression() {
+      return expression;
    }
 
    public Statement getStatement() {
@@ -28,16 +28,16 @@ public class IterationStatement implements Statement {
    public void execute() {
       // TODO Auto-generated method stub
    }
-   
+
    public String toString() {
       StringBuilder sb = new StringBuilder();
-      
+
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      sb.append("expression: ").append(getBooleanExpression());
+      sb.append("expression: ").append(getExpression());
       sb.append("; statement: ").append(getStatement());
       sb.append("}");
-      
+
       return sb.toString();
    }
-   
+
 }

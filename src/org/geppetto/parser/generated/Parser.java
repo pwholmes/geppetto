@@ -44,7 +44,6 @@ package org.geppetto.parser.generated;
   import org.geppetto.domain.Value;
   import org.geppetto.domain.expression.AssignmentExpression;
   import org.geppetto.domain.expression.BinaryExpression;
-  import org.geppetto.domain.expression.BooleanExpression;
   import org.geppetto.domain.expression.ConstantExpression;
   import org.geppetto.domain.expression.Expression;
   import org.geppetto.domain.expression.FunctionExpression;
@@ -60,7 +59,7 @@ package org.geppetto.parser.generated;
   import org.geppetto.domain.statement.NullStatement;
   import org.geppetto.domain.statement.SelectionStatement;
   import org.geppetto.domain.statement.Statement;
-//#line 60 "Parser.java"
+//#line 59 "Parser.java"
 
 
 
@@ -207,11 +206,11 @@ final static short yylhs[] = {                           -1,
    13,   13,   20,   20,   21,   21,   22,   23,   23,   24,
    15,   15,   25,   26,   26,   27,    9,    9,    9,    9,
     9,    4,    4,   28,   29,   30,   32,   32,   32,   32,
-   32,   33,   33,   31,   37,   37,   38,   40,   40,   41,
-   41,   42,   42,   42,   43,   43,   43,   43,   43,   44,
-   44,   44,   45,   45,   45,   45,   46,   46,   46,   46,
-   47,   47,   47,   39,   39,   39,   48,   48,   50,   49,
-   49,   49,   18,   51,   51,   34,   35,   36,
+   32,   33,   33,   31,   37,   37,   38,   38,   40,   40,
+   41,   41,   41,   42,   42,   42,   42,   42,   43,   43,
+   43,   44,   44,   44,   44,   45,   45,   45,   45,   46,
+   46,   46,   39,   39,   39,   39,   39,   39,   39,   39,
+   47,   47,   48,   18,   49,   49,   34,   50,   35,   36,
 };
 final static short yylen[] = {                            2,
     5,    2,    0,    5,    1,    2,    6,    1,    3,    2,
@@ -220,222 +219,229 @@ final static short yylen[] = {                            2,
     1,    0,    1,    3,    1,    3,    3,    1,    3,    3,
     1,    3,    4,    1,    3,    3,    1,    1,    1,    1,
     1,    1,    2,    4,    1,    1,    1,    1,    1,    1,
-    1,    2,    1,    1,    1,    3,    1,    1,    3,    1,
-    3,    1,    3,    3,    1,    3,    3,    3,    3,    1,
-    3,    3,    1,    3,    3,    3,    1,    2,    2,    2,
-    1,    3,    4,    1,    3,    5,    1,    3,    1,    1,
-    1,    3,    3,    1,    2,    5,    5,    2,
+    1,    2,    1,    1,    1,    3,    1,    3,    1,    3,
+    1,    3,    3,    1,    3,    3,    3,    3,    1,    3,
+    3,    1,    3,    3,    3,    1,    2,    2,    2,    1,
+    3,    4,    1,    3,    2,    4,    6,    1,    3,    5,
+    1,    3,    1,    3,    1,    2,    6,    0,    5,    2,
 };
 final static short yydefred[] = {                         3,
     0,    0,   26,   24,   23,    0,   25,    0,    2,    0,
     5,   22,    0,    0,    0,    6,   12,    0,    0,    0,
     0,    0,   13,   52,    0,    0,    0,    8,    0,   47,
-   48,   49,   51,   50,    0,    0,    0,    0,    0,  101,
-    0,   55,   64,   65,    0,    0,    0,    0,    0,    0,
-    0,   83,   87,   94,    0,   53,    0,    0,    0,    0,
-    0,    0,   41,    0,   91,   89,   88,   90,    0,    0,
+   48,   49,   51,   50,    0,    0,    0,    0,    0,    0,
+   93,    0,   55,   64,    0,    0,    0,    0,    0,    0,
+    0,   82,   86,    0,   53,    0,    0,    0,    0,    0,
+    0,   41,    0,   90,   88,   87,   89,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,   15,    4,    0,    7,
-    9,    0,    0,    0,  102,   92,   99,    0,   97,    0,
-    0,    0,    0,   63,    0,   58,   54,    0,   56,   57,
-   59,   60,   61,   66,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,   84,   85,   86,    0,    0,    0,
-   33,    0,    0,    0,   29,    0,   31,    0,    0,   44,
-   42,   14,   93,    0,    0,  108,    0,    0,  104,    0,
-   62,    0,    0,    0,   11,    0,    0,    0,    0,   43,
-    0,   98,   96,    0,    0,  103,  105,    0,    0,   18,
-   37,   40,   34,   36,   39,   46,   45,    0,    0,   21,
-    0,    0,  107,  106,   17,   19,
+    9,    0,    0,    0,   94,    0,   91,  103,    0,  101,
+    0,    0,    0,    0,   63,    0,   58,   54,    0,   56,
+   57,   59,   60,   61,    0,   66,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,   83,   84,   85,    0,    0,
+    0,   33,    0,    0,    0,   29,    0,   31,    0,    0,
+   44,   42,   14,    0,   92,    0,    0,  110,    0,    0,
+  105,    0,   62,    0,    0,    0,   11,    0,    0,    0,
+    0,   43,    0,    0,  102,  100,    0,    0,  104,  106,
+    0,    0,   18,   37,   40,   34,   36,   39,   46,   45,
+   97,    0,    0,   21,    0,    0,  109,  108,   17,   19,
+  107,
 };
 final static short yydgoto[] = {                          1,
-    2,    8,   15,   22,   55,    9,   26,   39,   40,   11,
-   27,   28,  132,   17,   62,   87,  169,  106,  170,  133,
-  134,  135,  136,  137,   63,  139,  140,   24,   41,  107,
-  108,  109,  110,  111,  112,  113,   43,   44,   65,   46,
-   47,   48,   49,   50,   51,   52,   53,   98,   54,   99,
-  150,
+    2,    8,   15,   22,   54,    9,   26,   40,   41,   11,
+   27,   28,  133,   17,   61,   87,  172,  107,  173,  134,
+  135,  136,  137,  138,   62,  140,  141,   24,   42,  108,
+  109,  110,  111,  112,  113,  114,   44,   45,   64,   47,
+   48,   49,   50,   51,   52,   53,   99,  100,  152,  191,
 };
 final static short yysindex[] = {                         0,
-    0, -221,    0,    0,    0, -259,    0, -234,    0, -259,
-    0,    0,   -7, -259, -260,    0,    0,  -12, -220,  -86,
-   -2, -216,    0,    0, -223, -259,  -26,    0, -259,    0,
-    0,    0,    0,    0,   -2,   -2,   -2,   -2,    7,    0,
- -184,    0,    0,    0,   23, -177, -167,  -91,  -54,   37,
-  112,    0,    0,    0, -220,    0,   41,  -15,   65, -220,
-  118,  -40,    0,  115,    0,    0,    0,    0,  -11, -259,
-  -24,   -2,   -2,   -2,   -2,   -2,   -2,   -2,   -2,   -2,
-   -2,   -2,   -2,   -2,   -2, -259,    0,    0, -129,    0,
-    0, -259, -259,  106,    0,    0,    0,   25,    0,  128,
-  121,  145,  149,    0,  -24,    0,    0,  135,    0,    0,
-    0,    0,    0,    0, -167,  -91,  -54,  -54,   37,   37,
-   37,   37,  112,  112,    0,    0,    0,  156,  155,  158,
-    0,   81,  168,  174,    0,  178,    0,  163,   47,    0,
-    0,    0,    0,   -2, -259,    0,   -2,   -2,    0,  -33,
-    0, -220,  -42,  -37,    0,  -41,  -38,  -30, -223,    0,
- -259,    0,    0,  198,  206,    0,    0, -259,   74,    0,
-    0,    0,    0,    0,    0,    0,    0,  -24,  -24,    0,
-  127, -220,    0,    0,    0,    0,
+    0,   74,    0,    0,    0, -233,    0, -252,    0, -233,
+    0,    0,    4, -233, -250,    0,    0,    9, -244,  -35,
+   19, -190,    0,    0, -222, -233,   17,    0, -233,    0,
+    0,    0,    0,    0,   19,   19,   19,   19, -233,    2,
+    0, -151,    0,    0, -143,   72, -124, -209,  -42,   63,
+   18,    0,    0, -244,    0,   84,   28,   93, -244,  118,
+  -31,    0,  119,    0,    0,    0,    0,  115,   -2, -233,
+  -24,   19,   19,   19,   19,   19,   19,   19,   19,   19,
+   19,   19,   19,   19,   19, -233,    0,    0, -265,    0,
+    0, -233, -233,  108,    0, -233,    0,    0,   30,    0,
+  127,  117,  141,  142,    0,  -24,    0,    0,  124,    0,
+    0,    0,    0,    0, -124,    0, -209,  -42,  -42,   63,
+   63,   63,   63,   18,   18,    0,    0,    0,  151,  147,
+  152,    0,   75,  155,  157,    0,  158,    0,  149,   34,
+    0,    0,    0,  162,    0,   19, -233,    0,   19,   19,
+    0,  -33,    0, -244,  -64,  -53,    0,  -58,  -50,  -37,
+ -222,    0, -233, -233,    0,    0,  177,  185,    0,    0,
+ -233,   56,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,  -24,  -24,    0,  110, -244,    0,    0,    0,    0,
+    0,
 };
 final static short yyrindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    1,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,   34,    0,
-    0,    0,    0,    0,   69,  -17,  189,   13,  -39,  111,
-   82,    0,    0,    0,  255,    0,    0,   89,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,   42,
+    0,    0,    0,    0,  -30,  112,  -36,  271,   32,  154,
+  125,    0,    0,  255,    0,    0,   90,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,   68,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,  131,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+   77,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,   13,    0,  300,  252,  265,  165,
+  179,  188,  216,  134,  145,    0,    0,    0,    0,  -29,
+  -27,    0,    0,  133,  139,    0,  144,    0,    0,    0,
+    0,    0,    0,  103,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,   91,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,  144,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   60,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,  243,   24,  164,  173,  122,  131,
-  142,  151,   91,  102,    0,    0,    0,    0,  -16,   -8,
-    0,    0,  150,  161,    0,  166,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,  116,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,
-};
-final static short yygindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,   15,  430,  -22,  252,
-    0,  210,    0,  261,    0,    0,    0,  107,   98,    0,
-    0,    0,    0,    0,  203,    0,  137,  279,    0,    0,
-    4,  -92,    0,    0,    0,    0,  231,   40,  392,    0,
-  232,  230,  123,   99,  134,  382,    0,    0,    0,  162,
     0,
 };
-final static int YYTABLESIZE=598;
+final static short yygindex[] = {                         0,
+    0,    0,    0,    0,    0,    0,   26,  457,  -19,  251,
+    0,  211,    0,  259,    0,    0,    0,   95,   96,    0,
+    0,    0,    0,    0,  191,    0,  132,  277,    0,    0,
+  311,  -57,    0,    0,    0,    0,  237,    0,  429,  241,
+  240,    6,  -11,   35,  455,    0,    0,  170,    0,    0,
+};
+final static int YYTABLESIZE=628;
 static short yytable[];
 static { yytable();}
 static void yytable(){
 yytable = new short[]{                         38,
-   16,   72,   57,   93,   72,   80,   35,   79,   38,   37,
-   12,   36,  149,   14,   59,   35,   10,   60,   37,   72,
-   36,   38,   21,   67,   42,  104,   67,   35,   35,   96,
-   38,   37,   19,   36,  104,   38,   29,   35,   64,   14,
-   37,   67,   36,   30,   31,   32,   69,    6,   25,    3,
-    3,   33,   70,   70,    4,    4,   70,  167,    5,    5,
-    6,   34,    7,    7,   71,  143,   21,   71,  144,   86,
-  100,   70,   97,   71,  100,  100,  100,  100,  100,   82,
-  100,   81,   71,   72,   94,  183,  184,  160,   73,  105,
-  161,  166,  100,  100,  100,  100,   95,   74,  105,   88,
-   95,   95,   95,   95,   95,   91,   95,   89,   35,   91,
-   91,   91,   91,   91,  181,   91,   38,  182,   95,   95,
-   95,   95,   80,   90,   80,   80,   80,   91,   91,   10,
-   91,   82,   10,   82,   82,   82,  176,  129,  130,  131,
-   80,   80,   81,   80,   81,   81,   81,   97,   85,   82,
-   82,   75,   82,   83,   75,   95,   20,   92,   84,   20,
-   81,   81,   78,   81,  142,   78,  168,   75,   76,   75,
-   75,   79,   75,  145,   79,  119,  120,  121,  122,  146,
-   78,   78,   76,   78,  147,   76,  164,  165,  148,   79,
-   79,   77,   79,  151,   77,  152,  168,  117,  118,  153,
-   76,   76,  154,   76,   73,  155,   77,   73,   78,   77,
-   77,  156,   77,   74,  123,  124,   74,  157,   72,   72,
-   72,  158,   73,  159,  171,   72,   72,  173,  174,   68,
-  172,   74,   68,   30,   31,   32,   12,  175,  178,  101,
-   67,   33,   30,   31,   32,   12,  179,   68,  101,  105,
-   33,   34,  102,  103,    1,   30,   31,   32,   12,   16,
-   34,  102,  103,   33,   30,   31,   32,   12,   32,   91,
-   70,   16,   33,   34,   27,   23,   16,   70,   70,  186,
-   16,   71,   34,   69,   16,   28,   69,  185,   71,   71,
-   30,  100,  100,  100,  100,  141,  100,  177,  100,  100,
-   56,   69,  114,  116,  115,  162,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,   95,   95,   95,
-   95,    0,   95,    0,   95,   95,   91,   91,   91,   91,
-    0,   91,    0,   91,   91,    0,    0,    0,    0,   80,
-   80,   80,   80,    0,   80,    0,   80,   80,   82,   82,
-   82,   82,    0,   82,    0,   82,   82,    0,    0,   81,
-   81,   81,   81,    0,   81,    0,   81,   81,   75,   75,
-   75,   75,    0,   75,    0,   75,   75,    0,    0,   78,
-   78,   78,   78,    0,   78,    0,   78,   78,   79,   79,
-   79,   79,    0,   79,    0,   79,   79,    0,    0,   76,
-   76,   76,   76,    0,   76,    0,   76,   76,   77,   77,
-   77,   77,   45,   77,    0,   77,   77,   66,   67,   68,
-    0,   73,   73,   73,    0,    0,   45,    0,   73,   73,
-   74,   74,   74,    0,    0,   13,    0,   74,   74,   18,
-    0,    0,    0,   20,    0,    0,   68,    0,    0,    0,
-    0,    0,    0,    0,   68,   58,    0,    0,   61,    0,
-   45,    0,   45,   45,  125,  126,  127,    0,    0,    0,
+   16,  130,  131,  132,   67,   56,   35,   67,   38,   37,
+   65,   36,   93,   65,   35,   35,   38,   80,   37,   79,
+   36,   14,   67,   14,   39,  105,    3,   10,   65,    6,
+   38,    4,   21,   39,  105,    5,   12,   35,   97,    7,
+   37,   69,   36,   19,   30,   31,   32,   70,  151,   75,
+   76,   38,   33,   68,   85,   39,   68,   58,   35,   83,
+   59,   37,   34,   36,   84,  120,  121,  122,  123,   25,
+  145,   68,   71,  146,  162,   71,   39,  163,   98,   86,
+  118,  119,   98,   98,   98,   98,   98,   29,   98,  106,
+   71,  169,   21,   94,  170,   35,  185,   38,  106,  186,
+   98,   98,   98,   98,   95,   82,   71,   81,   95,   95,
+   95,   95,   95,   99,   95,  124,  125,   99,   99,   99,
+   99,   99,   72,   99,  187,  188,   95,   95,   95,   95,
+   10,   20,   73,   10,   20,   99,   99,   99,   99,   96,
+   74,  179,   88,   96,   96,   96,   96,   96,   90,   96,
+   89,   90,   90,   90,   90,   90,   90,   92,   90,   95,
+   96,   96,   96,   96,   96,   79,  143,   79,   79,   79,
+   90,   90,  147,   90,   81,  148,   81,   81,   81,  171,
+  149,  150,  153,   79,   79,   80,   79,   80,   80,   80,
+  154,  155,   81,   81,   74,   81,  156,   74,  158,  157,
+  159,  160,  174,   80,   80,   77,   80,  164,   77,  161,
+  176,  171,   74,   74,  175,   74,  177,  182,   77,   78,
+   78,   67,   78,   77,   77,  183,   77,   65,   75,   67,
+  178,   75,  106,   30,   31,   32,   12,   78,   78,  102,
+   78,   33,   30,   31,   32,   12,   75,   75,  102,   75,
+   33,   34,  103,  104,    1,   32,   76,   27,   16,   76,
+   34,  103,  104,   28,   30,   31,   32,   12,   30,   91,
+   68,   16,   33,   23,   76,   76,   16,   76,   68,  189,
+   16,  190,   34,  142,   16,   30,   31,   32,   12,   71,
+   71,   71,   72,   33,  180,   72,   71,   71,   55,   98,
+   98,   98,   98,   34,   98,   73,   98,   98,   73,  116,
+   72,   69,  115,  117,   69,  165,    0,    0,    0,    0,
+    0,    0,    0,   73,    0,   95,   95,   95,   95,   69,
+   95,   43,   95,   95,   99,   99,   99,   99,    0,   99,
+   70,   99,   99,   70,    3,   63,    0,    0,    0,    4,
+    0,    0,    0,    5,    0,    6,    0,    7,   70,    0,
+   96,   96,   96,   96,    0,   96,    0,   96,   96,   90,
+   90,   90,   90,    0,   90,    0,   90,   90,    0,   98,
+    0,    0,   79,   79,   79,   79,    0,   79,    0,   79,
+   79,   81,   81,   81,   81,    0,   81,    0,   81,   81,
+    0,    0,   80,   80,   80,   80,    0,   80,    0,   80,
+   80,   74,   74,   74,   74,    0,   74,    0,   74,   74,
+    0,    0,   77,   77,   77,   77,    0,   77,    0,   77,
+   77,    0,    0,    0,    0,    0,   78,   78,   78,   78,
+    0,   78,    0,   78,   78,   75,   75,   75,   75,   46,
+   75,    0,   75,   75,    0,    0,   98,    0,    0,  167,
+  168,    0,   13,   46,    0,    0,   18,    0,    0,    0,
+   20,    0,    0,   76,   76,   76,   76,    0,   76,    0,
+   76,   76,   57,    0,    0,   60,    0,    0,    0,    0,
+   65,   66,   67,    0,    0,   68,    0,   46,    0,   46,
+    0,   46,    0,    0,    0,    0,    0,    0,    0,   72,
+   72,   72,    0,    0,    0,    0,   72,   72,    0,    0,
+    0,    0,   73,   73,   73,    0,  101,    0,   69,   73,
+   73,    0,    0,    0,   46,   69,   69,  126,  127,  128,
+    0,    0,  129,    0,    0,    0,    0,    0,  139,   60,
+    0,    0,  144,    0,    0,    0,    0,   70,    0,    0,
+    0,    0,    0,    0,   70,   70,    0,    0,    0,    0,
+    0,    0,    0,    0,   46,    0,    0,   46,   46,    0,
+   46,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,   45,    0,    0,  100,
-   69,    0,    0,    0,    0,    0,    0,    0,   69,    0,
-    0,    0,    0,    0,    0,  128,    0,    0,    0,    0,
-    0,  138,   61,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,   45,    0,    0,    0,    0,
-    0,   45,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   45,
-   45,    0,    0,    0,  163,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-  138,    0,    0,    0,    0,    0,    0,  180,
+    0,    0,    0,  166,    0,    0,    0,    0,    0,    0,
+   46,   46,    0,    0,    0,    0,    0,    0,    0,  139,
+  181,    0,    0,    0,    0,    0,    0,  184,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         33,
-    0,   41,   25,   44,   44,   60,   40,   62,   33,   43,
-  270,   45,  105,  274,   41,   40,    2,   44,   43,   59,
-   45,   33,  283,   41,   21,   59,   44,   44,   40,   41,
-   33,   43,   40,   45,   59,   44,  123,   40,   35,  274,
-   43,   59,   45,  267,  268,  269,   40,  282,   61,  271,
-  271,  275,   46,   41,  276,  276,   44,  150,  280,  280,
-  282,  285,  284,  284,   41,   41,  283,   44,   44,   55,
-   37,   59,   69,  258,   41,   42,   43,   44,   45,   43,
-   47,   45,   59,   61,  125,  178,  179,   41,  266,  123,
-   44,  125,   59,   60,   61,   62,   37,  265,  123,   59,
-   41,   42,   43,   44,   45,   37,   47,  123,  125,   41,
-   42,   43,   44,   45,   41,   47,  125,   44,   59,   60,
-   61,   62,   41,   59,   43,   44,   45,   59,   60,   41,
-   62,   41,   44,   43,   44,   45,  159,  267,  268,  269,
-   59,   60,   41,   62,   43,   44,   45,  144,   37,   59,
-   60,   41,   62,   42,   44,   41,   41,   40,   47,   44,
-   59,   60,   41,   62,   59,   44,  152,  259,  260,   59,
-   60,   41,   62,   46,   44,   77,   78,   79,   80,   59,
-   59,   60,   41,   62,   40,   44,  147,  148,   40,   59,
-   60,   41,   62,   59,   44,   40,  182,   75,   76,   45,
-   59,   60,   45,   62,   41,  125,  261,   44,  263,   59,
-   60,   44,   62,   41,   81,   82,   44,   44,  258,  259,
-  260,   44,   59,   61,  267,  265,  266,  269,  267,   41,
-  268,   59,   44,  267,  268,  269,  270,  268,   41,  273,
-  258,  275,  267,  268,  269,  270,   41,   59,  273,  123,
-  275,  285,  286,  287,    0,  267,  268,  269,  270,    8,
-  285,  286,  287,  275,  267,  268,  269,  270,  125,   60,
-  258,  271,  275,  285,  125,   15,  276,  265,  266,  182,
-  280,  258,  285,   41,  284,  125,   44,  181,  265,  266,
-  125,  258,  259,  260,  261,   93,  263,  161,  265,  266,
-   22,   59,   72,   74,   73,  144,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,  258,  259,  260,
-  261,   -1,  263,   -1,  265,  266,  258,  259,  260,  261,
-   -1,  263,   -1,  265,  266,   -1,   -1,   -1,   -1,  258,
-  259,  260,  261,   -1,  263,   -1,  265,  266,  258,  259,
-  260,  261,   -1,  263,   -1,  265,  266,   -1,   -1,  258,
-  259,  260,  261,   -1,  263,   -1,  265,  266,  258,  259,
-  260,  261,   -1,  263,   -1,  265,  266,   -1,   -1,  258,
-  259,  260,  261,   -1,  263,   -1,  265,  266,  258,  259,
-  260,  261,   -1,  263,   -1,  265,  266,   -1,   -1,  258,
-  259,  260,  261,   -1,  263,   -1,  265,  266,  258,  259,
-  260,  261,   21,  263,   -1,  265,  266,   36,   37,   38,
-   -1,  258,  259,  260,   -1,   -1,   35,   -1,  265,  266,
-  258,  259,  260,   -1,   -1,    6,   -1,  265,  266,   10,
-   -1,   -1,   -1,   14,   -1,   -1,  258,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,  266,   26,   -1,   -1,   29,   -1,
-   69,   -1,   71,   72,   83,   84,   85,   -1,   -1,   -1,
+    0,  267,  268,  269,   41,   25,   40,   44,   33,   43,
+   41,   45,   44,   44,   44,   40,   44,   60,   43,   62,
+   45,  274,   59,  274,   58,   59,  271,    2,   59,  282,
+   33,  276,  283,   58,   59,  280,  270,   40,   41,  284,
+   43,   40,   45,   40,  267,  268,  269,   46,  106,  259,
+  260,   33,  275,   41,   37,   58,   44,   41,   40,   42,
+   44,   43,  285,   45,   47,   77,   78,   79,   80,   61,
+   41,   59,   41,   44,   41,   44,   58,   44,   37,   54,
+   75,   76,   41,   42,   43,   44,   45,  123,   47,  123,
+   59,  125,  283,  125,  152,  125,   41,  125,  123,   44,
+   59,   60,   61,   62,   37,   43,  258,   45,   41,   42,
+   43,   44,   45,   37,   47,   81,   82,   41,   42,   43,
+   44,   45,  266,   47,  182,  183,   59,   60,   61,   62,
+   41,   41,   61,   44,   44,   59,   60,   61,   62,   37,
+  265,  161,   59,   41,   42,   43,   44,   45,   37,   47,
+  123,   59,   41,   42,   43,   44,   45,   40,   47,   41,
+   46,   59,   60,   61,   62,   41,   59,   43,   44,   45,
+   59,   60,   46,   62,   41,   59,   43,   44,   45,  154,
+   40,   40,   59,   59,   60,   41,   62,   43,   44,   45,
+   40,   45,   59,   60,   41,   62,   45,   44,   44,  125,
+   44,   44,  267,   59,   60,   41,   62,   46,   44,   61,
+  269,  186,   59,   60,  268,   62,  267,   41,  261,   41,
+  263,  258,   44,   59,   60,   41,   62,  258,   41,  266,
+  268,   44,  123,  267,  268,  269,  270,   59,   60,  273,
+   62,  275,  267,  268,  269,  270,   59,   60,  273,   62,
+  275,  285,  286,  287,    0,  125,   41,  125,    8,   44,
+  285,  286,  287,  125,  267,  268,  269,  270,  125,   59,
+  258,  271,  275,   15,   59,   60,  276,   62,  266,  185,
+  280,  186,  285,   93,  284,  267,  268,  269,  270,  258,
+  259,  260,   41,  275,  163,   44,  265,  266,   22,  258,
+  259,  260,  261,  285,  263,   41,  265,  266,   44,   73,
+   59,   41,   72,   74,   44,  146,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   59,   -1,  258,  259,  260,  261,   59,
+  263,   21,  265,  266,  258,  259,  260,  261,   -1,  263,
+   41,  265,  266,   44,  271,   35,   -1,   -1,   -1,  276,
+   -1,   -1,   -1,  280,   -1,  282,   -1,  284,   59,   -1,
+  258,  259,  260,  261,   -1,  263,   -1,  265,  266,  258,
+  259,  260,  261,   -1,  263,   -1,  265,  266,   -1,   69,
+   -1,   -1,  258,  259,  260,  261,   -1,  263,   -1,  265,
+  266,  258,  259,  260,  261,   -1,  263,   -1,  265,  266,
+   -1,   -1,  258,  259,  260,  261,   -1,  263,   -1,  265,
+  266,  258,  259,  260,  261,   -1,  263,   -1,  265,  266,
+   -1,   -1,  258,  259,  260,  261,   -1,  263,   -1,  265,
+  266,   -1,   -1,   -1,   -1,   -1,  258,  259,  260,  261,
+   -1,  263,   -1,  265,  266,  258,  259,  260,  261,   21,
+  263,   -1,  265,  266,   -1,   -1,  146,   -1,   -1,  149,
+  150,   -1,    6,   35,   -1,   -1,   10,   -1,   -1,   -1,
+   14,   -1,   -1,  258,  259,  260,  261,   -1,  263,   -1,
+  265,  266,   26,   -1,   -1,   29,   -1,   -1,   -1,   -1,
+   36,   37,   38,   -1,   -1,   39,   -1,   69,   -1,   71,
+   -1,   73,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  258,
+  259,  260,   -1,   -1,   -1,   -1,  265,  266,   -1,   -1,
+   -1,   -1,  258,  259,  260,   -1,   70,   -1,  258,  265,
+  266,   -1,   -1,   -1,  106,  265,  266,   83,   84,   85,
+   -1,   -1,   86,   -1,   -1,   -1,   -1,   -1,   92,   93,
+   -1,   -1,   96,   -1,   -1,   -1,   -1,  258,   -1,   -1,
+   -1,   -1,   -1,   -1,  265,  266,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,  146,   -1,   -1,  149,  150,   -1,
+  152,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,  105,   -1,   -1,   70,
-  258,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  266,   -1,
-   -1,   -1,   -1,   -1,   -1,   86,   -1,   -1,   -1,   -1,
-   -1,   92,   93,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,  144,   -1,   -1,   -1,   -1,
-   -1,  150,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  178,
-  179,   -1,   -1,   -1,  145,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-  161,   -1,   -1,   -1,   -1,   -1,   -1,  168,
+   -1,   -1,   -1,  147,   -1,   -1,   -1,   -1,   -1,   -1,
+  182,  183,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  163,
+  164,   -1,   -1,   -1,   -1,   -1,   -1,  171,
 };
 }
 final static short YYFINAL=1;
@@ -444,7 +450,7 @@ final static String yyname[] = {
 "end-of-file",null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,"'!'",null,null,null,"'%'",null,null,"'('","')'","'*'","'+'",
-"','","'-'","'.'","'/'",null,null,null,null,null,null,null,null,null,null,null,
+"','","'-'","'.'","'/'",null,null,null,null,null,null,null,null,null,null,"':'",
 "';'","'<'","'='","'>'",null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
@@ -529,9 +535,8 @@ final static String yyrule[] = {
 "expressionStatement : expression ';'",
 "expressionStatement : ';'",
 "expression : assignmentExpression",
-"assignmentExpression : booleanExpression",
-"assignmentExpression : structureExpression '=' assignmentExpression",
-"booleanExpression : logicalOrExpression",
+"assignmentExpression : logicalOrExpression",
+"assignmentExpression : primaryExpression '=' assignmentExpression",
 "logicalOrExpression : logicalAndExpression",
 "logicalOrExpression : logicalOrExpression LOGICAL_OR logicalAndExpression",
 "logicalAndExpression : equalityExpression",
@@ -555,27 +560,30 @@ final static String yyrule[] = {
 "unaryExpression : '+' unaryExpression",
 "unaryExpression : '-' unaryExpression",
 "unaryExpression : '!' unaryExpression",
-"functionExpression : structureExpression",
+"functionExpression : primaryExpression",
 "functionExpression : identifier '(' ')'",
 "functionExpression : identifier '(' argumentExpressionList ')'",
-"structureExpression : primaryExpression",
-"structureExpression : identifier '.' identifier",
-"structureExpression : identifier '.' identifier '.' identifier",
+"primaryExpression : constant",
+"primaryExpression : '(' expression ')'",
+"primaryExpression : ':' identifier",
+"primaryExpression : ':' identifier '.' identifier",
+"primaryExpression : ':' identifier '.' identifier '.' identifier",
+"primaryExpression : identifier",
+"primaryExpression : identifier '.' identifier",
+"primaryExpression : identifier '.' identifier '.' identifier",
 "argumentExpressionList : argumentExpression",
 "argumentExpressionList : argumentExpressionList ',' argumentExpression",
 "argumentExpression : expression",
-"primaryExpression : identifier",
-"primaryExpression : constant",
-"primaryExpression : '(' expression ')'",
 "compoundStatement : '{' statementList '}'",
 "statementList : statement",
 "statementList : statementList statement",
-"selectionStatement : IF '(' booleanExpression ')' statement",
-"iterationStatement : WHILE '(' booleanExpression ')' statement",
+"selectionStatement : IF '(' expression ')' statement elseClause",
+"elseClause :",
+"iterationStatement : WHILE '(' expression ')' statement",
 "endStatement : END ';'",
 };
 
-//#line 434 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 427 "../../../../../src/org/geppetto/parser/parser.y"
 
 /* Yylex is the lexer generated by JFlex */
 private Yylex lexer;
@@ -675,7 +683,7 @@ private String tokenToString(ParserVal pv) {
         s = "ival: " + pv.ival + "; dval: " + pv.dval + "; sval: " + pv.sval + "; obj: " + pv.obj;
     return s;
 }
-//#line 637 "Parser.java"
+//#line 645 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -830,7 +838,7 @@ boolean doaction;
       {
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
-//#line 70 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 69 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Variable> globalVariables = (ArrayList<Variable>) val_peek(4).obj;
                                                       ArrayList<PropertyDefinition> propertyDefinitions = (ArrayList<PropertyDefinition>) val_peek(3).obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) val_peek(2).obj;
@@ -839,7 +847,7 @@ case 1:
                                                       geppettoProgram = new GeppettoProgram(globalVariables, propertyDefinitions, entities, rules, functions); }
 break;
 case 2:
-//#line 79 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 78 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Variable> variables = (ArrayList<Variable>) val_peek(1).obj;
                                                       if (variables == null)
                                                          variables = new ArrayList<Variable>();
@@ -847,73 +855,73 @@ case 2:
                                                       yyval.obj = variables; }
 break;
 case 3:
-//#line 84 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 83 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new ArrayList<Variable>(); }
 break;
 case 4:
-//#line 88 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 87 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Variable(symbolTable.get(val_peek(3).ival), (VariableType) val_peek(4).obj, (Value) val_peek(1).obj); }
 break;
 case 5:
-//#line 92 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 91 "../../../../../src/org/geppetto/parser/parser.y"
 { propertyDefinitions = new ArrayList<PropertyDefinition>();
                                                       propertyDefinitions.add((PropertyDefinition) val_peek(0).obj); 
                                                       yyval.obj = propertyDefinitions; }
 break;
 case 6:
-//#line 95 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 94 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<PropertyDefinition> propertyDefs = (ArrayList<PropertyDefinition>) val_peek(1).obj;
                                                       propertyDefs.add((PropertyDefinition) val_peek(0).obj); 
                                                       yyval.obj = propertyDefs; }
 break;
 case 7:
-//#line 101 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 100 "../../../../../src/org/geppetto/parser/parser.y"
 { PropertyDefinition propertyDef = new PropertyDefinition(symbolTable.get(val_peek(4).ival));
                                                       propertyDef.addAttributeDefinitions((ArrayList<AttributeDefinition>) val_peek(2).obj);
                                                       yyval.obj = propertyDef; }
 break;
 case 8:
-//#line 107 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 106 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<AttributeDefinition> attributeDefs = new ArrayList<AttributeDefinition>();
                                                       attributeDefs.add((AttributeDefinition) val_peek(0).obj); 
                                                       yyval.obj = attributeDefs; }
 break;
 case 9:
-//#line 110 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 109 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<AttributeDefinition> attributeDefs = (ArrayList<AttributeDefinition>) val_peek(2).obj;
                                                       attributeDefs.add((AttributeDefinition) val_peek(0).obj); 
                                                       yyval.obj = attributeDefs; }
 break;
 case 10:
-//#line 116 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 115 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeDefinition((VariableType)val_peek(1).obj, symbolTable.get(val_peek(0).ival)); }
 break;
 case 11:
-//#line 117 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 116 "../../../../../src/org/geppetto/parser/parser.y"
 { AttributeDefinition attributeDef = new AttributeDefinition((VariableType)val_peek(4).obj, symbolTable.get(val_peek(3).ival));
                                                       attributeDef.setConstraint((AttributeConstraint) val_peek(1).obj); 
                                                       yyval.obj = attributeDef; }
 break;
 case 12:
-//#line 123 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 122 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Entity> entities = new ArrayList<Entity>();  
                                                       entities.add((Entity) val_peek(0).obj); 
                                                       yyval.obj = entities; }
 break;
 case 13:
-//#line 126 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 125 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Entity> entities = (ArrayList<Entity>) val_peek(1).obj;  
                                                       entities.add((Entity) val_peek(0).obj); 
                                                       yyval.obj = entities; }
 break;
 case 14:
-//#line 132 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 131 "../../../../../src/org/geppetto/parser/parser.y"
 { Entity entity = new Entity(symbolTable.get(val_peek(4).ival));
                                                       entity.addProperties((List<Property>) val_peek(2).obj);
                                                       yyval.obj = entity; }
 break;
 case 15:
-//#line 138 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 137 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) val_peek(1).obj;
                                                       if (functions == null)
                                                           functions = new ArrayList<FunctionDefinition>();
@@ -921,11 +929,11 @@ case 15:
                                                       yyval.obj = functions; }
 break;
 case 16:
-//#line 143 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 142 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new ArrayList<FunctionDefinition>(); }
 break;
 case 17:
-//#line 148 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 147 "../../../../../src/org/geppetto/parser/parser.y"
 { String name = symbolTable.get(val_peek(4).ival);
                                                       VariableType type = (VariableType) val_peek(5).obj;
                                                       ArrayList<ArgumentDeclaration> arguments = (ArrayList<ArgumentDeclaration>) val_peek(2).obj;
@@ -933,130 +941,130 @@ case 17:
                                                       yyval.obj = new FunctionDefinition(name, type, arguments, compoundStatement); }
 break;
 case 18:
-//#line 156 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 155 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<ArgumentDeclaration> arguments = new ArrayList<ArgumentDeclaration>();
                                                       arguments.add((ArgumentDeclaration) val_peek(0).obj); 
                                                       yyval.obj = arguments; }
 break;
 case 19:
-//#line 159 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 158 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<ArgumentDeclaration> arguments = (ArrayList<ArgumentDeclaration>) val_peek(2).obj;
                                                       arguments.add((ArgumentDeclaration) val_peek(0).obj); 
                                                       yyval.obj = arguments; }
 break;
 case 20:
-//#line 162 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 161 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new ArrayList<ArgumentDeclaration>(); }
 break;
 case 21:
-//#line 166 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 165 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new ArgumentDeclaration(symbolTable.get(val_peek(0).ival), (VariableType) val_peek(1).obj); }
 break;
 case 22:
-//#line 170 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 169 "../../../../../src/org/geppetto/parser/parser.y"
 { debug("** IDENTIFIER: ID: " + val_peek(0).ival + "; symb table entry: " + symbolTable.get(val_peek(0).ival)); 
                                                       yyval.ival = val_peek(0).ival; }
 break;
 case 23:
-//#line 175 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 174 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = VariableType.INT; }
 break;
 case 24:
-//#line 176 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 175 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = VariableType.FLOAT; }
 break;
 case 25:
-//#line 177 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 176 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = VariableType.STRING; }
 break;
 case 26:
-//#line 178 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 177 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = VariableType.BOOLEAN; }
 break;
 case 27:
-//#line 182 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 181 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeConstraintStringSet((Set<String>) val_peek(0).obj); }
 break;
 case 28:
-//#line 183 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 182 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeConstraintIntegerSet((Set<Integer>) val_peek(0).obj); }
 break;
 case 29:
-//#line 184 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 183 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeConstraintIntegerRange((ArrayList<Integer>)val_peek(0).obj); }
 break;
 case 30:
-//#line 185 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 184 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeConstraintFloatSet((Set<Float>)val_peek(0).obj); }
 break;
 case 31:
-//#line 186 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 185 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeConstraintFloatRange((ArrayList<Float>)val_peek(0).obj); }
 break;
 case 33:
-//#line 191 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 190 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<String> stringSet = new HashSet<String>(); 
                                                       stringSet.add(symbolTable.get(val_peek(0).ival)); 
                                                       yyval.obj = stringSet; }
 break;
 case 34:
-//#line 194 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 193 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<String> stringSet = (HashSet<String>) val_peek(2).obj;
                                                       stringSet.add(symbolTable.get(val_peek(0).ival)); 
                                                       yyval.obj = stringSet; }
 break;
 case 35:
-//#line 200 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 199 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<Integer> intSet = new HashSet<Integer>(); 
                                                       intSet.add(new Integer(val_peek(0).ival)); 
                                                       yyval.obj = intSet; }
 break;
 case 36:
-//#line 203 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 202 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<Integer> intSet = (HashSet<Integer>) val_peek(2).obj; 
                                                       intSet.add(new Integer(val_peek(0).ival)); 
                                                       yyval.obj = intSet; }
 break;
 case 37:
-//#line 209 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 208 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Integer> intList = new ArrayList<Integer>();
                                                       intList.add(val_peek(2).ival);
                                                       intList.add(val_peek(0).ival);
                                                       yyval.obj = intList; }
 break;
 case 38:
-//#line 216 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 215 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<Float> floatSet = new HashSet<Float>(); 
                                                       floatSet.add(new Float(val_peek(0).dval)); 
                                                       yyval.obj = floatSet; }
 break;
 case 39:
-//#line 219 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 218 "../../../../../src/org/geppetto/parser/parser.y"
 { HashSet<Float> floatSet = (HashSet<Float>) val_peek(2).obj; 
                                                       floatSet.add(new Float(val_peek(0).dval)); 
                                                       yyval.obj = floatSet; }
 break;
 case 40:
-//#line 225 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 224 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Float> floatList = new ArrayList<Float>();
                                                       floatList.add(new Float(val_peek(2).dval));
                                                       floatList.add(new Float(val_peek(1).dval));
                                                       yyval.obj = floatList; }
 break;
 case 41:
-//#line 232 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 231 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Property> properties = new ArrayList<Property>();
                                                       properties.add((Property) val_peek(0).obj); 
                                                       yyval.obj = properties;}
 break;
 case 42:
-//#line 235 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 234 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Property> properties = (ArrayList<Property>) val_peek(2).obj;
                                                       properties.add((Property) val_peek(0).obj); 
                                                       yyval.obj = properties; }
 break;
 case 43:
-//#line 241 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 240 "../../../../../src/org/geppetto/parser/parser.y"
 { String propertyName = symbolTable.get(val_peek(3).ival);
                                                       PropertyDefinition propertyDef = null;
                                                       for (PropertyDefinition def : propertyDefinitions) {
@@ -1070,282 +1078,290 @@ case 43:
                                                       yyval.obj = property; }
 break;
 case 44:
-//#line 255 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 254 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<AttributeInitializer> attributeInitializers = new ArrayList<AttributeInitializer>();
                                                       attributeInitializers.add((AttributeInitializer) val_peek(0).obj);
                                                       yyval.obj = attributeInitializers; }
 break;
 case 45:
-//#line 258 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 257 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<AttributeInitializer> attributeInitiazers = (ArrayList<AttributeInitializer>) val_peek(2).obj;
                                                       attributeInitiazers.add((AttributeInitializer) val_peek(0).obj);
                                                       yyval.obj = attributeInitiazers; }
 break;
 case 46:
-//#line 264 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 263 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AttributeInitializer(symbolTable.get(val_peek(2).ival), (Value)val_peek(0).obj); }
 break;
 case 47:
-//#line 268 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 267 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Value(val_peek(0).ival); }
 break;
 case 48:
-//#line 269 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 268 "../../../../../src/org/geppetto/parser/parser.y"
 { Float fval = new Float(val_peek(0).dval); yyval.obj = new Value(fval); }
 break;
 case 49:
-//#line 270 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 269 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Value(symbolTable.get(val_peek(0).ival)); }
 break;
 case 50:
-//#line 271 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 270 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Value(true); }
 break;
 case 51:
-//#line 272 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 271 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Value(false); }
 break;
 case 52:
-//#line 276 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 275 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Rule> rules = new ArrayList<Rule>();  
                                                       rules.add((Rule) val_peek(0).obj); 
                                                       yyval.obj = rules; }
 break;
 case 53:
-//#line 279 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 278 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Rule> rules = (ArrayList<Rule>) val_peek(1).obj;  
                                                       rules.add((Rule) val_peek(0).obj); 
                                                       yyval.obj = rules; }
 break;
 case 54:
-//#line 285 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 284 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Rule((Condition) val_peek(2).obj, (Behavior) val_peek(0).obj); }
 break;
 case 55:
-//#line 292 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 288 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Condition((Expression) val_peek(0).obj); }
 break;
 case 56:
-//#line 296 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 292 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new Behavior((Statement) val_peek(0).obj); }
 break;
 case 57:
-//#line 300 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 296 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 58:
-//#line 301 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 297 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 59:
-//#line 302 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 298 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 60:
-//#line 303 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 299 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 61:
-//#line 304 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 300 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 62:
-//#line 308 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 304 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new ExpressionStatement((Expression) val_peek(1).obj); }
 break;
 case 63:
-//#line 309 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 305 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new NullStatement(); }
 break;
 case 64:
-//#line 313 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 309 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 65:
-//#line 317 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 313 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 66:
-//#line 318 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 314 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new AssignmentExpression((Expression) val_peek(2).obj, (Expression) val_peek(0).obj); }
 break;
 case 67:
-//#line 322 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 318 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
 case 68:
-//#line 326 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = val_peek(0).obj; }
-break;
-case 69:
-//#line 327 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 319 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.LOGICAL_OR, (Expression) val_peek(0).obj); }
 break;
-case 70:
-//#line 331 "../../../../../src/org/geppetto/parser/parser.y"
+case 69:
+//#line 323 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 71:
-//#line 332 "../../../../../src/org/geppetto/parser/parser.y"
+case 70:
+//#line 324 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression( (Expression) val_peek(2).obj,  Operator.LOGICAL_AND, (Expression) val_peek(0).obj); }
 break;
-case 72:
-//#line 336 "../../../../../src/org/geppetto/parser/parser.y"
+case 71:
+//#line 328 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 73:
-//#line 337 "../../../../../src/org/geppetto/parser/parser.y"
+case 72:
+//#line 329 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.EQUAL_TO, (Expression) val_peek(0).obj); }
 break;
-case 74:
-//#line 338 "../../../../../src/org/geppetto/parser/parser.y"
+case 73:
+//#line 330 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.NOT_EQUAL_TO, (Expression) val_peek(0).obj); }
 break;
+case 74:
+//#line 334 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = val_peek(0).obj; }
+break;
 case 75:
+//#line 335 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.GREATER_THAN, (Expression) val_peek(0).obj); }
+break;
+case 76:
+//#line 336 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.LESS_THAN, (Expression) val_peek(0).obj); }
+break;
+case 77:
+//#line 337 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.GREATER_THAN_OR_EQUAL_TO, (Expression) val_peek(0).obj); }
+break;
+case 78:
+//#line 338 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.LESS_THAN_OR_EQUAL_TO, (Expression) val_peek(0).obj); }
+break;
+case 79:
 //#line 342 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 76:
-//#line 343 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.GREATER_THAN, (Expression) val_peek(0).obj); }
-break;
-case 77:
-//#line 344 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.LESS_THAN, (Expression) val_peek(0).obj); }
-break;
-case 78:
-//#line 345 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.GREATER_THAN_OR_EQUAL_TO, (Expression) val_peek(0).obj); }
-break;
-case 79:
-//#line 346 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.LESS_THAN_OR_EQUAL_TO, (Expression) val_peek(0).obj); }
-break;
 case 80:
-//#line 350 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = val_peek(0).obj; }
-break;
-case 81:
-//#line 351 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 343 "../../../../../src/org/geppetto/parser/parser.y"
 {yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.PLUS, (Expression) val_peek(0).obj); }
 break;
-case 82:
-//#line 352 "../../../../../src/org/geppetto/parser/parser.y"
+case 81:
+//#line 344 "../../../../../src/org/geppetto/parser/parser.y"
 {yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.MINUS, (Expression) val_peek(0).obj); }
 break;
-case 83:
-//#line 356 "../../../../../src/org/geppetto/parser/parser.y"
+case 82:
+//#line 348 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 84:
-//#line 357 "../../../../../src/org/geppetto/parser/parser.y"
+case 83:
+//#line 349 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.MULTIPLY, (Expression) val_peek(0).obj); }
 break;
-case 85:
-//#line 358 "../../../../../src/org/geppetto/parser/parser.y"
+case 84:
+//#line 350 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.DIVIDE, (Expression) val_peek(0).obj); }
 break;
-case 86:
-//#line 359 "../../../../../src/org/geppetto/parser/parser.y"
+case 85:
+//#line 351 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.MODULUS, (Expression) val_peek(0).obj); }
 break;
-case 87:
-//#line 363 "../../../../../src/org/geppetto/parser/parser.y"
+case 86:
+//#line 355 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 88:
-//#line 364 "../../../../../src/org/geppetto/parser/parser.y"
+case 87:
+//#line 356 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new UnaryExpression(Operator.UNARY_PLUS, (Expression) val_peek(1).obj); }
 break;
-case 89:
-//#line 365 "../../../../../src/org/geppetto/parser/parser.y"
+case 88:
+//#line 357 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new UnaryExpression(Operator.UNARY_MINUS, (Expression) val_peek(1).obj); }
 break;
-case 90:
-//#line 366 "../../../../../src/org/geppetto/parser/parser.y"
+case 89:
+//#line 358 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new UnaryExpression(Operator.UNARY_NEGATION, (Expression) val_peek(1).obj); }
 break;
-case 91:
-//#line 370 "../../../../../src/org/geppetto/parser/parser.y"
+case 90:
+//#line 362 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 92:
-//#line 371 "../../../../../src/org/geppetto/parser/parser.y"
+case 91:
+//#line 363 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new FunctionExpression(symbolTable.get(val_peek(2).ival), null); }
 break;
-case 93:
-//#line 372 "../../../../../src/org/geppetto/parser/parser.y"
+case 92:
+//#line 364 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new FunctionExpression(symbolTable.get(val_peek(3).ival), (ArrayList<Expression>) val_peek(3).obj); }
 break;
+case 93:
+//#line 368 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new ConstantExpression((Value) val_peek(0).obj); }
+break;
 case 94:
-//#line 376 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = val_peek(0).obj; }
+//#line 369 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = val_peek(1).obj; }
 break;
 case 95:
-//#line 377 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(2).ival), symbolTable.get(val_peek(0).ival)); }
+//#line 370 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new Variable(symbolTable.get(val_peek(1).ival)); }
 break;
 case 96:
-//#line 378 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(4).ival), symbolTable.get(val_peek(2).ival), symbolTable.get(val_peek(0).ival)); }
+//#line 371 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(3).ival), symbolTable.get(val_peek(1).ival)); }
 break;
 case 97:
-//#line 382 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 372 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(5).ival), symbolTable.get(val_peek(3).ival), symbolTable.get(val_peek(1).ival)); }
+break;
+case 98:
+//#line 373 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new Variable(symbolTable.get(val_peek(0).ival)); }
+break;
+case 99:
+//#line 374 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(2).ival), symbolTable.get(val_peek(0).ival)); }
+break;
+case 100:
+//#line 375 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new StructureExpression(symbolTable.get(val_peek(4).ival), symbolTable.get(val_peek(2).ival), symbolTable.get(val_peek(0).ival)); }
+break;
+case 101:
+//#line 379 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Expression> argList = new ArrayList<Expression>(); 
 	                                                  argList.add((Expression) val_peek(0).obj); 
 	                                                  yyval.obj = argList; }
 break;
-case 98:
-//#line 385 "../../../../../src/org/geppetto/parser/parser.y"
+case 102:
+//#line 382 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Expression> argList = (ArrayList<Expression>) val_peek(2).obj; 
 	                                                  argList.add((Expression) val_peek(0).obj); 
 	                                                  yyval.obj = argList; }
 break;
-case 99:
-//#line 394 "../../../../../src/org/geppetto/parser/parser.y"
+case 103:
+//#line 391 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = val_peek(0).obj; }
 break;
-case 100:
-//#line 398 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new Variable(symbolTable.get(val_peek(0).ival)); }
-break;
-case 101:
-//#line 399 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new ConstantExpression((Value) val_peek(0).obj); }
-break;
-case 102:
-//#line 400 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = val_peek(1).obj; }
-break;
-case 103:
-//#line 404 "../../../../../src/org/geppetto/parser/parser.y"
+case 104:
+//#line 395 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new CompoundStatement((ArrayList<Statement>) val_peek(1).obj); }
 break;
-case 104:
-//#line 408 "../../../../../src/org/geppetto/parser/parser.y"
+case 105:
+//#line 399 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Statement> statementList = new ArrayList<Statement>(); 
                                                       statementList.add((Statement) val_peek(0).obj); 
                                                       yyval.obj = statementList; }
 break;
-case 105:
-//#line 411 "../../../../../src/org/geppetto/parser/parser.y"
+case 106:
+//#line 402 "../../../../../src/org/geppetto/parser/parser.y"
 { ArrayList<Statement> statementList = (ArrayList<Statement>) val_peek(1).obj; 
                                                       statementList.add((Statement) val_peek(0).obj); 
                                                       yyval.obj = statementList; }
 break;
-case 106:
-//#line 417 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new SelectionStatement( (BooleanExpression) val_peek(2).obj, (Statement) val_peek(0).obj); }
-break;
 case 107:
-//#line 424 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new IterationStatement((BooleanExpression) val_peek(2).obj, (Statement) val_peek(0).obj); }
+//#line 408 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new SelectionStatement((Expression) val_peek(3).obj, (Statement) val_peek(1).obj); }
 break;
 case 108:
-//#line 429 "../../../../../src/org/geppetto/parser/parser.y"
+//#line 413 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = null; }
+break;
+case 109:
+//#line 417 "../../../../../src/org/geppetto/parser/parser.y"
+{ yyval.obj = new IterationStatement((Expression) val_peek(2).obj, (Statement) val_peek(0).obj); }
+break;
+case 110:
+//#line 422 "../../../../../src/org/geppetto/parser/parser.y"
 { yyval.obj = new EndStatement(); }
 break;
-//#line 1302 "Parser.java"
+//#line 1318 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

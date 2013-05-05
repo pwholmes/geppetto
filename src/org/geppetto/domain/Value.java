@@ -3,11 +3,13 @@ package org.geppetto.domain;
 import org.geppetto.domain.expression.VariableType;
 
 public class Value {
-   VariableType type;
-   int iValue;
-   float fValue;
-   String sValue;
-   boolean bValue;
+   private VariableType type;
+   private int iValue;
+   private float fValue;
+   private String sValue;
+   private boolean bValue;
+   
+   protected Value() {}
    
    public Value(int value) {
       this.type = VariableType.INT;
@@ -67,6 +69,16 @@ public class Value {
 
    public void setbValue(boolean bValue) {
       this.bValue = bValue;
+   }
+   
+   public Value copy() {
+      Value value = new Value();
+      value.type = getType();
+      value.bValue = getbValue();
+      value.iValue = getiValue();
+      value.fValue = getfValue();
+      value.sValue = getsValue();
+      return value;
    }
 
    public String toString() {

@@ -24,11 +24,22 @@ public class FunctionExpression implements Expression {
    }
 
    @Override
-   public Value evaluate() {
+   public boolean isLValue() {
+      return false;
+   }       
+
+   @Override
+   public void setValue(Value value) {
+      throw new IllegalArgumentException("Cannot assign a value to this expression");
+   }
+
+   @Override
+   public Value getValue() {
       // TODO Auto-generated method stub
       return null;
    }
    
+   @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
@@ -38,5 +49,6 @@ public class FunctionExpression implements Expression {
       sb.append("}");
       
       return sb.toString();
-   }       
+   }
+
 }

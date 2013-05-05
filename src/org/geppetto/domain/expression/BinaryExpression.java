@@ -2,6 +2,7 @@ package org.geppetto.domain.expression;
 
 import org.geppetto.domain.Value;
 
+
 public class BinaryExpression implements Expression {
    private Expression operand1;
    private Operator operator;
@@ -29,11 +30,74 @@ public class BinaryExpression implements Expression {
    }
 
    @Override
-   public Value evaluate() {
-      // TODO Auto-generated method stub
-      return null;
+   public boolean isLValue() {
+      return false;
+   }
+
+   @Override
+   public void setValue(Value value) {
+      throw new IllegalArgumentException("Cannot assign a value to an expression that is not an l-value");
+   }
+
+   @Override
+   public Value getValue() {
+      Value value1 = operand1.getValue();
+      Value value2 = operand2.getValue();
+      Value rv = null;
+
+      switch (operator) {
+         case ASSIGNMENT:
+            if (!operand1.isLValue())
+               throw new IllegalArgumentException("Left operand of assignment must be a variable.");
+            if (value1.getType() != value2.getType())
+               throw new IllegalArgumentException("Type mismatch: attempring to assign type " + value2.getType() + " to variable of type " + value1.getType() + ".");
+            operand1.setValue(value2.copy());
+            rv = value2.copy();
+            break;
+         case DIVIDE:
+            break;
+         case EQUAL_TO:
+            break;
+         case GREATER_THAN:
+            break;
+         case GREATER_THAN_OR_EQUAL_TO:
+            break;
+         case LESS_THAN:
+            break;
+         case LESS_THAN_OR_EQUAL_TO:
+            break;
+         case LOGICAL_AND:
+            break;
+         case LOGICAL_OR:
+            if (value1.getType() != VariableType.BOOLEAN)
+               throw new IllegalArgumentException("Illegal operand type " + value1.getType() + " for operator " + operator);
+            if (value2.getType() != VariableType.BOOLEAN)
+               throw new IllegalArgumentException("Illegal operand type " + value2.getType() + " for operator " + operator);
+            rv = new Value(value1.getbValue() || value2.getbValue());
+            break;
+         case MINUS:
+            break;
+         case MODULUS:
+            break;
+         case MULTIPLY:
+            break;
+         case NOT_EQUAL_TO:
+            break;
+         case PLUS:
+            break;
+         case UNARY_MINUS:
+            break;
+         case UNARY_NEGATION:
+            break;
+         case UNARY_PLUS:
+            break;
+         default: // should never happen
+            throw new IllegalArgumentException("Unknown operator");
+      }
+      return rv;
    }
    
+   @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
       

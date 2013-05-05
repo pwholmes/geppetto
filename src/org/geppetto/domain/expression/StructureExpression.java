@@ -2,6 +2,7 @@ package org.geppetto.domain.expression;
 
 import org.geppetto.domain.Value;
 
+
 public class StructureExpression implements Expression {
    private String name1;
    private String name2;
@@ -34,11 +35,23 @@ public class StructureExpression implements Expression {
    }
 
    @Override
-   public Value evaluate() {
+   public boolean isLValue() {
+      return true;
+   }
+
+   @Override
+   public void setValue(Value value) {
+      // TODO Auto-generated method stub
+      
+   }
+
+   @Override
+   public Value getValue() {
       // TODO Auto-generated method stub
       return null;
    }
    
+   @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
       

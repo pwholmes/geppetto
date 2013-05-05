@@ -53,7 +53,9 @@ import org.geppetto.parser.generated.Parser;
 "!" |
 "&" |
 "|" |
+"." |
 "," |
+":" |
 ";"                     { return (int) yycharat(0); } /* pass through to parser untouched */
 
 /* float literals */

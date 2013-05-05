@@ -2,6 +2,7 @@ package org.geppetto.domain.expression;
 
 import org.geppetto.domain.Value;
 
+
 public class ConstantExpression implements Expression {
    private String name;
    private Value value;
@@ -21,16 +22,22 @@ public class ConstantExpression implements Expression {
       return name;
    }
 
+   @Override
+   public boolean isLValue() {
+      return false;
+   }
+
+   @Override
+   public void setValue(Value value) {
+      throw new IllegalArgumentException("Cannot assign a value to this expression");
+   }    
+
+   @Override
    public Value getValue() {
       return value;
    }
 
    @Override
-   public Value evaluate() {
-      // TODO Auto-generated method stub
-      return null;
-   }
-   
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
@@ -40,5 +47,6 @@ public class ConstantExpression implements Expression {
       sb.append("}");
       
       return sb.toString();
-   }    
+   }
+
 }
