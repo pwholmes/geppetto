@@ -4,7 +4,6 @@ import org.geppetto.domain.GeppettoProgram;
 import org.geppetto.domain.Rule;
 
 public class Interpreter {
-   private GeppettoProgram program;
    private boolean debug;
    private int maxCycles = 100;
    private int cycles = 0; 

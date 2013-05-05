@@ -19,9 +19,12 @@ public class Geppetto {
 
    public void execute(String[] args) {
       try {
+         // Parse the command-line arguments
+         parseArgs(args);
+         
          // Parse the input file into a GeppettoProgram object (which is effectively our AST)
          yyparser = new Parser(debug);
-         GeppettoProgram program = yyparser.parse(new FileReader(args[0]));
+         GeppettoProgram program = yyparser.parse(new FileReader(inputFileName));
          program.setDebug(debug);
 
          // Print the program state to the console.
