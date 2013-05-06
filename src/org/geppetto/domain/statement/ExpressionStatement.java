@@ -18,9 +18,9 @@ public class ExpressionStatement implements Statement {
    }
 
    @Override
-   public void execute() {
-      // TODO execute() for ExpressionStatement
-      
+   public boolean execute() {
+      expression.getValue(); // just evaluate the expression, the value doesn't go anywhere
+      return true;
    }
    
    public String toString() {

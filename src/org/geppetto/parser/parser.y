@@ -311,7 +311,7 @@ expression:
 
 assignmentExpression:
 	logicalOrExpression                             { $$.obj = $1.obj; }
-	| primaryExpression '=' assignmentExpression    { $$.obj = new AssignmentExpression((Expression) $1.obj, (Expression) $3.obj); }
+	| primaryExpression '=' assignmentExpression    { $$.obj = new BinaryExpression((Expression) $1.obj, Operator.ASSIGNMENT, (Expression) $3.obj); }
 	;
 
 logicalOrExpression:

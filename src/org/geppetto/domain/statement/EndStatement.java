@@ -6,9 +6,8 @@ public class EndStatement implements Statement {
    }
 
    @Override
-   public void execute() {
-      // TODO execute() for EndStatement
-      
+   public boolean execute() {
+      return false;
    }
    
    public String toString() {

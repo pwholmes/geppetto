@@ -38,9 +38,9 @@ public class SelectionStatement implements Statement {
    }
 
    @Override
-   public void execute() {
+   public boolean execute() {
+      return true;
       // TODO execute() for SelectionStatement
-
    }
 
    public String toString() {

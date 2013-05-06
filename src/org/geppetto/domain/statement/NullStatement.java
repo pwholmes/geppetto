@@ -3,9 +3,8 @@ package org.geppetto.domain.statement;
 public class NullStatement implements Statement {
 
    @Override
-   public void execute() {
-      // TODO execute() for NullStatement
-
+   public boolean execute() {
+      return true;
    }
 
    public String toString() {

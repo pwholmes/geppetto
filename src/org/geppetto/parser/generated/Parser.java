@@ -1194,7 +1194,7 @@ case 65:
 break;
 case 66:
 //#line 314 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new AssignmentExpression((Expression) val_peek(2).obj, (Expression) val_peek(0).obj); }
+{ yyval.obj = new BinaryExpression((Expression) val_peek(2).obj, Operator.ASSIGNMENT, (Expression) val_peek(0).obj); }
 break;
 case 67:
 //#line 318 "../../../../../src/org/geppetto/parser/parser.y"

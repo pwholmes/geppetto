@@ -45,6 +45,11 @@ public class BinaryExpression implements Expression {
       Value value2 = operand2.getValue();
 
       switch (operator) {
+         case ADD:
+            return new Value(value1.getiValue() + value2.getiValue());
+            // TODO: ADD
+            //throw new IllegalArgumentException("Feature not implemented yet.");
+            
          case ASSIGNMENT: // as with C, we'll go with the convention that the value of an assignment expression is the value assigned to the lvalue
             if (!operand1.isLValue())
                throw new IllegalArgumentException("Left operand of an assignment must be a variable, is: " + operand1.getClass().getSimpleName() + ".");
@@ -96,10 +101,6 @@ public class BinaryExpression implements Expression {
                throw new IllegalArgumentException("Illegal operand type " + value2.getType() + " for operator " + operator);
             return new Value(value1.getbValue() || value2.getbValue());
          
-         case SUBTRACT:
-            // TODO: SUBTRACT
-            throw new IllegalArgumentException("Feature not implemented yet.");
-         
          case MODULUS:
             // TODO: MODULUS
             throw new IllegalArgumentException("Feature not implemented yet.");
@@ -113,10 +114,10 @@ public class BinaryExpression implements Expression {
                throw new IllegalArgumentException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(!value1.equals(value2));
          
-         case ADD:
-            // TODO: ADD
+         case SUBTRACT:
+            // TODO: SUBTRACT
             throw new IllegalArgumentException("Feature not implemented yet.");
-            
+         
          default: // should never happen
             throw new IllegalArgumentException("Unknown binary operator: " + operator);
       }

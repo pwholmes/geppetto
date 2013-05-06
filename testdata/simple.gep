@@ -1,13 +1,16 @@
-int x = 2;
+int maxCycles = 100;
+int x = 1;
 
-property mood(string m {"happy", "sad"});
+property type(string s {"predator", "prey"});
 property state(string s {"foraging", "hunting", "relaxing", "fleeing", "dead"});
-property age(int n);
 property position(int x {0-100}, int y {0-100});
+property linearpos(int x {1-10});
 
-entity bob {mood(m="happy"), age(n=35)};
-entity alice {mood(m="sad"), age(n=22)};
+entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
+entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
 
-rule x == 2 -> end;
+rule x < 10 -> x = x + 1;
+rule x == 5 -> end;
 
 int test(int x, string y) { end; end; } 
+string test2(string x, float z) { end; }

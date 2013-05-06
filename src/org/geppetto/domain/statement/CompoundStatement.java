@@ -18,8 +18,12 @@ public class CompoundStatement implements Statement {
    }
 
    @Override
-   public void execute() {
-      // TODO execute() for CompoundStatement
+   public boolean execute() {
+      for (Statement statement : getStatements()) {
+         if (!statement.execute())
+            return false;
+      }
+      return true;
    }
 
    public String toString() {

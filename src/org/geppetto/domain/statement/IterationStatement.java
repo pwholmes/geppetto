@@ -25,7 +25,8 @@ public class IterationStatement implements Statement {
    }
 
    @Override
-   public void execute() {
+   public boolean execute() {
+      return true;
       // TODO execute() for IterationStatement
    }
 
