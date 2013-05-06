@@ -1,22 +1,25 @@
 package org.geppetto.domain;
 
+import org.geppetto.domain.expression.Expression;
+import org.geppetto.domain.statement.Statement;
+
 public class Rule {
-   private Condition condition;
-   private Behavior behavior;
+   private Expression condition;
+   private Statement behavior;
    
    @SuppressWarnings("unused")
    private Rule() {}
    
-   public Rule(Condition condition, Behavior behavior) {
+   public Rule(Expression condition, Statement behavior) {
       this.condition = condition;
       this.behavior = behavior;
    }
    
-   public Condition getCondition() {
+   public Expression getCondition() {
       return condition;
    }
    
-   public Behavior getBehavior() {
+   public Statement getBehavior() {
       return behavior;
    }
    

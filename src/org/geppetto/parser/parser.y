@@ -14,8 +14,6 @@
   import org.geppetto.domain.AttributeConstraintStringSet;
   import org.geppetto.domain.AttributeDefinition;
   import org.geppetto.domain.AttributeInitializer;
-  import org.geppetto.domain.Behavior;
-  import org.geppetto.domain.Condition;
   import org.geppetto.domain.Entity;
   import org.geppetto.domain.FunctionDefinition;
   import org.geppetto.domain.GeppettoProgram;
@@ -37,6 +35,7 @@
   import org.geppetto.domain.statement.ExpressionStatement;
   import org.geppetto.domain.statement.IterationStatement;
   import org.geppetto.domain.statement.NullStatement;
+  import org.geppetto.domain.statement.PrintStatement;
   import org.geppetto.domain.statement.SelectionStatement;
   import org.geppetto.domain.statement.Statement;
 %}
@@ -280,23 +279,16 @@ ruleDeclarationList:
     ;
     
 rule:
-    RULE condition INFERS behavior                  { $$.obj = new Rule((Condition) $2.obj, (Behavior) $4.obj); }
+    RULE expression INFERS statement                { $$.obj = new Rule((Expression) $2.obj, (Statement) $4.obj); }
     ;
     
-condition:
-    expression                                      { $$.obj = new Condition((Expression) $1.obj); }
-    ;
-
-behavior:
-    statement                                       { $$.obj = new Behavior((Statement) $1.obj); }
-    ;
-
 statement:
 	expressionStatement                             { $$.obj = $1.obj; }
 	| compoundStatement	                            { $$.obj = $1.obj; }
 	| selectionStatement	                        { $$.obj = $1.obj; }
 	| iterationStatement	                        { $$.obj = $1.obj; }
 	| endStatement		                            { $$.obj = $1.obj; }
+	| printStatement                                { $$.obj = $1.obj; }
 	;
 	
 expressionStatement:
@@ -435,6 +427,10 @@ iterationStatement:
 endStatement:
 	END	';'					                        { $$.obj = new EndStatement(); }
 	;
+	
+printStatement:
+    PRINT '(' expression ')' ';'                    { $$.obj = new PrintStatement((Expression) $3.obj); }
+    ;
 
 
 %%

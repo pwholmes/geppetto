@@ -1,6 +1,7 @@
 package org.geppetto.domain.statement;
 
 import org.geppetto.domain.expression.Expression;
+import org.geppetto.domain.expression.VariableType;
 
 public class IterationStatement implements Statement {
 
@@ -26,8 +27,11 @@ public class IterationStatement implements Statement {
 
    @Override
    public boolean execute() {
+      if (expression.getValue().getType() != VariableType.BOOLEAN)
+         throw new IllegalArgumentException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
+      if (expression.getValue().getbValue())
+         return statement.execute();
       return true;
-      // TODO execute() for IterationStatement
    }
 
    public String toString() {

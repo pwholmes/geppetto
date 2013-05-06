@@ -1,6 +1,7 @@
 package org.geppetto.domain.statement;
 
 import org.geppetto.domain.expression.Expression;
+import org.geppetto.domain.expression.VariableType;
 
 public class SelectionStatement implements Statement {
 
@@ -39,8 +40,13 @@ public class SelectionStatement implements Statement {
 
    @Override
    public boolean execute() {
+      if (expression.getValue().getType() != VariableType.BOOLEAN)
+         throw new IllegalArgumentException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
+      if (expression.getValue().getbValue())
+         return ifStatement.execute();
+      else if (elseStatement != null)
+         return elseStatement.execute();
       return true;
-      // TODO execute() for SelectionStatement
    }
 
    public String toString() {

@@ -65,7 +65,7 @@ import org.geppetto.parser.generated.Parser;
 [0-9]+                  { yyparser.yylval = new ParserVal(Integer.parseInt(yytext())); return Parser.INTEGER_LITERAL; }
 
 /* string literals */
-\"[^\"]*\"              { symbolTable.add(yytext()); yyparser.yylval.ival = symbolTable.indexOf(yytext()); return Parser.STRING_LITERAL; }  
+\"[^\"]*\"              { String str = yytext().substring(1,yytext().length()-1); symbolTable.add(str); yyparser.yylval.ival = symbolTable.indexOf(str); return Parser.STRING_LITERAL; }  
 
 /* reserved words */
 boolean                 { return Parser.BOOLEAN; }

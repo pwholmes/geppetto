@@ -59,13 +59,13 @@ public class Interpreter {
    public boolean processRule(Rule rule) {
       if (debug)
          print("Processing rule...");
-      Value conditionValue = rule.getCondition().getExpression().getValue(); 
+      Value conditionValue = rule.getCondition().getValue(); 
       if (conditionValue.getType() != VariableType.BOOLEAN)
          throw new IllegalArgumentException("Rule condition must be a boolean expression, but is of type: " + conditionValue.getType());
       if (conditionValue.getbValue()) {
          if (debug)
             print("Rule condition is true, executing its behavior...");
-         return rule.getBehavior().getStatement().execute();
+         return rule.getBehavior().execute();
       }
       return true;
    }
