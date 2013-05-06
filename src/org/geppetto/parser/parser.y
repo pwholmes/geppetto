@@ -23,7 +23,6 @@
   import org.geppetto.domain.PropertyDefinition;
   import org.geppetto.domain.Rule;
   import org.geppetto.domain.Value;
-  import org.geppetto.domain.expression.AssignmentExpression;
   import org.geppetto.domain.expression.BinaryExpression;
   import org.geppetto.domain.expression.ConstantExpression;
   import org.geppetto.domain.expression.Expression;
