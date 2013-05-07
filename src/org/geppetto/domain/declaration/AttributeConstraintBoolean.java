@@ -1,4 +1,6 @@
-package org.geppetto.domain;
+package org.geppetto.domain.declaration;
+
+
 
 public class AttributeConstraintBoolean implements AttributeConstraint {
    

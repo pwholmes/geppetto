@@ -1,6 +1,6 @@
 package org.geppetto.domain.statement;
 
-import org.geppetto.domain.GeppettoProgram;
+import org.geppetto.GeppettoProgram;
 
 public class EndStatement implements Statement {
 

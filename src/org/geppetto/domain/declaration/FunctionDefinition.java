@@ -1,4 +1,4 @@
-package org.geppetto.domain;
+package org.geppetto.domain.declaration;
 
 import java.util.ArrayList;
 import org.geppetto.domain.expression.VariableType;

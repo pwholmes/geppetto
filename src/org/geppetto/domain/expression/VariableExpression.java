@@ -1,21 +1,14 @@
 package org.geppetto.domain.expression;
 
+import org.geppetto.GeppettoProgram;
 import org.geppetto.domain.declaration.Value;
+import org.geppetto.domain.declaration.VariableDeclaration;
 
-
-public class Variant implements Expression {
-
+public class VariableExpression implements Expression {
    private VariableType type;
    private String name;
-   private Value value;
 
-   public Variant(String name, VariableType type, Value value) {
-      this.name = name;
-      this.type = type;
-      this.value = value;
-   }
-
-   public Variant(String name) {
+   public VariableExpression(String name) {
       this.name = name;
    }
 
@@ -38,16 +31,22 @@ public class Variant implements Expression {
    @Override
    public boolean isLValue() {
       return true;
-   }
+   }   
 
    @Override
    public void setValue(Value value) {
-      this.value = value;
+      VariableDeclaration variable = GeppettoProgram.getInstance().getVariableDeclaration(getName());
+      if (variable == null)
+         throw new IllegalArgumentException("Undeclared variable: " + getName());
+      variable.setValue(value);
    }
    
    @Override
    public Value getValue() {
-      return value;
+      VariableDeclaration variable = GeppettoProgram.getInstance().getVariableDeclaration(getName());
+      if (variable == null)
+         throw new IllegalArgumentException("Undeclared variable: " + getName());
+      return variable.getValue();
    }
 
    @Override

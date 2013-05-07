@@ -1,22 +1,16 @@
-package org.geppetto.domain.expression;
+package org.geppetto.domain.declaration;
 
-import org.geppetto.domain.declaration.Value;
+import org.geppetto.domain.expression.VariableType;
 
-
-public class Variant implements Expression {
-
+public class VariableDeclaration {
    private VariableType type;
    private String name;
    private Value value;
 
-   public Variant(String name, VariableType type, Value value) {
+   public VariableDeclaration(String name, VariableType type, Value value) {
       this.name = name;
       this.type = type;
       this.value = value;
-   }
-
-   public Variant(String name) {
-      this.name = name;
    }
 
    public String getName() {
@@ -35,19 +29,12 @@ public class Variant implements Expression {
       this.type = type;
    }
 
-   @Override
-   public boolean isLValue() {
-      return true;
-   }
-
-   @Override
    public void setValue(Value value) {
       this.value = value;
    }
    
-   @Override
    public Value getValue() {
-      return value;
+      return this.value;
    }
 
    @Override

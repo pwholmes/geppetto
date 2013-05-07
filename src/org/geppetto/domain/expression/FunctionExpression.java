@@ -1,9 +1,9 @@
 package org.geppetto.domain.expression;
 
 import java.util.ArrayList;
-import org.geppetto.domain.FunctionDefinition;
-import org.geppetto.domain.GeppettoProgram;
-import org.geppetto.domain.Value;
+import org.geppetto.GeppettoProgram;
+import org.geppetto.domain.declaration.FunctionDefinition;
+import org.geppetto.domain.declaration.Value;
 
 /**
  * Functions are expressions rather than statements because they return a value.

@@ -1,31 +1,31 @@
-package org.geppetto.domain;
+package org.geppetto.domain.declaration;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class AttributeConstraintIntegerSet implements AttributeConstraint {
-   private Set<Integer> values = new HashSet<Integer>();
+public class AttributeConstraintFloatSet implements AttributeConstraint {
+   private Set<Float> values = new HashSet<Float>();
    
-   public AttributeConstraintIntegerSet(Set<Integer> values) {
-      this.values.addAll(values);
+   public AttributeConstraintFloatSet(Set<Float> values) {
+      values.addAll(values);
    }
    
-   public void addValue(Integer value) {
-      this.values.add(value);
+   public Set<Float> getValues() {
+      return values;
    }
 
-   public Set<Integer> getValues() {
-      return this.values;
+   public void addValue(Float value) {
+      values.add(value);
    }
 
    @Override
    public AttributeConstraintType getType() {
-      return AttributeConstraintType.INT_SET;
+      return AttributeConstraintType.FLOAT_SET;
    }
    
    @Override
    public boolean violatesConstraint(Object value) {
-      if (value.getClass() != Integer.class)
+      if (value.getClass() != Float.class)
          return true;
       return !(values.contains(value));
    }
@@ -38,5 +38,5 @@ public class AttributeConstraintIntegerSet implements AttributeConstraint {
       sb.append("}");
       
       return sb.toString();
-   }      
+   }   
 }

@@ -1,6 +1,6 @@
 package org.geppetto.domain.expression;
 
-import org.geppetto.domain.Value;
+import org.geppetto.domain.declaration.Value;
 
 
 public class BinaryExpression implements Expression {

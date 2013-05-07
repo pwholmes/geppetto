@@ -5,22 +5,23 @@
   import java.util.HashSet;
   import java.util.List;
   import java.util.Set;
-  import org.geppetto.domain.ArgumentDeclaration;
-  import org.geppetto.domain.AttributeConstraint;
-  import org.geppetto.domain.AttributeConstraintFloatRange;
-  import org.geppetto.domain.AttributeConstraintFloatSet;
-  import org.geppetto.domain.AttributeConstraintIntegerRange;
-  import org.geppetto.domain.AttributeConstraintIntegerSet;
-  import org.geppetto.domain.AttributeConstraintStringSet;
-  import org.geppetto.domain.AttributeDefinition;
-  import org.geppetto.domain.AttributeInitializer;
-  import org.geppetto.domain.Entity;
-  import org.geppetto.domain.FunctionDefinition;
-  import org.geppetto.domain.GeppettoProgram;
-  import org.geppetto.domain.Property;
-  import org.geppetto.domain.PropertyDefinition;
-  import org.geppetto.domain.Rule;
-  import org.geppetto.domain.Value;
+  import org.geppetto.GeppettoProgram;
+  import org.geppetto.domain.declaration.ArgumentDeclaration;
+  import org.geppetto.domain.declaration.AttributeConstraint;
+  import org.geppetto.domain.declaration.AttributeConstraintFloatRange;
+  import org.geppetto.domain.declaration.AttributeConstraintFloatSet;
+  import org.geppetto.domain.declaration.AttributeConstraintIntegerRange;
+  import org.geppetto.domain.declaration.AttributeConstraintIntegerSet;
+  import org.geppetto.domain.declaration.AttributeConstraintStringSet;
+  import org.geppetto.domain.declaration.AttributeDefinition;
+  import org.geppetto.domain.declaration.AttributeInitializer;
+  import org.geppetto.domain.declaration.Entity;
+  import org.geppetto.domain.declaration.FunctionDefinition;
+  import org.geppetto.domain.declaration.Property;
+  import org.geppetto.domain.declaration.PropertyDefinition;
+  import org.geppetto.domain.declaration.Rule;
+  import org.geppetto.domain.declaration.Value;
+  import org.geppetto.domain.declaration.VariableDeclaration;
   import org.geppetto.domain.expression.BinaryExpression;
   import org.geppetto.domain.expression.ConstantExpression;
   import org.geppetto.domain.expression.Expression;
@@ -28,7 +29,7 @@
   import org.geppetto.domain.expression.Operator;
   import org.geppetto.domain.expression.StructureExpression;
   import org.geppetto.domain.expression.UnaryExpression;
-  import org.geppetto.domain.expression.Variable;
+  import org.geppetto.domain.expression.VariableExpression;
   import org.geppetto.domain.expression.VariableType;
   import org.geppetto.domain.statement.CompoundStatement;
   import org.geppetto.domain.statement.EndStatement;
@@ -64,7 +65,7 @@ program:
     propertyDefinitionList 
     entityDeclarationList 
     ruleDeclarationList
-    functionDefinitionList                          { ArrayList<Variable> variables = (ArrayList<Variable>) $1.obj;
+    functionDefinitionList                          { ArrayList<VariableDeclaration> variables = (ArrayList<VariableDeclaration>) $1.obj;
                                                       ArrayList<PropertyDefinition> properties = (ArrayList<PropertyDefinition>) $2.obj;
                                                       ArrayList<Entity> entities =  (ArrayList<Entity>) $3.obj;
                                                       ArrayList<Rule> rules = (ArrayList<Rule>) $4.obj;
@@ -73,16 +74,16 @@ program:
     ; 
 
 variableDeclarationList:
-    variableDeclarationList variableDeclaration     { variables = (ArrayList<Variable>) $1.obj;
+    variableDeclarationList variableDeclaration     { variables = (ArrayList<VariableDeclaration>) $1.obj;
                                                       if (variables == null)
-                                                         variables = new ArrayList<Variable>();
-                                                      variables.add((Variable) $2.obj); 
+                                                         variables = new ArrayList<VariableDeclaration>();
+                                                      variables.add((VariableDeclaration) $2.obj); 
                                                       $$.obj = variables; } 
-    |                                               { $$.obj = new ArrayList<Variable>(); }
+    |                                               { $$.obj = new ArrayList<VariableDeclaration>(); }
     ;
 
 variableDeclaration:
-    typeSpecifier identifier '=' constant ';'       { $$.obj = new Variable(symbolTable.get($2.ival), (VariableType) $1.obj, (Value) $4.obj); }
+    typeSpecifier identifier '=' constant ';'       { $$.obj = new VariableDeclaration(symbolTable.get($2.ival), (VariableType) $1.obj, (Value) $4.obj); }
     ;
 
 propertyDefinitionList:
@@ -358,20 +359,10 @@ functionExpression:
 primaryExpression:
     constant                                        { $$.obj = new ConstantExpression((Value) $1.obj); }
     | '(' expression ')'                            { $$.obj = $2.obj; }
-    | ':' identifier                                { $$.obj = new Variable(symbolTable.get($1.ival)); }
+    | ':' identifier                                { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
     | ':' identifier '.' identifier                 { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | ':' identifier '.' identifier '.' identifier  { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
-    | identifier                                    { String name = symbolTable.get($1.ival);
-                                                      Variable var = null;
-                                                      for (Variable v : variables) {
-                                                          if (v.getName().equals(name)) {
-                                                              var = v;
-                                                              break;
-                                                          }
-                                                      }
-                                                      if (var == null)
-                                                          throw new IllegalArgumentException("Undeclared identifier: " + name);
-                                                      $$.obj = var; }
+    | identifier                                    { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
     | identifier '.' identifier                     { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | identifier '.' identifier '.' identifier      { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
     ;
@@ -447,7 +438,7 @@ public GeppettoProgram geppettoProgram = null;
 /* Need these as their own global variables because the definitions are needed to validate subsequent declarations.
    These variables are in essence the symbol table. */ 
 public ArrayList<PropertyDefinition> propertyDefinitions = null;
-public ArrayList<Variable> variables = null; 
+public ArrayList<VariableDeclaration> variables = null; 
 
 /**
  * parse() is called explicitly by the Geppetto main program to start off 
@@ -458,7 +449,7 @@ public GeppettoProgram  parse(Reader inputReader) {
        We supply our own constructor so we can give it whatever parameters we want. 
        Here we pass it the Reader that supplies the input we're going to parse, a 
        pointer to this class (necessary so the lexer can access the parser's member 
-       variable's, such as yylval), and a pointer to the symbol table. */
+       variables, such as yylval), and a pointer to the symbol table. */
     lexer = new Yylex(inputReader, this, symbolTable); 
     
     /* Start parsing the input.  BYACCJ will call yylex as necessary to retrieve

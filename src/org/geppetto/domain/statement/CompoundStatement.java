@@ -1,7 +1,7 @@
 package org.geppetto.domain.statement;
 
 import java.util.ArrayList;
-import org.geppetto.domain.GeppettoProgram;
+import org.geppetto.GeppettoProgram;
 
 public class CompoundStatement implements Statement {
    private ArrayList<Statement> statements;

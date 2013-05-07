@@ -1,8 +1,8 @@
 package org.geppetto.interpreter;
 
-import org.geppetto.domain.GeppettoProgram;
-import org.geppetto.domain.Rule;
-import org.geppetto.domain.Value;
+import org.geppetto.GeppettoProgram;
+import org.geppetto.domain.declaration.Rule;
+import org.geppetto.domain.declaration.Value;
 import org.geppetto.domain.expression.VariableType;
 
 public class Interpreter {

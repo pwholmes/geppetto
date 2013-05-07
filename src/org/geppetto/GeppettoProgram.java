@@ -1,11 +1,18 @@
-package org.geppetto.domain;
+package org.geppetto;
 
 import java.util.ArrayList;
-import org.geppetto.domain.expression.Variable;
+import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
+import org.geppetto.domain.declaration.Entity;
+import org.geppetto.domain.declaration.FunctionDefinition;
+import org.geppetto.domain.declaration.PropertyDefinition;
+import org.geppetto.domain.declaration.Rule;
+import org.geppetto.domain.declaration.VariableDeclaration;
 
 public class GeppettoProgram {
    private static GeppettoProgram        instance;
-   private ArrayList<Variable>           variables;
+   private LinkedList<ProgramContext>    contexts; // this one is a LinkedList because we want to be able to get a descendingIterator
    private ArrayList<PropertyDefinition> propertyDefinitions;
    private ArrayList<Entity>             entities;
    private ArrayList<Rule>               rules;
@@ -13,10 +20,11 @@ public class GeppettoProgram {
    private boolean                       debug;
    private boolean                       endRequested;
 
-   public static GeppettoProgram createInstance(ArrayList<Variable> variables, ArrayList<PropertyDefinition> propertyDefinitions,
+   public static GeppettoProgram createInstance(ArrayList<VariableDeclaration> globalVariables, ArrayList<PropertyDefinition> propertyDefinitions,
          ArrayList<Entity> entities, ArrayList<Rule> rules, ArrayList<FunctionDefinition> functionDefinitions) {
       instance = new GeppettoProgram();
-      instance.variables = variables;
+      instance.contexts = new LinkedList<ProgramContext>();
+      instance.contexts.add(new ProgramContext("global", globalVariables));
       instance.propertyDefinitions = propertyDefinitions;
       instance.entities = entities;
       instance.rules = rules;
@@ -28,14 +36,23 @@ public class GeppettoProgram {
       return instance;
    }
 
-   public ArrayList<Variable> getVariables() {
-      return variables;
+   public Deque<ProgramContext> getContexts() {
+      return contexts;
    }
 
-   public Variable getVariable(String name) {
-      for (Variable variable : getVariables()) {
-         if (variable.getName().equals(name))
-            return variable;
+   /**
+    * Loop through all program contexts, starting with the most recent, and within
+    * each context loop through the list of variables, to find the variable with the 
+    * name we're searching for.
+    */
+   public VariableDeclaration getVariableDeclaration(String name) {
+      Iterator<ProgramContext> i = contexts.descendingIterator();
+      while (i.hasNext()) {
+         ProgramContext context = i.next();
+         for (VariableDeclaration variable : context.getVariableDeclarations()) {
+            if (variable.getName().equals(name))
+               return variable;
+         }
       }
       return null;
    }
@@ -101,7 +118,7 @@ public class GeppettoProgram {
 
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
 
-      sb.append("variables: ").append(getVariables()).append("\n");
+      sb.append("contexts: ").append(getContexts()).append("\n");
       sb.append("propertyDefinitions: ").append(getPropertyDefinitions()).append("\n");
       sb.append("entities: ").append(getEntities()).append("\n");
       sb.append("rules: ").append(getRules()).append("\n");
