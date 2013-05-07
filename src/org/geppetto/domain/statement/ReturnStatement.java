@@ -21,6 +21,7 @@ public class ReturnStatement implements Statement {
    @Override
    public void execute() {
       GeppettoProgram.getInstance().getContexts().getLast().setReturnValue(expression.getValue());
+      GeppettoProgram.getInstance().getContexts().getLast().setReturnCalled(true);
    }
 
    @Override

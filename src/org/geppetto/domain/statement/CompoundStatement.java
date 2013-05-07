@@ -22,7 +22,7 @@ public class CompoundStatement implements Statement {
    public void execute() {
       for (Statement statement : getStatements()) {
          statement.execute();
-         if (GeppettoProgram.getInstance().isEndRequested())
+         if (GeppettoProgram.getInstance().isEndRequested() || GeppettoProgram.getInstance().getContexts().getLast().isReturnCalled())
             break;
       }
    }

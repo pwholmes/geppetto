@@ -60,13 +60,13 @@ public class Interpreter {
    
    public void processRule(Rule rule) {
       if (debug)
-         print("Processing rule...");
+         print("Processing rule: " + rule.getName());
       Value conditionValue = rule.getCondition().getValue(); 
       if (conditionValue.getType() != VariableType.BOOLEAN)
          throw new GeppettoException("Rule condition must be a boolean expression, but is of type: " + conditionValue.getType());
       if (conditionValue.getBooleanValue()) {
          if (debug)
-            print("Rule condition is true, executing its behavior...");
+            print("Condition of rule " + rule.getName() + " is true, executing its behavior...");
          rule.getBehavior().execute();
       }
    }

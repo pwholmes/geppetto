@@ -9,10 +9,11 @@ property linearpos(int x {1-10});
 entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
 entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
 
-rule (x < 10) -> { x = x + 1; print("x incremented to: " + x); }
-rule (x == 3) -> test();
-rule (test2(x)) -> { end; }
-rule (x == 6) -> { end; }
+rule incrementX              (true)     -> { x = x + 1; print("x incremented to: " + x); }
+rule callRecursiveFunction   (true)     -> print("fib("+ x + ") = " + fib(x));
+rule callFunctionInBehavior  (x == 3)   -> test();
+rule callFunctionInCondition (test2(x)) -> { end; }
+rule endWhenXis6             (x == 6)   -> { end; }
 
 int test() {
    print("3/4 = " + 3/4);  
@@ -25,4 +26,14 @@ boolean test2(int x) {
       return true;
    else
       return false;
+      
+   print("Shouldn't get here...");
 }
+
+int fib(int x) {
+   if (x == 1)
+      return 1;
+   if (x <= 0)
+      return 0;
+   return fib(x-1) + fib(x-2);
+} 

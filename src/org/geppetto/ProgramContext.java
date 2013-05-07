@@ -11,6 +11,7 @@ import org.geppetto.domain.expression.Expression;
 public class ProgramContext {
    private String name;
    private ArrayList<VariableDeclaration> variables;
+   private boolean returnCalled = false;
    private Value returnValue;
    
    public ProgramContext(String name, ArrayList<VariableDeclaration> variables) {
@@ -68,6 +69,14 @@ public class ProgramContext {
       return variables;
    }
    
+   public boolean isReturnCalled() {
+      return returnCalled;
+   }
+
+   public void setReturnCalled(boolean returnCalled) {
+      this.returnCalled = returnCalled;
+   }
+
    public Value getReturnValue() {
       return returnValue;
    }
