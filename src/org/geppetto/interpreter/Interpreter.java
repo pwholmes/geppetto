@@ -64,7 +64,7 @@ public class Interpreter {
       Value conditionValue = rule.getCondition().getValue(); 
       if (conditionValue.getType() != VariableType.BOOLEAN)
          throw new GeppettoException("Rule condition must be a boolean expression, but is of type: " + conditionValue.getType());
-      if (conditionValue.getbValue()) {
+      if (conditionValue.getBooleanValue()) {
          if (debug)
             print("Rule condition is true, executing its behavior...");
          rule.getBehavior().execute();

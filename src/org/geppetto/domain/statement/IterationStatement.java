@@ -30,7 +30,7 @@ public class IterationStatement implements Statement {
    public void execute() {
       if (expression.getValue().getType() != VariableType.BOOLEAN)
          throw new GeppettoException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
-      if (expression.getValue().getbValue())
+      if (expression.getValue().getBooleanValue())
          statement.execute();
    }
 

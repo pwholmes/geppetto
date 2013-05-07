@@ -47,7 +47,7 @@ public class BinaryExpression implements Expression {
 
       switch (operator) {
          case ADD:
-            return new Value(value1.getiValue() + value2.getiValue());
+            return new Value(value1.getIntValue() + value2.getIntValue());
             // TODO: ADD
             //throw new GeppettoException("Feature not implemented yet.");
             
@@ -93,14 +93,14 @@ public class BinaryExpression implements Expression {
                throw new GeppettoException("Illegal operand type " + value1.getType() + " for operator " + operator);
             if (value2.getType() != VariableType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value2.getType() + " for operator " + operator);
-            return new Value(value1.getbValue() && value2.getbValue());
+            return new Value(value1.getBooleanValue() && value2.getBooleanValue());
          
          case LOGICAL_OR:
             if (value1.getType() != VariableType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value1.getType() + " for operator " + operator);
             if (value2.getType() != VariableType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value2.getType() + " for operator " + operator);
-            return new Value(value1.getbValue() || value2.getbValue());
+            return new Value(value1.getBooleanValue() || value2.getBooleanValue());
          
          case MODULUS:
             // TODO: MODULUS

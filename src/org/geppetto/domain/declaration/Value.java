@@ -5,31 +5,31 @@ import org.geppetto.domain.expression.VariableType;
 
 public class Value {
    private VariableType type;
-   private int iValue = 0;
-   private float fValue = 0;
-   private String sValue = null;
-   private boolean bValue = false;
+   private int intValue = 0;
+   private float floatValue = 0;
+   private String stringValue = null;
+   private boolean booleanValue = false;
    
    protected Value() {}
    
-   public Value(int value) {
+   public Value(int intValue) {
       this.type = VariableType.INT;
-      this.iValue = value;
+      this.intValue = intValue;
    }
 
-   public Value(float value) {
+   public Value(float floatValue) {
       this.type = VariableType.FLOAT;
-      this.fValue = value;
+      this.floatValue = floatValue;
    }
    
-   public Value(String value) {
+   public Value(String stringValue) {
       this.type = VariableType.STRING;
-      this.sValue = value;
+      this.stringValue = stringValue;
    }
 
-   public Value(boolean value) {
+   public Value(boolean booleanValue) {
       this.type = VariableType.BOOLEAN;
-      this.bValue = value;
+      this.booleanValue = booleanValue;
    }
 
    public VariableType getType() {
@@ -40,45 +40,45 @@ public class Value {
       this.type = type;
    }
    
-   public int getiValue() {
-      return iValue;
+   public int getIntValue() {
+      return intValue;
    }
 
-   public void setiValue(int iValue) {
-      this.iValue = iValue;
+   public void setIntValue(int intValue) {
+      this.intValue = intValue;
    }
 
-   public float getfValue() {
-      return fValue;
+   public float getFloatValue() {
+      return floatValue;
    }
 
-   public void setfValue(float fValue) {
-      this.fValue = fValue;
+   public void setFloatValue(float floatValue) {
+      this.floatValue = floatValue;
    }
 
-   public String getsValue() {
-      return sValue;
+   public String getStringValue() {
+      return stringValue;
    }
 
-   public void setsValue(String sValue) {
-      this.sValue = sValue;
+   public void setStringValue(String stringValue) {
+      this.stringValue = stringValue;
    }
 
-   public boolean getbValue() {
-      return bValue;
+   public boolean getBooleanValue() {
+      return booleanValue;
    }
 
-   public void setbValue(boolean bValue) {
-      this.bValue = bValue;
+   public void setBooleanValue(boolean booleanValue) {
+      this.booleanValue = booleanValue;
    }
    
    public Value copy() {
       Value value = new Value();
       value.type = getType();
-      value.bValue = getbValue();
-      value.iValue = getiValue();
-      value.fValue = getfValue();
-      value.sValue = getsValue();
+      value.booleanValue = getBooleanValue();
+      value.intValue = getIntValue();
+      value.floatValue = getFloatValue();
+      value.stringValue = getStringValue();
       return value;
    }
    
@@ -95,13 +95,13 @@ public class Value {
       
       switch (value1.getType()) {
          case BOOLEAN:
-            return (value1.getbValue() == value2.getbValue());
+            return (value1.getBooleanValue() == value2.getBooleanValue());
          case FLOAT:
-            return (value1.getfValue() == value2.getfValue());
+            return (value1.getFloatValue() == value2.getFloatValue());
          case INT:
-            return (value1.getiValue() == value2.getiValue());
+            return (value1.getIntValue() == value2.getIntValue());
          case STRING:
-            return (value1.getsValue() == value2.getsValue());
+            return (value1.getStringValue() == value2.getStringValue());
       }
       return false; // should never get here
    }
@@ -123,16 +123,61 @@ public class Value {
 
       switch (value1.getType()) {
          case BOOLEAN:
-            return Boolean.compare(value1.getbValue(), value2.getbValue());
+            return Boolean.compare(value1.getBooleanValue(), value2.getBooleanValue());
          case FLOAT:
-            return Float.compare(value1.getfValue(), value2.getfValue());
+            return Float.compare(value1.getFloatValue(), value2.getFloatValue());
          case INT:
-            return Integer.compare(value1.getiValue(), value2.getiValue());
+            return Integer.compare(value1.getIntValue(), value2.getIntValue());
          case STRING:
-            return value1.getsValue().compareTo(value2.getsValue());
+            return value1.getStringValue().compareTo(value2.getStringValue());
       }
 
       throw new GeppettoException("Unknown data type: " + value1.getType()); // should never get here
+   }
+   
+   public Value convertTo(VariableType type) {
+      switch (getType()) {
+         case BOOLEAN:
+            if (type == VariableType.BOOLEAN)
+               return new Value(getBooleanValue());
+            else if (type == VariableType.STRING)
+               return new Value(String.valueOf(getBooleanValue()));
+            else
+               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
+         case FLOAT:
+            if (type == VariableType.FLOAT)
+               return new Value(getFloatValue());
+            else if (type == VariableType.INT)
+               return new Value((int)getFloatValue());
+            else if (type == VariableType.STRING)
+               return new Value(String.valueOf(getFloatValue()));
+            else
+               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
+         case INT:
+            if (type == VariableType.FLOAT)
+               return new Value((float)getIntValue());
+            else if (type == VariableType.INT)
+               return new Value(getIntValue());
+            else if (type == VariableType.STRING)
+               return new Value(String.valueOf(getIntValue()));
+            else
+               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
+         case STRING: // Note that the numerical conversions will throw a NumberFormatException if the string can't be converted to the desired type
+            try {
+               if (type == VariableType.BOOLEAN)
+                  return new Value(Boolean.valueOf(getStringValue()));
+               else if (type == VariableType.FLOAT)
+                  return new Value(Float.valueOf(getStringValue()));
+               else if (type == VariableType.INT)
+                  return new Value(Integer.valueOf(getStringValue()));
+               else // (type == VariableType.STRING)
+                  return new Value(getStringValue());
+            } catch (Throwable e) {
+               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".", e);
+            }
+         default:
+            throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
+      }
    }
 
    public String toString() {
@@ -140,10 +185,10 @@ public class Value {
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("type: ").append(getType());
-      sb.append("; iValue: ").append(getiValue());
-      sb.append("; fValue: ").append(getfValue());
-      sb.append("; sValue: ").append(getsValue());
-      sb.append("; bValue: ").append(getbValue());
+      sb.append("; iValue: ").append(getIntValue());
+      sb.append("; fValue: ").append(getFloatValue());
+      sb.append("; sValue: ").append(getStringValue());
+      sb.append("; bValue: ").append(getBooleanValue());
       sb.append("}");
       
       return sb.toString();
