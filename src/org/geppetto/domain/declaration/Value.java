@@ -82,7 +82,6 @@ public class Value {
    /**
     * For now I'm allowing Int and Float types to be implicitly converted into Booleans (if != 0 then true, otherwise false).
     * I'm  not sure that's a good idea, though, so keep an eye on this...
-    * TODO: Ensure it's OK to convert numerical types into booleans 
     */
    public boolean getBooleanValue() {
       if (type == DataType.INT)
@@ -156,6 +155,21 @@ public class Value {
       }
 
       throw new GeppettoException("Unknown data type: " + value1.getType()); // should never get here
+   }
+   
+   public Value convertTo(DataType type) {
+      switch (type) {
+         case BOOLEAN:
+            return new Value(getBooleanValue());
+         case FLOAT:
+            return new Value(getFloatValue());
+         case INT:
+            return new Value(getIntValue());
+         case STRING:
+            return new Value(getStringValue());
+         default:
+            throw new GeppettoException("Unknown data type: " + type); // should never get here
+      }
    }
    
    public String toString() {

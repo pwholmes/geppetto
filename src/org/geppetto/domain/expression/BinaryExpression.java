@@ -60,10 +60,12 @@ public class BinaryExpression implements Expression {
          case ASSIGNMENT: // as with C, we'll go with the convention that the value of an assignment expression is the value assigned to the lvalue
             if (!operand1.isLValue())
                throw new GeppettoException("Left operand of an assignment must be a variable, is: " + operand1.getClass().getSimpleName() + ".");
-            if (value1.getType() != value2.getType())
-               throw new GeppettoException("Type mismatch: attempting to assign value of type " + value2.getType() + " to variable of type " + value1.getType() + ".");
-            operand1.setValue(value2.copy());
-            return value2.copy();
+            try {
+               operand1.setValue(value2.convertTo(value1.getType()));
+            } catch (Throwable e) {
+               throw new GeppettoException("Type mismatch: attempting to assign value of type " + value2.getType() + " to variable of type " + value1.getType() + ".", e);
+            }
+            return operand1.getValue().copy();
 
          case DIVIDE:
             if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
