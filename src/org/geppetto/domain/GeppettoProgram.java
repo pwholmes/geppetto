@@ -11,11 +11,10 @@ public class GeppettoProgram {
    private ArrayList<Rule>               rules;
    private ArrayList<FunctionDefinition> functionDefinitions;
    private boolean                       debug;
+   private boolean                       endRequested;
 
-   public static GeppettoProgram createInstance(ArrayList<Variable> variables,
-         ArrayList<PropertyDefinition> propertyDefinitions,
-         ArrayList<Entity> entities, ArrayList<Rule> rules,
-         ArrayList<FunctionDefinition> functionDefinitions) {
+   public static GeppettoProgram createInstance(ArrayList<Variable> variables, ArrayList<PropertyDefinition> propertyDefinitions,
+         ArrayList<Entity> entities, ArrayList<Rule> rules, ArrayList<FunctionDefinition> functionDefinitions) {
       instance = new GeppettoProgram();
       instance.variables = variables;
       instance.propertyDefinitions = propertyDefinitions;
@@ -84,23 +83,29 @@ public class GeppettoProgram {
    public void setDebug(boolean debug) {
       this.debug = debug;
    }
-   
+
    public boolean isDebug() {
       return debug;
    }
-   
+
+   public void setEndRequested(boolean endRequested) {
+      this.endRequested = endRequested;
+   }
+
+   public boolean isEndRequested() {
+      return endRequested;
+   }
+
    public String toString() {
       StringBuilder sb = new StringBuilder();
 
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
 
       sb.append("variables: ").append(getVariables()).append("\n");
-      sb.append("propertyDefinitions: ").append(getPropertyDefinitions())
-            .append("\n");
+      sb.append("propertyDefinitions: ").append(getPropertyDefinitions()).append("\n");
       sb.append("entities: ").append(getEntities()).append("\n");
       sb.append("rules: ").append(getRules()).append("\n");
-      sb.append("functionDefinitions: ").append(getFunctionDefinitions())
-            .append("\n");
+      sb.append("functionDefinitions: ").append(getFunctionDefinitions()).append("\n");
       sb.append("}");
 
       return sb.toString();

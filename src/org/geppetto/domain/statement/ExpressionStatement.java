@@ -18,9 +18,8 @@ public class ExpressionStatement implements Statement {
    }
 
    @Override
-   public boolean execute() {
-      expression.getValue(); // just evaluate the expression, the value doesn't go anywhere
-      return true;
+   public void execute() {
+      expression.getValue(); // just evaluate the expression, its value doesn't go anywhere (if it did, it would be an assignment in a BinaryExpression)
    }
    
    public String toString() {

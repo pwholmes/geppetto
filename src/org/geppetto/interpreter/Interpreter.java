@@ -36,27 +36,28 @@ public class Interpreter {
 
    public void execute(GeppettoProgram program) {
       int cycle = 1;
-      boolean proceed = true;
-      while (proceed && cycle < maxCycles) {  
+      while (true) {  
          if (debug)
             print("Starting cycle #" + cycle);
          for (Rule rule : program.getRules()) {
-            proceed = processRule(rule);
-            if (!proceed)
+            processRule(rule);
+            if (program.isEndRequested())
                break;
          }
-         if (!proceed)
+         cycle++;
+         if (program.isEndRequested()) {
             print("End statement encountered.  Terminating program.");
-         else {
-            cycle++;
-            if (cycle > maxCycles) 
-               print("Maximum number of cycles reached.  Terminating program.");
+            break;
+         }
+         else if (cycle > maxCycles) { 
+            print("Maximum number of cycles reached.  Terminating program.");
+            break;
          }
       }
 
    }
    
-   public boolean processRule(Rule rule) {
+   public void processRule(Rule rule) {
       if (debug)
          print("Processing rule...");
       Value conditionValue = rule.getCondition().getValue(); 
@@ -65,9 +66,8 @@ public class Interpreter {
       if (conditionValue.getbValue()) {
          if (debug)
             print("Rule condition is true, executing its behavior...");
-         return rule.getBehavior().execute();
+         rule.getBehavior().execute();
       }
-      return true;
    }
    
    public void print(String s) {

@@ -1,8 +1,18 @@
 package org.geppetto.domain.expression;
 
 import java.util.ArrayList;
+import org.geppetto.domain.FunctionDefinition;
+import org.geppetto.domain.GeppettoProgram;
 import org.geppetto.domain.Value;
 
+/**
+ * Functions are expressions rather than statements because they return a value.
+ * Therefore a function is executed when its value is requested.
+ * The other problems associated with functions are arguments, which effectively
+ * become scoped variables, and return values.
+ * We've avoided the problem of scoping by requiring that all variables be global,
+ * but we can't avoid it here.  So those problems have yet to be solved.
+ */
 public class FunctionExpression implements Expression {
    private String                name;
    private ArrayList<Expression> arguments;
@@ -35,7 +45,11 @@ public class FunctionExpression implements Expression {
 
    @Override
    public Value getValue() {
-      // TODO getValue() for FunctionExpression
+      FunctionDefinition functionDef = GeppettoProgram.getInstance().getFunctionDefinition(getName());
+      if (functionDef == null)
+         throw new IllegalArgumentException("Attempting to call undeclared function: " + getName());
+      functionDef.getCompoundStatement().execute();
+      // TODO: Figure out how to deal with function arguments and return values!
       return null;
    }
    

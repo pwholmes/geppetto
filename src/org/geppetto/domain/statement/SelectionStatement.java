@@ -39,14 +39,13 @@ public class SelectionStatement implements Statement {
    }
 
    @Override
-   public boolean execute() {
+   public void execute() {
       if (expression.getValue().getType() != VariableType.BOOLEAN)
          throw new IllegalArgumentException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
       if (expression.getValue().getbValue())
-         return ifStatement.execute();
+         ifStatement.execute();
       else if (elseStatement != null)
-         return elseStatement.execute();
-      return true;
+         elseStatement.execute();
    }
 
    public String toString() {

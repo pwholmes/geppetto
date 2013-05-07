@@ -26,12 +26,11 @@ public class IterationStatement implements Statement {
    }
 
    @Override
-   public boolean execute() {
+   public void execute() {
       if (expression.getValue().getType() != VariableType.BOOLEAN)
          throw new IllegalArgumentException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
       if (expression.getValue().getbValue())
-         return statement.execute();
-      return true;
+         statement.execute();
    }
 
    public String toString() {

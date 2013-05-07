@@ -15,10 +15,23 @@ public class PrintStatement implements Statement {
       this.stringExpression = stringExpression;
    }
    
+   public Expression getStringExpression() {
+      return stringExpression;
+   }
+
    @Override
-   public boolean execute() {
+   public void execute() {
       System.out.println(stringExpression.getValue().getsValue());
-      return true;
+   }
+   
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
+      sb.append("stringExpression: ").append(getStringExpression());
+      sb.append("}");
+      
+      return sb.toString();
    }
 
 }

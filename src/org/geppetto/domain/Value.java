@@ -138,7 +138,7 @@ public class Value {
       StringBuilder sb = new StringBuilder();
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      sb.append("name: ").append(getType());
+      sb.append("type: ").append(getType());
       sb.append("; iValue: ").append(getiValue());
       sb.append("; fValue: ").append(getfValue());
       sb.append("; sValue: ").append(getsValue());

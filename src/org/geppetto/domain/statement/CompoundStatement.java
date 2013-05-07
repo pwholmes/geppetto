@@ -1,6 +1,7 @@
 package org.geppetto.domain.statement;
 
 import java.util.ArrayList;
+import org.geppetto.domain.GeppettoProgram;
 
 public class CompoundStatement implements Statement {
    private ArrayList<Statement> statements;
@@ -18,12 +19,12 @@ public class CompoundStatement implements Statement {
    }
 
    @Override
-   public boolean execute() {
+   public void execute() {
       for (Statement statement : getStatements()) {
-         if (!statement.execute())
-            return false;
+         statement.execute();
+         if (GeppettoProgram.getInstance().isEndRequested())
+            break;
       }
-      return true;
    }
 
    public String toString() {
