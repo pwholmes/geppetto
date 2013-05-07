@@ -82,6 +82,7 @@ input                   { return Parser.INPUT; }
 int                     { return Parser.INT; }
 print                   { return Parser.PRINT; }
 property                { return Parser.PROPERTY; }
+return                  { return Parser.RETURN; }
 rule                    { return Parser.RULE; }
 string                  { return Parser.STRING; }
 true                    { return Parser.TRUE; }

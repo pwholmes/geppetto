@@ -1,5 +1,6 @@
 package org.geppetto.domain.declaration;
 
+import org.geppetto.GeppettoException;
 import org.geppetto.domain.expression.VariableType;
 
 public class AttributeDefinition {
@@ -34,13 +35,13 @@ public class AttributeDefinition {
    public void setConstraint(AttributeConstraint constraint) {
       if (constraint != null) {
          if (type == VariableType.INT && constraint.getType() != AttributeConstraintType.INT_SET && constraint.getType() != AttributeConstraintType.INT_RANGE)
-            throw new IllegalArgumentException("Constraint type does not match attribute type");
+            throw new GeppettoException("Constraint type does not match attribute type");
          if (type == VariableType.FLOAT && constraint.getType() != AttributeConstraintType.FLOAT_SET && constraint.getType() != AttributeConstraintType.FLOAT_RANGE)
-            throw new IllegalArgumentException("Constraint type does not match attribute type");
+            throw new GeppettoException("Constraint type does not match attribute type");
          if (type == VariableType.STRING && constraint.getType() != AttributeConstraintType.STRING_SET)
-            throw new IllegalArgumentException("Constraint type does not match attribute type");
+            throw new GeppettoException("Constraint type does not match attribute type");
          if (type == VariableType.BOOLEAN && constraint.getType() != AttributeConstraintType.BOOLEAN)
-            throw new IllegalArgumentException("Constraint type does not match attribute type");
+            throw new GeppettoException("Constraint type does not match attribute type");
       }
       this.constraint = constraint;
    }

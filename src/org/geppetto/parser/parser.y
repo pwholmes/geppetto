@@ -5,6 +5,7 @@
   import java.util.HashSet;
   import java.util.List;
   import java.util.Set;
+  import org.geppetto.GeppettoException;
   import org.geppetto.GeppettoProgram;
   import org.geppetto.domain.declaration.ArgumentDeclaration;
   import org.geppetto.domain.declaration.AttributeConstraint;
@@ -37,6 +38,7 @@
   import org.geppetto.domain.statement.IterationStatement;
   import org.geppetto.domain.statement.NullStatement;
   import org.geppetto.domain.statement.PrintStatement;
+  import org.geppetto.domain.statement.ReturnStatement;
   import org.geppetto.domain.statement.SelectionStatement;
   import org.geppetto.domain.statement.Statement;
 %}
@@ -56,7 +58,7 @@
 %token IDENTIFIER
 
 /* Reserved words */
-%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RULE STRING TRUE WHILE IF FOREACH
+%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR GLOBAL INPUT INT PRINT PROPERTY RETURN RULE STRING TRUE WHILE IF FOREACH
 
 %%
 
@@ -243,7 +245,7 @@ property:
                                                               propertyDef = def;
                                                           }
                                                       if (propertyDef == null)
-                                                          throw new IllegalArgumentException("Unknown property: " + propertyName);
+                                                          throw new GeppettoException("Unknown property: " + propertyName);
                                                       Property property = new Property(propertyName, propertyDef); 
                                                       property.setAttributeValues((List<AttributeInitializer>)$3.obj); 
                                                       $$.obj = property; }
@@ -290,6 +292,7 @@ statement:
 	| iterationStatement	                        { $$.obj = $1.obj; }
 	| endStatement		                            { $$.obj = $1.obj; }
 	| printStatement                                { $$.obj = $1.obj; }
+    | returnStatement                               { $$.obj = $1.obj; }
 	;
 	
 expressionStatement:
@@ -423,6 +426,9 @@ printStatement:
     PRINT '(' expression ')' ';'                    { $$.obj = new PrintStatement((Expression) $3.obj); }
     ;
 
+returnStatement:
+    RETURN expression ';'                           { $$.obj = new ReturnStatement((Expression) $2.obj); }
+    ;
 
 %%
 

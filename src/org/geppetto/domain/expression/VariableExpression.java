@@ -1,5 +1,6 @@
 package org.geppetto.domain.expression;
 
+import org.geppetto.GeppettoException;
 import org.geppetto.GeppettoProgram;
 import org.geppetto.domain.declaration.Value;
 import org.geppetto.domain.declaration.VariableDeclaration;
@@ -37,7 +38,7 @@ public class VariableExpression implements Expression {
    public void setValue(Value value) {
       VariableDeclaration variable = GeppettoProgram.getInstance().getVariableDeclaration(getName());
       if (variable == null)
-         throw new IllegalArgumentException("Undeclared variable: " + getName());
+         throw new GeppettoException("Undeclared variable: " + getName());
       variable.setValue(value);
    }
    
@@ -45,7 +46,7 @@ public class VariableExpression implements Expression {
    public Value getValue() {
       VariableDeclaration variable = GeppettoProgram.getInstance().getVariableDeclaration(getName());
       if (variable == null)
-         throw new IllegalArgumentException("Undeclared variable: " + getName());
+         throw new GeppettoException("Undeclared variable: " + getName());
       return variable.getValue();
    }
 

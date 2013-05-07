@@ -2,6 +2,7 @@ package org.geppetto.domain.declaration;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.geppetto.GeppettoException;
 
 public class Property {
    private String               name;
@@ -38,7 +39,7 @@ public class Property {
          String attributeName = initializer.getName();
          AttributeDefinition attributeDef = propertyDefinition.getAttributeDefinition(attributeName);
          if (attributeDef == null)
-            throw new IllegalArgumentException("Unknown attribute: " + attributeName);
+            throw new GeppettoException("Unknown attribute: " + attributeName);
          setAttributeValue(initializer, attributeDef);
       }
    }
@@ -46,7 +47,7 @@ public class Property {
    public void setAttributeValue(AttributeInitializer attributeInitializer, AttributeDefinition attributeDef) {
       Value value = attributeInitializer.getValue();
       if (value.getType() != attributeDef.getType())
-         throw new IllegalArgumentException("Invalid attribute data type; is: " + value.getType() + ", must be : " + attributeDef.getType());
+         throw new GeppettoException("Invalid attribute data type; is: " + value.getType() + ", must be : " + attributeDef.getType());
       // TODO: verify that value is within constraints
       Attribute attribute = new Attribute(attributeInitializer.getName(), attributeInitializer.getValue());
       attributes.add(attribute);

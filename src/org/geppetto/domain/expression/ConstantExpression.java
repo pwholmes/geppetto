@@ -1,5 +1,6 @@
 package org.geppetto.domain.expression;
 
+import org.geppetto.GeppettoException;
 import org.geppetto.domain.declaration.Value;
 
 
@@ -29,7 +30,7 @@ public class ConstantExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      throw new IllegalArgumentException("Cannot assign a value to this expression");
+      throw new GeppettoException("Cannot assign a value to this expression");
    }    
 
    @Override

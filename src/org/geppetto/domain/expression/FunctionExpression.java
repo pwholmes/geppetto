@@ -1,7 +1,9 @@
 package org.geppetto.domain.expression;
 
 import java.util.ArrayList;
+import org.geppetto.GeppettoException;
 import org.geppetto.GeppettoProgram;
+import org.geppetto.ProgramContext;
 import org.geppetto.domain.declaration.FunctionDefinition;
 import org.geppetto.domain.declaration.Value;
 
@@ -40,17 +42,21 @@ public class FunctionExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      throw new IllegalArgumentException("Cannot assign a value to this expression");
+      throw new GeppettoException("Cannot assign a value to this expression");
    }
 
    @Override
    public Value getValue() {
       FunctionDefinition functionDef = GeppettoProgram.getInstance().getFunctionDefinition(getName());
       if (functionDef == null)
-         throw new IllegalArgumentException("Attempting to call undeclared function: " + getName());
+         throw new GeppettoException("Attempting to call undeclared function: " + getName());
+      ProgramContext context = new ProgramContext(functionDef);
+      GeppettoProgram.getInstance().getContexts().add(context);
       functionDef.getCompoundStatement().execute();
-      // TODO: Figure out how to deal with function arguments and return values!
-      return null;
+      GeppettoProgram.getInstance().getContexts().removeLast();
+      if (context.getReturnValue() == null)
+         throw new GeppettoException("Function " + functionDef.getName() + " did not set a return value.");
+      return context.getReturnValue();
    }
    
    @Override

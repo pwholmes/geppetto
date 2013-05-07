@@ -1,5 +1,6 @@
 package org.geppetto.domain.statement;
 
+import org.geppetto.GeppettoException;
 import org.geppetto.domain.expression.Expression;
 import org.geppetto.domain.expression.VariableType;
 
@@ -11,7 +12,7 @@ public class PrintStatement implements Statement {
    
    public PrintStatement(Expression stringExpression) {
       if (stringExpression.getValue().getType() != VariableType.STRING)
-         throw new IllegalArgumentException("Type mismatch: Argument to print statement must be string expression.");
+         throw new GeppettoException("Type mismatch: Argument to print statement must be string expression.");
       this.stringExpression = stringExpression;
    }
    

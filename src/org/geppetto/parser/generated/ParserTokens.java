@@ -26,10 +26,11 @@ public final static short INPUT=279;
 public final static short INT=280;
 public final static short PRINT=281;
 public final static short PROPERTY=282;
-public final static short RULE=283;
-public final static short STRING=284;
-public final static short TRUE=285;
-public final static short WHILE=286;
-public final static short IF=287;
-public final static short FOREACH=288;
+public final static short RETURN=283;
+public final static short RULE=284;
+public final static short STRING=285;
+public final static short TRUE=286;
+public final static short WHILE=287;
+public final static short IF=288;
+public final static short FOREACH=289;
 }

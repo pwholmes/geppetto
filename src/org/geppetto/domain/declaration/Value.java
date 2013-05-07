@@ -1,13 +1,14 @@
 package org.geppetto.domain.declaration;
 
+import org.geppetto.GeppettoException;
 import org.geppetto.domain.expression.VariableType;
 
 public class Value {
    private VariableType type;
-   private int iValue;
-   private float fValue;
-   private String sValue;
-   private boolean bValue;
+   private int iValue = 0;
+   private float fValue = 0;
+   private String sValue = null;
+   private boolean bValue = false;
    
    protected Value() {}
    
@@ -115,10 +116,10 @@ public class Value {
     */
    public static int compare(Value value1, Value value2) {
       if (value1 == null || value2 == null)
-         throw new IllegalArgumentException("Cannot compare null values");
+         throw new GeppettoException("Cannot compare null values");
       
       if (value1.getType() != value2.getType())
-         throw new IllegalArgumentException("Values being compared are not of the same type.");
+         throw new GeppettoException("Values being compared are not of the same type.");
 
       switch (value1.getType()) {
          case BOOLEAN:
@@ -131,7 +132,7 @@ public class Value {
             return value1.getsValue().compareTo(value2.getsValue());
       }
 
-      throw new IllegalArgumentException("Unknown data type: " + value1.getType()); // should never get here
+      throw new GeppettoException("Unknown data type: " + value1.getType()); // should never get here
    }
 
    public String toString() {

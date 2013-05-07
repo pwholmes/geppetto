@@ -13,6 +13,12 @@ public class VariableDeclaration {
       this.value = value;
    }
 
+   public VariableDeclaration(String name, VariableType type) {
+      this.name = name;
+      this.type = type;
+      this.value = new Value();
+   }
+
    public String getName() {
       return name;
    }

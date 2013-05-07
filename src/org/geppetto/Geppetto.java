@@ -50,11 +50,11 @@ public class Geppetto {
             if (f.exists())
                inputFileName = args[i];
          } else {
-            throw new IllegalArgumentException("Unrecognized argument: " + args[i]);
+            throw new GeppettoException("Unrecognized argument: " + args[i]);
          }
       }
 
       if (inputFileName == null)
-         throw new IllegalArgumentException("Missing argument: an input file is required.");
+         throw new GeppettoException("Missing argument: an input file is required.");
    }
 }
