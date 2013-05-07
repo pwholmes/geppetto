@@ -8,6 +8,7 @@ import org.geppetto.parser.generated.Parser;
 
 public class Geppetto {
    boolean debug         = false;
+   boolean verbose       = false;
    String  inputFileName = null;
    Parser  yyparser      = null;
 
@@ -22,7 +23,7 @@ public class Geppetto {
          parseArgs(args);
          
          // Parse the input file into a GeppettoProgram object (which is effectively our AST)
-         yyparser = new Parser(debug);
+         yyparser = new Parser(verbose);
          GeppettoProgram program = yyparser.parse(new FileReader(inputFileName));
          program.setDebug(debug);
 
@@ -44,6 +45,8 @@ public class Geppetto {
    public void parseArgs(String args[]) {
       for (int i = 0; i < args.length; i++) {
          if (args[i].equals("-d") || (args[i].equals("-debug")))
+            debug = true;
+         else if (args[i].equals("-v") || (args[i].equals("-verbose")))
             debug = true;
          else if (i == args.length - 1) {
             File f = new File(args[i]);
