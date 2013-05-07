@@ -1,7 +1,6 @@
 package org.geppetto.domain.statement;
 
 import org.geppetto.domain.expression.Expression;
-import org.geppetto.domain.expression.VariableType;
 
 public class PrintStatement implements Statement {
    private Expression stringExpression;
@@ -19,7 +18,7 @@ public class PrintStatement implements Statement {
 
    @Override
    public void execute() {
-      System.out.println(stringExpression.getValue().convertTo(VariableType.STRING));
+      System.out.println(stringExpression.getValue().getStringValue());
    }
    
    public String toString() {

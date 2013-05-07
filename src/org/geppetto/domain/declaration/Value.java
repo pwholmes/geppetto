@@ -36,42 +36,65 @@ public class Value {
       return this.type;
    }
    
-   public void setType(VariableType type) {
-      this.type = type;
-   }
-   
    public int getIntValue() {
-      return intValue;
-   }
-
-   public void setIntValue(int intValue) {
-      this.intValue = intValue;
+      if (type == VariableType.INT)
+         return intValue;
+      else if (type == VariableType.FLOAT)
+         return (int)floatValue;
+      else if (type == VariableType.STRING) {
+         try {
+            return Integer.valueOf(stringValue);
+         } catch (Throwable e) {
+            throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".", e);
+         }
+      }
+      else // (type == VariableType.BOOLEAN)
+         throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
    }
 
    public float getFloatValue() {
-      return floatValue;
-   }
-
-   public void setFloatValue(float floatValue) {
-      this.floatValue = floatValue;
+      if (type == VariableType.INT)
+         return (float)intValue;
+      else if (type == VariableType.FLOAT)
+         return floatValue;
+      else if (type == VariableType.STRING) {
+         try {
+            return Float.valueOf(stringValue);
+         } catch (Throwable e) {
+            throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".", e);
+         }
+      }
+      else // (type == VariableType.BOOLEAN)
+         throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
    }
 
    public String getStringValue() {
-      return stringValue;
+      if (type == VariableType.INT)
+         return String.valueOf(intValue);
+      else if (type == VariableType.FLOAT)
+         return String.valueOf(floatValue);
+      else if (type == VariableType.STRING)
+         return stringValue;
+      else // (type == VariableType.BOOLEAN)
+         return String.valueOf(booleanValue);
    }
 
-   public void setStringValue(String stringValue) {
-      this.stringValue = stringValue;
-   }
-
+   /**
+    * For now I'm allowing Int and Float types to be implicitly converted into Booleans (if != 0 then true, otherwise false).
+    * I'm  not sure that's a good idea, though, so keep an eye on this...
+    * TODO: Ensure it's OK to convert numerical types into booleans 
+    */
    public boolean getBooleanValue() {
-      return booleanValue;
+      if (type == VariableType.INT)
+         return (intValue != 0);
+      else if (type == VariableType.FLOAT)
+         return (floatValue != 0);
+      else if (type == VariableType.STRING)
+         return Boolean.valueOf(stringValue);
+      else // (type == VariableType.BOOLEAN)
+         return booleanValue;
    }
 
-   public void setBooleanValue(boolean booleanValue) {
-      this.booleanValue = booleanValue;
-   }
-   
    public Value copy() {
       Value value = new Value();
       value.type = getType();
@@ -135,60 +158,15 @@ public class Value {
       throw new GeppettoException("Unknown data type: " + value1.getType()); // should never get here
    }
    
-   public Value convertTo(VariableType type) {
-      switch (getType()) {
-         case BOOLEAN:
-            if (type == VariableType.BOOLEAN)
-               return new Value(getBooleanValue());
-            else if (type == VariableType.STRING)
-               return new Value(String.valueOf(getBooleanValue()));
-            else
-               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
-         case FLOAT:
-            if (type == VariableType.FLOAT)
-               return new Value(getFloatValue());
-            else if (type == VariableType.INT)
-               return new Value((int)getFloatValue());
-            else if (type == VariableType.STRING)
-               return new Value(String.valueOf(getFloatValue()));
-            else
-               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
-         case INT:
-            if (type == VariableType.FLOAT)
-               return new Value((float)getIntValue());
-            else if (type == VariableType.INT)
-               return new Value(getIntValue());
-            else if (type == VariableType.STRING)
-               return new Value(String.valueOf(getIntValue()));
-            else
-               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
-         case STRING: // Note that the numerical conversions will throw a NumberFormatException if the string can't be converted to the desired type
-            try {
-               if (type == VariableType.BOOLEAN)
-                  return new Value(Boolean.valueOf(getStringValue()));
-               else if (type == VariableType.FLOAT)
-                  return new Value(Float.valueOf(getStringValue()));
-               else if (type == VariableType.INT)
-                  return new Value(Integer.valueOf(getStringValue()));
-               else // (type == VariableType.STRING)
-                  return new Value(getStringValue());
-            } catch (Throwable e) {
-               throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".", e);
-            }
-         default:
-            throw new GeppettoException("Cannot convert type " + getType() + " to type " + type + ".");
-      }
-   }
-
    public String toString() {
       StringBuilder sb = new StringBuilder();
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("type: ").append(getType());
-      sb.append("; iValue: ").append(getIntValue());
-      sb.append("; fValue: ").append(getFloatValue());
-      sb.append("; sValue: ").append(getStringValue());
-      sb.append("; bValue: ").append(getBooleanValue());
+      sb.append("; intValue: ").append(intValue);
+      sb.append("; floatValue: ").append(floatValue);
+      sb.append("; stringValue: ").append(stringValue);
+      sb.append("; booleanValue: ").append(booleanValue);
       sb.append("}");
       
       return sb.toString();
