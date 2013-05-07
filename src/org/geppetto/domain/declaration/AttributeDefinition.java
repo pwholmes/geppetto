@@ -1,17 +1,17 @@
 package org.geppetto.domain.declaration;
 
 import org.geppetto.GeppettoException;
-import org.geppetto.domain.expression.VariableType;
+import org.geppetto.domain.DataType;
 
 public class AttributeDefinition {
    private String              name;
-   private VariableType        type;
+   private DataType        type;
    private AttributeConstraint constraint;
 
    protected AttributeDefinition() {
    }
 
-   public AttributeDefinition(VariableType type, String name) {
+   public AttributeDefinition(DataType type, String name) {
       this.type = type;
       this.name = name;
    }
@@ -24,7 +24,7 @@ public class AttributeDefinition {
       return name;
    }
 
-   public VariableType getType() {
+   public DataType getType() {
       return type;
    }
 
@@ -34,13 +34,13 @@ public class AttributeDefinition {
 
    public void setConstraint(AttributeConstraint constraint) {
       if (constraint != null) {
-         if (type == VariableType.INT && constraint.getType() != AttributeConstraintType.INT_SET && constraint.getType() != AttributeConstraintType.INT_RANGE)
+         if (type == DataType.INT && constraint.getType() != AttributeConstraintType.INT_SET && constraint.getType() != AttributeConstraintType.INT_RANGE)
             throw new GeppettoException("Constraint type does not match attribute type");
-         if (type == VariableType.FLOAT && constraint.getType() != AttributeConstraintType.FLOAT_SET && constraint.getType() != AttributeConstraintType.FLOAT_RANGE)
+         if (type == DataType.FLOAT && constraint.getType() != AttributeConstraintType.FLOAT_SET && constraint.getType() != AttributeConstraintType.FLOAT_RANGE)
             throw new GeppettoException("Constraint type does not match attribute type");
-         if (type == VariableType.STRING && constraint.getType() != AttributeConstraintType.STRING_SET)
+         if (type == DataType.STRING && constraint.getType() != AttributeConstraintType.STRING_SET)
             throw new GeppettoException("Constraint type does not match attribute type");
-         if (type == VariableType.BOOLEAN && constraint.getType() != AttributeConstraintType.BOOLEAN)
+         if (type == DataType.BOOLEAN && constraint.getType() != AttributeConstraintType.BOOLEAN)
             throw new GeppettoException("Constraint type does not match attribute type");
       }
       this.constraint = constraint;

@@ -3,20 +3,20 @@ package org.geppetto.domain.expression;
 import org.geppetto.domain.declaration.Value;
 
 
-public class StructureExpression implements Expression {
+public class EntityExpression implements Expression {
    private String name1;
    private String name2;
    private String name3;
    
    @SuppressWarnings("unused")
-   private StructureExpression() {}
+   private EntityExpression() {}
    
-   public StructureExpression(String name1, String name2) {
+   public EntityExpression(String name1, String name2) {
       this.name1 = name1;
       this.name2 = name2;
    }
 
-   public StructureExpression(String name1, String name2, String name3) {
+   public EntityExpression(String name1, String name2, String name3) {
       this.name1 = name1;
       this.name2 = name2;
       this.name3 = name3;

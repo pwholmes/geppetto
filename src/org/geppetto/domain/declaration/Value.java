@@ -1,10 +1,10 @@
 package org.geppetto.domain.declaration;
 
 import org.geppetto.GeppettoException;
-import org.geppetto.domain.expression.VariableType;
+import org.geppetto.domain.DataType;
 
 public class Value {
-   private VariableType type;
+   private DataType type;
    private int intValue = 0;
    private float floatValue = 0;
    private String stringValue = null;
@@ -13,35 +13,35 @@ public class Value {
    protected Value() {}
    
    public Value(int intValue) {
-      this.type = VariableType.INT;
+      this.type = DataType.INT;
       this.intValue = intValue;
    }
 
    public Value(float floatValue) {
-      this.type = VariableType.FLOAT;
+      this.type = DataType.FLOAT;
       this.floatValue = floatValue;
    }
    
    public Value(String stringValue) {
-      this.type = VariableType.STRING;
+      this.type = DataType.STRING;
       this.stringValue = stringValue;
    }
 
    public Value(boolean booleanValue) {
-      this.type = VariableType.BOOLEAN;
+      this.type = DataType.BOOLEAN;
       this.booleanValue = booleanValue;
    }
 
-   public VariableType getType() {
+   public DataType getType() {
       return this.type;
    }
    
    public int getIntValue() {
-      if (type == VariableType.INT)
+      if (type == DataType.INT)
          return intValue;
-      else if (type == VariableType.FLOAT)
+      else if (type == DataType.FLOAT)
          return (int)floatValue;
-      else if (type == VariableType.STRING) {
+      else if (type == DataType.STRING) {
          try {
             return Integer.valueOf(stringValue);
          } catch (Throwable e) {
@@ -53,11 +53,11 @@ public class Value {
    }
 
    public float getFloatValue() {
-      if (type == VariableType.INT)
+      if (type == DataType.INT)
          return (float)intValue;
-      else if (type == VariableType.FLOAT)
+      else if (type == DataType.FLOAT)
          return floatValue;
-      else if (type == VariableType.STRING) {
+      else if (type == DataType.STRING) {
          try {
             return Float.valueOf(stringValue);
          } catch (Throwable e) {
@@ -69,11 +69,11 @@ public class Value {
    }
 
    public String getStringValue() {
-      if (type == VariableType.INT)
+      if (type == DataType.INT)
          return String.valueOf(intValue);
-      else if (type == VariableType.FLOAT)
+      else if (type == DataType.FLOAT)
          return String.valueOf(floatValue);
-      else if (type == VariableType.STRING)
+      else if (type == DataType.STRING)
          return stringValue;
       else // (type == VariableType.BOOLEAN)
          return String.valueOf(booleanValue);
@@ -85,11 +85,11 @@ public class Value {
     * TODO: Ensure it's OK to convert numerical types into booleans 
     */
    public boolean getBooleanValue() {
-      if (type == VariableType.INT)
+      if (type == DataType.INT)
          return (intValue != 0);
-      else if (type == VariableType.FLOAT)
+      else if (type == DataType.FLOAT)
          return (floatValue != 0);
-      else if (type == VariableType.STRING)
+      else if (type == DataType.STRING)
          return Boolean.valueOf(stringValue);
       else // (type == VariableType.BOOLEAN)
          return booleanValue;

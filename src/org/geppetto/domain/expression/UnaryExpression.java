@@ -1,6 +1,8 @@
 package org.geppetto.domain.expression;
 
 import org.geppetto.GeppettoException;
+import org.geppetto.domain.DataType;
+import org.geppetto.domain.Operator;
 import org.geppetto.domain.declaration.Value;
 
 
@@ -40,22 +42,22 @@ public class UnaryExpression implements Expression {
 
       switch (operator) {
          case UNARY_MINUS:
-            if (value.getType() == VariableType.INT)
+            if (value.getType() == DataType.INT)
                return new Value(-value.getIntValue());
-            else if (value.getType() == VariableType.FLOAT)
+            else if (value.getType() == DataType.FLOAT)
                return new Value(-value.getFloatValue());
             else
                throw new GeppettoException("Illegal operand type " + value.getType() + " for operator " + operator + ".");
    
          case UNARY_NEGATION:
-            if (value.getType() != VariableType.BOOLEAN)
+            if (value.getType() != DataType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value.getType() + " for operator " + operator + ".");
             return new Value(!value.getBooleanValue());
          
          case UNARY_PLUS: // why do we even have this?
-            if (value.getType() == VariableType.INT)
+            if (value.getType() == DataType.INT)
                return new Value(-value.getIntValue());
-            else if (value.getType() == VariableType.FLOAT)
+            else if (value.getType() == DataType.FLOAT)
                return new Value(value.getFloatValue());
             else
                throw new GeppettoException("Illegal operand type " + value.getType() + " for operator " + operator + ".");

@@ -1,12 +1,12 @@
 package org.geppetto.domain.declaration;
 
 import java.util.ArrayList;
-import org.geppetto.domain.expression.VariableType;
+import org.geppetto.domain.DataType;
 import org.geppetto.domain.statement.CompoundStatement;
 
 public class FunctionDefinition {
    private String name;
-   private VariableType type;
+   private DataType type;
    private ArrayList<ArgumentDeclaration> arguments;
    private CompoundStatement compoundStatement;
    
@@ -14,7 +14,7 @@ public class FunctionDefinition {
    private FunctionDefinition() {
    }
    
-   public FunctionDefinition(String name, VariableType type, ArrayList<ArgumentDeclaration> arguments, CompoundStatement compoundStatement) {
+   public FunctionDefinition(String name, DataType type, ArrayList<ArgumentDeclaration> arguments, CompoundStatement compoundStatement) {
       this.name = name;
       this.type = type;
       this.arguments = arguments;
@@ -25,7 +25,7 @@ public class FunctionDefinition {
       return name;
    }
 
-   public VariableType getType() {
+   public DataType getType() {
       return type;
    }
 

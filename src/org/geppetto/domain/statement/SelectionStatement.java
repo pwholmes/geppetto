@@ -1,8 +1,8 @@
 package org.geppetto.domain.statement;
 
 import org.geppetto.GeppettoException;
+import org.geppetto.domain.DataType;
 import org.geppetto.domain.expression.Expression;
-import org.geppetto.domain.expression.VariableType;
 
 public class SelectionStatement implements Statement {
 
@@ -41,7 +41,7 @@ public class SelectionStatement implements Statement {
 
    @Override
    public void execute() {
-      if (expression.getValue().getType() != VariableType.BOOLEAN)
+      if (expression.getValue().getType() != DataType.BOOLEAN)
          throw new GeppettoException("Iteration statement condition must be a boolean expression, but is of type: " + expression.getValue().getType());
       if (expression.getValue().getBooleanValue())
          ifStatement.execute();

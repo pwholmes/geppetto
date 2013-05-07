@@ -1,19 +1,19 @@
 package org.geppetto.domain.declaration;
 
-import org.geppetto.domain.expression.VariableType;
+import org.geppetto.domain.DataType;
 
 public class VariableDeclaration {
-   private VariableType type;
+   private DataType type;
    private String name;
    private Value value;
 
-   public VariableDeclaration(String name, VariableType type, Value value) {
+   public VariableDeclaration(String name, DataType type, Value value) {
       this.name = name;
       this.type = type;
       this.value = value;
    }
 
-   public VariableDeclaration(String name, VariableType type) {
+   public VariableDeclaration(String name, DataType type) {
       this.name = name;
       this.type = type;
       this.value = new Value();
@@ -27,11 +27,11 @@ public class VariableDeclaration {
       this.name = name;
    }
 
-   public VariableType getType() {
+   public DataType getType() {
       return type;
    }
 
-   public void setType(VariableType type) {
+   public void setType(DataType type) {
       this.type = type;
    }
 

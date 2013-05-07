@@ -2,9 +2,9 @@ package org.geppetto.interpreter;
 
 import org.geppetto.GeppettoException;
 import org.geppetto.GeppettoProgram;
+import org.geppetto.domain.DataType;
 import org.geppetto.domain.declaration.Rule;
 import org.geppetto.domain.declaration.Value;
-import org.geppetto.domain.expression.VariableType;
 
 public class Interpreter {
    private boolean debug;
@@ -62,7 +62,7 @@ public class Interpreter {
       if (debug)
          print("Processing rule: " + rule.getName());
       Value conditionValue = rule.getCondition().getValue(); 
-      if (conditionValue.getType() != VariableType.BOOLEAN)
+      if (conditionValue.getType() != DataType.BOOLEAN)
          throw new GeppettoException("Rule condition must be a boolean expression, but is of type: " + conditionValue.getType());
       if (conditionValue.getBooleanValue()) {
          if (debug)

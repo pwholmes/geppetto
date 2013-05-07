@@ -1,6 +1,8 @@
 package org.geppetto.domain.expression;
 
 import org.geppetto.GeppettoException;
+import org.geppetto.domain.DataType;
+import org.geppetto.domain.Operator;
 import org.geppetto.domain.declaration.Value;
 
 public class BinaryExpression implements Expression {
@@ -46,11 +48,11 @@ public class BinaryExpression implements Expression {
 
       switch (operator) {
          case ADD:
-            if (value1.getType() == VariableType.STRING || value2.getType() == VariableType.STRING)
+            if (value1.getType() == DataType.STRING || value2.getType() == DataType.STRING)
                return new Value(value1.getStringValue() + value2.getStringValue());
-            else if (value1.getType() == VariableType.BOOLEAN || value2.getType() == VariableType.BOOLEAN)
+            else if (value1.getType() == DataType.BOOLEAN || value2.getType() == DataType.BOOLEAN)
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
-            else if (value1.getType() == VariableType.FLOAT || value2.getType() == VariableType.FLOAT)
+            else if (value1.getType() == DataType.FLOAT || value2.getType() == DataType.FLOAT)
                return new Value(value1.getFloatValue() + value2.getFloatValue());
             else // only other possibility is two ints
                return new Value(value1.getIntValue() + value2.getIntValue());
@@ -64,10 +66,10 @@ public class BinaryExpression implements Expression {
             return value2.copy();
 
          case DIVIDE:
-            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() / value2.getIntValue()));
-            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
-                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+            else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
+                     (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() / value2.getFloatValue()));
             else
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
@@ -98,33 +100,33 @@ public class BinaryExpression implements Expression {
             return new Value(value1.compareTo(value2) <= 0);
          
          case LOGICAL_AND:
-            if (value1.getType() != VariableType.BOOLEAN)
+            if (value1.getType() != DataType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value1.getType() + " for operator " + operator);
-            if (value2.getType() != VariableType.BOOLEAN)
+            if (value2.getType() != DataType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value2.getType() + " for operator " + operator);
             return new Value(value1.getBooleanValue() && value2.getBooleanValue());
          
          case LOGICAL_OR:
-            if (value1.getType() != VariableType.BOOLEAN)
+            if (value1.getType() != DataType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value1.getType() + " for operator " + operator);
-            if (value2.getType() != VariableType.BOOLEAN)
+            if (value2.getType() != DataType.BOOLEAN)
                throw new GeppettoException("Illegal operand type " + value2.getType() + " for operator " + operator);
             return new Value(value1.getBooleanValue() || value2.getBooleanValue());
          
          case MODULUS:
-            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() % value2.getIntValue()));
-            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
-                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+            else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
+                     (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() % value2.getFloatValue()));
             else
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
 
          case MULTIPLY:
-            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() * value2.getIntValue()));
-            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
-                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+            else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
+                     (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() * value2.getFloatValue()));
             else
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
@@ -135,10 +137,10 @@ public class BinaryExpression implements Expression {
             return new Value(!value1.equals(value2));
          
          case SUBTRACT:
-            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() - value2.getIntValue()));
-            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
-                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+            else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
+                     (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() - value2.getFloatValue()));
             else
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");

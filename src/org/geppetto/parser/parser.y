@@ -7,6 +7,8 @@
   import java.util.Set;
   import org.geppetto.GeppettoException;
   import org.geppetto.GeppettoProgram;
+  import org.geppetto.domain.DataType;
+  import org.geppetto.domain.Operator;
   import org.geppetto.domain.declaration.ArgumentDeclaration;
   import org.geppetto.domain.declaration.AttributeConstraint;
   import org.geppetto.domain.declaration.AttributeConstraintFloatRange;
@@ -25,13 +27,12 @@
   import org.geppetto.domain.declaration.VariableDeclaration;
   import org.geppetto.domain.expression.BinaryExpression;
   import org.geppetto.domain.expression.ConstantExpression;
+  import org.geppetto.domain.expression.EntityExpression;
   import org.geppetto.domain.expression.Expression;
   import org.geppetto.domain.expression.FunctionExpression;
-  import org.geppetto.domain.expression.Operator;
-  import org.geppetto.domain.expression.StructureExpression;
   import org.geppetto.domain.expression.UnaryExpression;
   import org.geppetto.domain.expression.VariableExpression;
-  import org.geppetto.domain.expression.VariableType;
+  import org.geppetto.domain.expression.VariantExpression;
   import org.geppetto.domain.statement.CompoundStatement;
   import org.geppetto.domain.statement.EndStatement;
   import org.geppetto.domain.statement.ExpressionStatement;
@@ -85,7 +86,7 @@ variableDeclarationList:
     ;
 
 variableDeclaration:
-    typeSpecifier identifier '=' constant ';'       { $$.obj = new VariableDeclaration(symbolTable.get($2.ival), (VariableType) $1.obj, (Value) $4.obj); }
+    typeSpecifier identifier '=' constant ';'       { $$.obj = new VariableDeclaration(symbolTable.get($2.ival), (DataType) $1.obj, (Value) $4.obj); }
     ;
 
 propertyDefinitionList:
@@ -113,8 +114,8 @@ attributeDefinitionList:
     ;
 
 attributeDefinition:
-    typeSpecifier identifier                        { $$.obj = new AttributeDefinition((VariableType)$1.obj, symbolTable.get($2.ival)); }
-    | typeSpecifier identifier '{' attributeConstraint '}'  { AttributeDefinition attributeDef = new AttributeDefinition((VariableType)$1.obj, symbolTable.get($2.ival));
+    typeSpecifier identifier                        { $$.obj = new AttributeDefinition((DataType)$1.obj, symbolTable.get($2.ival)); }
+    | typeSpecifier identifier '{' attributeConstraint '}'  { AttributeDefinition attributeDef = new AttributeDefinition((DataType)$1.obj, symbolTable.get($2.ival));
                                                       attributeDef.setConstraint((AttributeConstraint) $4.obj); 
                                                       $$.obj = attributeDef; }
     ;
@@ -146,7 +147,7 @@ functionDefinitionList:
 functionDefinition:
     typeSpecifier identifier '(' argumentDeclarationList ')' compoundStatement
                                                     { String name = symbolTable.get($2.ival);
-                                                      VariableType type = (VariableType) $1.obj;
+                                                      DataType type = (DataType) $1.obj;
                                                       ArrayList<ArgumentDeclaration> arguments = (ArrayList<ArgumentDeclaration>) $4.obj;
                                                       CompoundStatement compoundStatement = (CompoundStatement) $6.obj; 
                                                       $$.obj = new FunctionDefinition(name, type, arguments, compoundStatement); }
@@ -163,7 +164,7 @@ argumentDeclarationList:
     ; 
 
 argumentDeclaration:
-    typeSpecifier identifier                        { $$.obj = new ArgumentDeclaration(symbolTable.get($2.ival), (VariableType) $1.obj); }
+    typeSpecifier identifier                        { $$.obj = new ArgumentDeclaration(symbolTable.get($2.ival), (DataType) $1.obj); }
 
 
 identifier:
@@ -172,10 +173,10 @@ identifier:
     ;
     
 typeSpecifier:
-    INT                                             { $$.obj = VariableType.INT; }
-    | FLOAT                                         { $$.obj = VariableType.FLOAT; }
-    | STRING                                        { $$.obj = VariableType.STRING; }
-    | BOOLEAN                                       { $$.obj = VariableType.BOOLEAN; }
+    INT                                             { $$.obj = DataType.INT; }
+    | FLOAT                                         { $$.obj = DataType.FLOAT; }
+    | STRING                                        { $$.obj = DataType.STRING; }
+    | BOOLEAN                                       { $$.obj = DataType.BOOLEAN; }
     ;
 
 attributeConstraint:
@@ -363,13 +364,16 @@ functionExpression:
 primaryExpression:
     constant                                        { $$.obj = new ConstantExpression((Value) $1.obj); }
     | '(' expression ')'                            { $$.obj = $2.obj; }
+    | identifier                                    { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
+    | identifier '.' identifier                     { $$.obj = new EntityExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
+    | identifier '.' identifier '.' identifier      { $$.obj = new EntityExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
+    ;
+
+/*
     | ':' identifier                                { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
     | ':' identifier '.' identifier                 { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | ':' identifier '.' identifier '.' identifier  { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
-    | identifier                                    { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
-    | identifier '.' identifier                     { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
-    | identifier '.' identifier '.' identifier      { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
-    ;
+*/
     
 argumentExpressionList:
 	argumentExpression                              { ArrayList<Expression> argList = new ArrayList<Expression>(); 

@@ -1,21 +1,22 @@
 package org.geppetto.domain.expression;
 
+import org.geppetto.domain.DataType;
 import org.geppetto.domain.declaration.Value;
 
 
-public class Variant implements Expression {
+public class VariantExpression implements Expression {
 
-   private VariableType type;
+   private DataType type;
    private String name;
    private Value value;
 
-   public Variant(String name, VariableType type, Value value) {
+   public VariantExpression(String name, DataType type, Value value) {
       this.name = name;
       this.type = type;
       this.value = value;
    }
 
-   public Variant(String name) {
+   public VariantExpression(String name) {
       this.name = name;
    }
 
@@ -27,11 +28,11 @@ public class Variant implements Expression {
       this.name = name;
    }
 
-   public VariableType getType() {
+   public DataType getType() {
       return type;
    }
 
-   public void setType(VariableType type) {
+   public void setType(DataType type) {
       this.type = type;
    }
 

@@ -9,6 +9,7 @@ import org.geppetto.parser.generated.Parser;
 public class Geppetto {
    boolean debug         = false;
    boolean verbose       = false;
+   boolean printAST      = false;
    String  inputFileName = null;
    Parser  yyparser      = null;
 
@@ -28,7 +29,7 @@ public class Geppetto {
          program.setDebug(debug);
 
          // Print the program state to the console.
-         if (debug)
+         if (printAST)
             System.out.println(program);
 
          // Run the program!
@@ -48,6 +49,8 @@ public class Geppetto {
             debug = true;
          else if (args[i].equals("-v") || (args[i].equals("-verbose")))
             debug = true;
+         else if (args[i].equals("-t") || (args[i].equals("-tree")))
+            printAST = true;
          else if (i == args.length - 1) {
             File f = new File(args[i]);
             if (f.exists())
