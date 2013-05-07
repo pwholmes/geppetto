@@ -3,7 +3,6 @@ package org.geppetto.domain.expression;
 import org.geppetto.GeppettoException;
 import org.geppetto.domain.declaration.Value;
 
-
 public class BinaryExpression implements Expression {
    private Expression operand1;
    private Operator operator;
@@ -47,9 +46,14 @@ public class BinaryExpression implements Expression {
 
       switch (operator) {
          case ADD:
-            return new Value(value1.getIntValue() + value2.getIntValue());
-            // TODO: ADD
-            //throw new GeppettoException("Feature not implemented yet.");
+            if (value1.getType() == VariableType.STRING || value2.getType() == VariableType.STRING)
+               return new Value(value1.getStringValue() + value2.getStringValue());
+            else if (value1.getType() == VariableType.BOOLEAN || value2.getType() == VariableType.BOOLEAN)
+               throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
+            else if (value1.getType() == VariableType.FLOAT || value2.getType() == VariableType.FLOAT)
+               return new Value(value1.getFloatValue() + value2.getFloatValue());
+            else // only other possibility is two ints
+               return new Value(value1.getIntValue() + value2.getIntValue());
             
          case ASSIGNMENT: // as with C, we'll go with the convention that the value of an assignment expression is the value assigned to the lvalue
             if (!operand1.isLValue())
@@ -60,8 +64,13 @@ public class BinaryExpression implements Expression {
             return value2.copy();
 
          case DIVIDE:
-            // TODO: DIVIDE
-            throw new GeppettoException("Feature not implemented yet.");
+            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+               return new Value((int)(value1.getIntValue() / value2.getIntValue()));
+            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
+                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+               return new Value((float)(value1.getFloatValue() / value2.getFloatValue()));
+            else
+               throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
          
          case EQUAL_TO:
             if (value1.getType() != value2.getType())
@@ -103,12 +112,22 @@ public class BinaryExpression implements Expression {
             return new Value(value1.getBooleanValue() || value2.getBooleanValue());
          
          case MODULUS:
-            // TODO: MODULUS
-            throw new GeppettoException("Feature not implemented yet.");
+            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+               return new Value((int)(value1.getIntValue() % value2.getIntValue()));
+            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
+                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+               return new Value((float)(value1.getFloatValue() % value2.getFloatValue()));
+            else
+               throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
 
          case MULTIPLY:
-            // TODO: MULTIPLY
-            throw new GeppettoException("Feature not implemented yet.");
+            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+               return new Value((int)(value1.getIntValue() * value2.getIntValue()));
+            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
+                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+               return new Value((float)(value1.getFloatValue() * value2.getFloatValue()));
+            else
+               throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
          
          case NOT_EQUAL_TO:
             if (value1.getType() != value2.getType())
@@ -116,8 +135,13 @@ public class BinaryExpression implements Expression {
             return new Value(!value1.equals(value2));
          
          case SUBTRACT:
-            // TODO: SUBTRACT
-            throw new GeppettoException("Feature not implemented yet.");
+            if (value1.getType() == VariableType.INT || value2.getType() == VariableType.INT)
+               return new Value((int)(value1.getIntValue() - value2.getIntValue()));
+            else if ((value1.getType() == VariableType.FLOAT || value1.getType() == VariableType.INT) &&
+                     (value2.getType() == VariableType.FLOAT || value2.getType() == VariableType.INT))
+               return new Value((float)(value1.getFloatValue() - value2.getFloatValue()));
+            else
+               throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
          
          default: // should never happen
             throw new GeppettoException("Unknown binary operator: " + operator);

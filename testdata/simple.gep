@@ -10,7 +10,19 @@ entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
 entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
 
 rule x < 10 -> { x = x + 1; print("incrementing x"); print(x); }
-rule x == 5 -> { x = test(); }
+rule x == 3 -> test();
+rule test2(x) -> { end; }
+rule x == 6 -> { end; }
 
-int test(int x, string y) { return 15; } 
-string test2(string x, float z) { end; }
+int test() {
+   print("3/4 = " + 3/4);  
+   print("3.0/4.0 = " + 3.0/4.0);
+   return 15; 
+} 
+
+boolean test2(int x) {
+   if (x == 5)
+      return true;
+   else
+      return false;
+}

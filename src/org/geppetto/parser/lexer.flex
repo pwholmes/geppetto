@@ -85,6 +85,7 @@ property                { return Parser.PROPERTY; }
 return                  { return Parser.RETURN; }
 rule                    { return Parser.RULE; }
 string                  { return Parser.STRING; }
+then                    { return Parser.THEN; }
 true                    { return Parser.TRUE; }
 while                   { return Parser.WHILE; }
 

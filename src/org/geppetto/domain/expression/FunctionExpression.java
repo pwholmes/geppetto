@@ -9,11 +9,9 @@ import org.geppetto.domain.declaration.Value;
 
 /**
  * Functions are expressions rather than statements because they return a value.
- * Therefore a function is executed when its value is requested. The other
- * problems associated with functions are arguments, which effectively become
- * scoped variables, and return values. We've avoided the problem of scoping by
- * requiring that all variables be global, but we can't avoid it here. So those
- * problems have yet to be solved.
+ * Therefore a function is executed when its value is requested. Functions arguments
+ * effectively become local variables.  Return values are placed into the current 
+ * program context by the return statement.
  */
 public class FunctionExpression implements Expression {
    private String                name;
@@ -47,13 +45,19 @@ public class FunctionExpression implements Expression {
 
    @Override
    public Value getValue() {
+      // Get the definition of the function from the AST. 
       FunctionDefinition functionDef = GeppettoProgram.getInstance().getFunctionDefinition(getName());
       if (functionDef == null)
          throw new GeppettoException("Attempting to call undeclared function: " + getName());
-      ProgramContext context = new ProgramContext(functionDef);
+      
+      // Add a new context to the stack, call the function, then pop the context off the stack.
+      // (We still have a reference to the context, so it won't be garbage collected until this function exits.)
+      ProgramContext context = new ProgramContext(functionDef, getArguments());
       GeppettoProgram.getInstance().getContexts().add(context);
       functionDef.getCompoundStatement().execute();
       GeppettoProgram.getInstance().getContexts().removeLast();
+      
+      // If the end statement was not called, check the function's return value.
       if (!GeppettoProgram.getInstance().isEndRequested()) {
          if (context.getReturnValue() == null)
             throw new GeppettoException("Function '" + functionDef.getName() + "' did not set a return value.");
@@ -62,6 +66,7 @@ public class FunctionExpression implements Expression {
                   + functionDef.getType() + " but returned value of type " + context.getReturnValue().getType() + ".");
       }
 
+      // Return the function's return value.
       return context.getReturnValue();
    }
 

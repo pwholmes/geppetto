@@ -6,7 +6,6 @@ import org.geppetto.domain.declaration.Value;
 import org.geppetto.domain.declaration.VariableDeclaration;
 
 public class VariableExpression implements Expression {
-   private VariableType type;
    private String name;
 
    public VariableExpression(String name) {
@@ -19,14 +18,6 @@ public class VariableExpression implements Expression {
 
    public void setName(String name) {
       this.name = name;
-   }
-
-   public VariableType getType() {
-      return type;
-   }
-
-   public void setType(VariableType type) {
-      this.type = type;
    }
 
    @Override
@@ -56,7 +47,6 @@ public class VariableExpression implements Expression {
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-      sb.append("; type: ").append(getType());
       sb.append("; value: ").append(getValue());
       sb.append("}");
       
