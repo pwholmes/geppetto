@@ -1155,11 +1155,11 @@ case 53:
 break;
 case 54:
 //#line 285 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new Rule((Expression) val_peek(4).obj, (Statement) val_peek(2).obj); }
+{ yyval.obj = new Rule((Expression) val_peek(3).obj, (Statement) val_peek(0).obj); }
 break;
 case 55:
 //#line 286 "../../../../../src/org/geppetto/parser/parser.y"
-{ yyval.obj = new Rule(symbolTable.get(val_peek(5).ival), (Expression) val_peek(4).obj, (Statement) val_peek(2).obj); }
+{ yyval.obj = new Rule(symbolTable.get(val_peek(5).ival), (Expression) val_peek(3).obj, (Statement) val_peek(0).obj); }
 break;
 case 56:
 //#line 290 "../../../../../src/org/geppetto/parser/parser.y"

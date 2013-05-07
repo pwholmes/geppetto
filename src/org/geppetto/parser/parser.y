@@ -282,8 +282,8 @@ ruleDeclarationList:
     ;
     
 rule:
-    RULE '(' expression ')' INFERS statement        { $$.obj = new Rule((Expression) $2.obj, (Statement) $4.obj); }
-    | RULE identifier '(' expression ')' INFERS statement  { $$.obj = new Rule(symbolTable.get($2.ival), (Expression) $3.obj, (Statement) $5.obj); }
+    RULE '(' expression ')' INFERS statement        { $$.obj = new Rule((Expression) $3.obj, (Statement) $6.obj); }
+    | RULE identifier '(' expression ')' INFERS statement  { $$.obj = new Rule(symbolTable.get($2.ival), (Expression) $4.obj, (Statement) $7.obj); }
     ;
     
 statement:

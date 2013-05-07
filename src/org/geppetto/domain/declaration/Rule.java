@@ -39,7 +39,7 @@ public class Rule {
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getCondition());
-      sb.append("condition: ").append(getCondition());
+      sb.append("; condition: ").append(getCondition());
       sb.append("; behavior: ").append(getBehavior());
       sb.append("}");
       

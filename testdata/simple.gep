@@ -9,10 +9,10 @@ property linearpos(int x {1-10});
 entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
 entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
 
-rule x < 10 -> { x = x + 1; print("x incremented to: " + x); }
-rule x == 3 -> test();
-rule test2(x) -> { end; }
-rule x == 6 -> { end; }
+rule (x < 10) -> { x = x + 1; print("x incremented to: " + x); }
+rule (x == 3) -> test();
+rule (test2(x)) -> { end; }
+rule (x == 6) -> { end; }
 
 int test() {
    print("3/4 = " + 3/4);  
