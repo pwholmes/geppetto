@@ -10,7 +10,7 @@ entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
 entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
 
 rule x < 10 -> { x = x + 1; print("incrementing x"); }
-rule x == 5 -> test();
+rule x == 5 -> { x = test(); }
 
-int test(int x, string y) { end; } 
+int test(int x, string y) { return 15; } 
 string test2(string x, float z) { end; }
