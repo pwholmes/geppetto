@@ -1,6 +1,7 @@
 package org.geppetto.domain.declaration;
 
 import java.util.List;
+import org.geppetto.domain.DataType;
 
 public class AttributeConstraintFloatRange implements AttributeConstraint {
    private float minValue;
@@ -38,10 +39,10 @@ public class AttributeConstraintFloatRange implements AttributeConstraint {
    }
    
    @Override
-   public boolean violatesConstraint(Object value) {
-      if (value.getClass() != Float.class)
+   public boolean violatesConstraint(Value value) {
+      if (value.getType() != DataType.FLOAT)
          return true;
-      return ((Float)value < minValue || (Float)value > maxValue);
+      return (value.getFloatValue() < minValue || value.getFloatValue() > maxValue);
    }
 
    public String toString() {

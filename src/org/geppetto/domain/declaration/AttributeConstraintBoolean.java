@@ -1,5 +1,7 @@
 package org.geppetto.domain.declaration;
 
+import org.geppetto.domain.DataType;
+
 
 
 public class AttributeConstraintBoolean implements AttributeConstraint {
@@ -13,8 +15,8 @@ public class AttributeConstraintBoolean implements AttributeConstraint {
    }
    
    @Override
-   public boolean violatesConstraint(Object value) {
-      if (value.getClass() != Boolean.class)
+   public boolean violatesConstraint(Value value) {
+      if (value.getType() != DataType.BOOLEAN)
          return true;
       return false;
    }

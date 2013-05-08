@@ -33,6 +33,14 @@ public class Property {
    public List<Attribute> getAttributes() {
       return attributes;
    }
+   
+   public Attribute getAttribute(String name) {
+      for (Attribute attribute : getAttributes()) {
+         if (attribute.getName().equals(name))
+            return attribute;
+      }
+      return null;
+   }
 
    public void setAttributeValues(List<AttributeInitializer> attributeInitializers) {
       for (AttributeInitializer initializer : attributeInitializers) {
@@ -48,7 +56,8 @@ public class Property {
       Value value = attributeInitializer.getValue();
       if (value.getType() != attributeDef.getType())
          throw new GeppettoException("Invalid attribute data type; is: " + value.getType() + ", must be : " + attributeDef.getType());
-      // TODO: verify that value is within constraints
+      if (attributeDef.getConstraint().violatesConstraint(value))
+         throw new GeppettoException("Constraint violation on attribute: " + attributeDef.getName() + ", value: " + value);
       Attribute attribute = new Attribute(attributeInitializer.getName(), attributeInitializer.getValue());
       attributes.add(attribute);
    }

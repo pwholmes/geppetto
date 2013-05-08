@@ -367,13 +367,9 @@ primaryExpression:
     | identifier                                    { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
     | identifier '.' identifier                     { $$.obj = new EntityExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
     | identifier '.' identifier '.' identifier      { $$.obj = new EntityExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
+    | ':' identifier '.' identifier                 { $$.obj = new VariantExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
+    | ':' identifier '.' identifier '.' identifier  { $$.obj = new VariantExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
     ;
-
-/*
-    | ':' identifier                                { $$.obj = new VariableExpression(symbolTable.get($1.ival)); }
-    | ':' identifier '.' identifier                 { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival)); }
-    | ':' identifier '.' identifier '.' identifier  { $$.obj = new StructureExpression(symbolTable.get($1.ival), symbolTable.get($3.ival), symbolTable.get($5.ival)); }
-*/
     
 argumentExpressionList:
 	argumentExpression                              { ArrayList<Expression> argList = new ArrayList<Expression>(); 

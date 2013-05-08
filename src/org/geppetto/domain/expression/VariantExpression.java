@@ -1,39 +1,33 @@
 package org.geppetto.domain.expression;
 
-import org.geppetto.domain.DataType;
 import org.geppetto.domain.declaration.Value;
 
-
 public class VariantExpression implements Expression {
-
-   private DataType type;
    private String name;
-   private Value value;
+   private String propertyName;
+   private String attributeName;
 
-   public VariantExpression(String name, DataType type, Value value) {
+   public VariantExpression(String name, String propertyName, String attributeName) {
       this.name = name;
-      this.type = type;
-      this.value = value;
+      this.propertyName = propertyName;
+      this.attributeName = attributeName;
    }
 
-   public VariantExpression(String name) {
+   public VariantExpression(String name, String propertyName) {
       this.name = name;
+      this.propertyName = propertyName;
    }
 
    public String getName() {
       return name;
    }
 
-   public void setName(String name) {
-      this.name = name;
+   public String getPropertyName() {
+      return propertyName;
    }
 
-   public DataType getType() {
-      return type;
-   }
-
-   public void setType(DataType type) {
-      this.type = type;
+   public String getAttributeName() {
+      return attributeName;
    }
 
    @Override
@@ -43,12 +37,13 @@ public class VariantExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      this.value = value;
+      // TODO: setValue() for VariantExpression 
    }
    
    @Override
    public Value getValue() {
-      return value;
+      // TODO: getValue() for VariantExpression 
+      return null;
    }
 
    @Override
@@ -57,8 +52,8 @@ public class VariantExpression implements Expression {
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("name: ").append(getName());
-      sb.append("; type: ").append(getType());
-      sb.append("; value: ").append(getValue());
+      sb.append("; propertyName: ").append(getPropertyName());
+      sb.append("; attributeName: ").append(getAttributeName());
       sb.append("}");
       
       return sb.toString();

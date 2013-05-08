@@ -29,6 +29,14 @@ public class Entity {
    public List<Property> getProperties() {
       return properties;
    }
+   
+   public Property getProperty(String name) {
+      for (Property property : getProperties()) {
+         if (property.getName().equals(name))
+            return property;
+      }
+      return null;
+   }
 
    public String toString() {
       StringBuilder sb = new StringBuilder();

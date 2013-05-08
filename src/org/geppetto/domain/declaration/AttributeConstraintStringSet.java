@@ -2,6 +2,7 @@ package org.geppetto.domain.declaration;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.geppetto.domain.DataType;
 
 public class AttributeConstraintStringSet implements AttributeConstraint {
    private Set<String> values = new HashSet<String>();
@@ -24,10 +25,10 @@ public class AttributeConstraintStringSet implements AttributeConstraint {
    }
    
    @Override
-   public boolean violatesConstraint(Object value) {
-      if (value.getClass() != String.class)
+   public boolean violatesConstraint(Value value) {
+      if (value.getType() != DataType.STRING)
          return true;
-      return !(values.contains(value));
+      return !(values.contains(value.getStringValue()));
    }
 
    public String toString() {

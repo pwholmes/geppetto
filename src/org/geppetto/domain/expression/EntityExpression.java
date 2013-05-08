@@ -1,37 +1,41 @@
 package org.geppetto.domain.expression;
 
+import org.geppetto.GeppettoException;
+import org.geppetto.GeppettoProgram;
+import org.geppetto.domain.declaration.Attribute;
+import org.geppetto.domain.declaration.Entity;
+import org.geppetto.domain.declaration.Property;
 import org.geppetto.domain.declaration.Value;
 
-
 public class EntityExpression implements Expression {
-   private String name1;
-   private String name2;
-   private String name3;
+   private String entityName;
+   private String propertyName;
+   private String attributeName;
    
    @SuppressWarnings("unused")
    private EntityExpression() {}
    
-   public EntityExpression(String name1, String name2) {
-      this.name1 = name1;
-      this.name2 = name2;
+   public EntityExpression(String entityName, String propertyName) {
+      this.entityName = entityName;
+      this.propertyName = propertyName;
    }
 
-   public EntityExpression(String name1, String name2, String name3) {
-      this.name1 = name1;
-      this.name2 = name2;
-      this.name3 = name3;
+   public EntityExpression(String entityName, String propertyName, String attributeName) {
+      this.entityName = entityName;
+      this.propertyName = propertyName;
+      this.attributeName = attributeName;
    }
 
-   public String getName1() {
-      return name1;
+   public String getEntityName() {
+      return entityName;
    }
 
-   public String getName2() {
-      return name2;
+   public String getPropertyName() {
+      return propertyName;
    }
 
-   public String getName3() {
-      return name3;
+   public String getAttributeName() {
+      return attributeName;
    }
 
    @Override
@@ -41,13 +45,30 @@ public class EntityExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      // TODO setValue() for StructureExpression.  What do we want to do with this thing???
+      Entity entity = GeppettoProgram.getInstance().getEntity(getEntityName());
+      if (entity == null)
+         throw new GeppettoException("Undeclared entity: " + getEntityName() + ".");
+      Property property = entity.getProperty(getPropertyName());
+      if (property == null)
+         throw new GeppettoException("Entity " + getEntityName() + " missing property: " + getPropertyName() + ".");
+      Attribute attribute = property.getAttribute(getAttributeName());
+      if (attribute == null)
+         throw new GeppettoException("Property " + getPropertyName() + " missing attribute: " + getAttributeName() + ".");
+      attribute.setValue(value);
    }
 
    @Override
    public Value getValue() {
-      // TODO getValue() for StructureExpression.  What do we want to do with this thing???
-      return null;
+      Entity entity = GeppettoProgram.getInstance().getEntity(getEntityName());
+      if (entity == null)
+         throw new GeppettoException("Undeclared entity: " + getEntityName() + ".");
+      Property property = entity.getProperty(getPropertyName());
+      if (property == null)
+         throw new GeppettoException("Entity " + getEntityName() + " missing property: " + getPropertyName() + ".");
+      Attribute attribute = property.getAttribute(getAttributeName());
+      if (attribute == null)
+         throw new GeppettoException("Property " + getPropertyName() + " missing attribute: " + getAttributeName() + ".");
+      return attribute.getValue();
    }
    
    @Override
@@ -55,9 +76,9 @@ public class EntityExpression implements Expression {
       StringBuilder sb = new StringBuilder();
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      sb.append("name1: ").append(getName1());
-      sb.append("; name2: ").append(getName2());
-      sb.append("; name3: ").append(getName3());
+      sb.append("entityName: ").append(getEntityName());
+      sb.append("; propertyName: ").append(getPropertyName());
+      sb.append("; attributeName: ").append(getAttributeName());
       sb.append("}");
       
       return sb.toString();

@@ -2,6 +2,7 @@ package org.geppetto.domain.declaration;
 
 import java.util.HashSet;
 import java.util.Set;
+import org.geppetto.domain.DataType;
 
 public class AttributeConstraintFloatSet implements AttributeConstraint {
    private Set<Float> values = new HashSet<Float>();
@@ -24,10 +25,10 @@ public class AttributeConstraintFloatSet implements AttributeConstraint {
    }
    
    @Override
-   public boolean violatesConstraint(Object value) {
-      if (value.getClass() != Float.class)
+   public boolean violatesConstraint(Value value) {
+      if (value.getType() != DataType.FLOAT)
          return true;
-      return !(values.contains(value));
+      return !(values.contains(value.getFloatValue()));
    }
 
    public String toString() {

@@ -1,6 +1,7 @@
 package org.geppetto.domain.declaration;
 
 import java.util.List;
+import org.geppetto.domain.DataType;
 
 public class AttributeConstraintIntegerRange implements AttributeConstraint {
    private int minValue;
@@ -38,10 +39,10 @@ public class AttributeConstraintIntegerRange implements AttributeConstraint {
    }
    
    @Override
-   public boolean violatesConstraint(Object value) {
-      if (value.getClass() != Integer.class)
+   public boolean violatesConstraint(Value value) {
+      if (value.getType() != DataType.INT)
          return true;
-      return ((Integer)value < minValue || (Integer)value > maxValue);
+      return (value.getIntValue() < minValue || value.getIntValue() > maxValue);
    }
 
    public String toString() {

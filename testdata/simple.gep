@@ -6,14 +6,14 @@ property state(string s {"foraging", "hunting", "relaxing", "fleeing", "dead"});
 property position(int x {0-100}, int y {0-100});
 property linearpos(int x {1-10});
 
-entity fox {type(s="predator"), state(s="hunting"), linearpos(x=5)};
-entity rabbit {type(s="prey"), state(s="foraging"), linearpos(x=2)};
+entity fox {type(s="predator"), state(s="hunting")};
+entity rabbit {type(s="prey"), state(s="foraging")};
 
 rule incrementX              (true)     -> { x = x + 1; print("x incremented to: " + x); }
 rule callRecursiveFunction   (true)     -> print("fib("+ x + ") = " + fib(x));
 rule callFunctionInBehavior  (x == 3)   -> test();
 rule callFunctionInCondition (test2(x)) -> { end; }
-rule endWhenXis6             (x == 6)   -> { end; }
+rule entityInCondition       (fox.state.s == "hunting") -> { print("Fox is hunting"); }
 
 int test() {
    print("3/4 = " + 3/4);  
