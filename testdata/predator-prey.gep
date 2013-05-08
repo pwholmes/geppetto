@@ -1,0 +1,35 @@
+property type(string s {"predator", "prey"});
+property state(string s {"foraging", "hunting", "relaxing", "fleeing", "dead"});
+property pos(int x{1-10}, int y{1-10}); 
+
+entity fox {type(s="predator"), state(s="hunting"), pos(x=7, y=5)};
+entity rabbit {type(s="prey"), state(s="foraging"), pos(x=1, y=1)};
+
+rule (true) -> print("Start of cycle:");
+rule sameLocation      (fox.state.s == "hunting" && fox.pos.x == rabbit.pos.x && fox.pos.y == rabbit.pos.y) -> eat();
+rule differentLocation (fox.state.s == "hunting" && (fox.pos.x != rabbit.pos.x || fox.pos.y != rabbit.pos.y)) -> approach();
+rule (true) -> print("fox: x=" + fox.pos.x + ", y=" + fox.pos.y);
+rule (true) -> print("rabbit: x=" + rabbit.pos.x + ", y=" + rabbit.pos.y);
+
+int eat() {
+   print("Gotcha!");
+   fox.state.s = "relaxing";
+   rabbit.state.s = "dead";
+   end;
+}
+
+int approach() {
+   print("Moving toward prey...");
+   
+   if (fox.pos.x > rabbit.pos.x)
+      fox.pos.x = fox.pos.x - 1;
+   if (fox.pos.x < rabbit.pos.x)
+      fox.pos.x = fox.pox.x + 1;
+
+   if (fox.pos.y > rabbit.pos.y)
+      fox.pos.y = fox.pos.y - 1;
+   if (fox.pos.y < rabbit.pos.y)
+      fox.pos.y = fox.pos.y + 1;
+
+   return 0;
+}
