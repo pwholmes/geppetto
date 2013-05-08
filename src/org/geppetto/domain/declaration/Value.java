@@ -96,11 +96,11 @@ public class Value {
 
    public Value copy() {
       Value value = new Value();
-      value.type = getType();
-      value.booleanValue = getBooleanValue();
-      value.intValue = getIntValue();
-      value.floatValue = getFloatValue();
-      value.stringValue = getStringValue();
+      value.type = type;
+      value.booleanValue = booleanValue;
+      value.intValue = intValue;
+      value.floatValue = floatValue;
+      value.stringValue = stringValue;
       return value;
    }
    

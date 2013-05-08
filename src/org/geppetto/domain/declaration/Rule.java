@@ -38,7 +38,7 @@ public class Rule {
       StringBuilder sb = new StringBuilder();
       
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
-      sb.append("name: ").append(getCondition());
+      sb.append("name: ").append(getName());
       sb.append("; condition: ").append(getCondition());
       sb.append("; behavior: ").append(getBehavior());
       sb.append("}");
