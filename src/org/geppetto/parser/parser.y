@@ -388,7 +388,7 @@ argumentExpression:
     ;
 
 compoundStatement:
-	'{' statementList '}'		                    { $$.obj = new CompoundStatement((ArrayList<Statement>) $2.obj); }
+	'{' variableDeclarationList statementList '}'	{ $$.obj = new CompoundStatement((ArrayList<VariableDeclaration>) $2.obj, (ArrayList<Statement>) $3.obj); }
 	;
 	
 statementList:
@@ -529,8 +529,8 @@ public void yyerror (String error) {
 }
 
 /*
- * This is just to aid in debugging.  It prints out the value of a token returned
- * from the lexer to the console.
+ * This is just to aid in debugging.  It converts the value of a token returned
+ * from the lexer into a String so it can be printed to the console.
  */
 private String tokenToString(ParserVal pv) {
     String s = null;

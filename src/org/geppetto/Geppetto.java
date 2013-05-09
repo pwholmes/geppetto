@@ -26,6 +26,8 @@ public class Geppetto {
          // Parse the input file into a GeppettoProgram object (which is effectively our AST)
          yyparser = new Parser(verbose);
          GeppettoProgram program = yyparser.parse(new FileReader(inputFileName));
+         if (program == null)
+            throw new GeppettoException("Parser error, aborting program.");
          program.setDebug(debug);
 
          // Print the program state to the console.

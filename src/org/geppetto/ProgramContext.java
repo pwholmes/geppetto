@@ -20,9 +20,7 @@ public class ProgramContext {
    }
 
    /**
-    * This constructor creates a new program context given the definition of a function.  Optimally
-    * we'd allow new local variables to be declared in the function call as well, but for now the only
-    * local variables allowed in the new context are those from the function's own arguments.  We
+    * This constructor creates a new program context given the definition of a function.  We
     * create new local variables with the names of the arguments in the function definition, and values
     * taken from the arguments in the function expression.  Note that the arguments in the function 
     * *definition* need not have the same names as those in the function *expression*, so they are 
