@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="geppetto" default="grammar" basedir="."> 
 	<taskdef classname="JFlex.anttask.JFlexTask" name="jflex" />
-	
-    <target name ="makejar" description="Create a jar for the project">
+ 
+    <target name="compile">
+        <mkdir dir="classes"/>
+        <javac srcdir="src" destdir="bin" includeantruntime="false"/>
+    </target>
+    
+    <target name ="jar" description="Create a jar for the project">
     	<echo>Building jar file...</echo>
-        <jar jarfile="geppetto.jar" includes="*.class" basedir="bin"/>
+        <jar jarfile="lib/geppetto.jar" basedir="bin" includes="*.class">
+            <manifest>
+                <attribute name="Main-Class" value="org.geppetto.Geppetto"/>
+            </manifest>
+        </jar>
     </target>
 	
     <target name="grammar">
@@ -18,6 +27,8 @@
     	<exec osfamily="unix" executable="tools/byaccj/linux/yacc.linux" dir="src/org/geppetto/parser/generated" resolveexecutable="true">
         	<arg line="-d -v -t -Jpackage=org.geppetto.parser.generated ../../../../../src/org/geppetto/parser/parser.y"/>
         </exec>
+        
+        <antcall target="compile"/>
     </target>
 	
 </project>

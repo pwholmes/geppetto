@@ -68,7 +68,7 @@ public class BinaryExpression implements Expression {
             return operand1.getValue().copy();
 
          case DIVIDE:
-            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() / value2.getIntValue()));
             else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
                      (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
@@ -77,26 +77,46 @@ public class BinaryExpression implements Expression {
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
          
          case EQUAL_TO:
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.FLOAT)
+               return new Value(value1.getIntValue() == value2.getFloatValue());
+            if (value1.getType() == DataType.FLOAT && value2.getType() == DataType.INT)
+               return new Value(value1.getFloatValue() == value2.getIntValue());
             if (value1.getType() != value2.getType())
                throw new GeppettoException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(value1.equals(value2));
          
          case GREATER_THAN:
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.FLOAT)
+               return new Value(value1.getIntValue() > value2.getFloatValue());
+            if (value1.getType() == DataType.FLOAT && value2.getType() == DataType.INT)
+               return new Value(value1.getFloatValue() > value2.getIntValue());
             if (value1.getType() != value2.getType())
                throw new GeppettoException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(value1.compareTo(value2) > 0);
          
          case GREATER_THAN_OR_EQUAL_TO:
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.FLOAT)
+               return new Value(value1.getIntValue() >= value2.getFloatValue());
+            if (value1.getType() == DataType.FLOAT && value2.getType() == DataType.INT)
+               return new Value(value1.getFloatValue() >= value2.getIntValue());
             if (value1.getType() != value2.getType())
                throw new GeppettoException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(value1.compareTo(value2) >= 0);
          
          case LESS_THAN:
-            if (value1.getType() != value2.getType())
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.FLOAT)
+               return new Value(value1.getIntValue() < value2.getFloatValue());
+            else if (value1.getType() == DataType.FLOAT && value2.getType() == DataType.INT)
+               return new Value(value1.getFloatValue() < value2.getIntValue());
+            else if (value1.getType() != value2.getType())
                throw new GeppettoException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(value1.compareTo(value2) < 0);
          
          case LESS_THAN_OR_EQUAL_TO:
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.FLOAT)
+               return new Value(value1.getIntValue() <= value2.getFloatValue());
+            if (value1.getType() == DataType.FLOAT && value2.getType() == DataType.INT)
+               return new Value(value1.getFloatValue() <= value2.getIntValue());
             if (value1.getType() != value2.getType())
                throw new GeppettoException("Type mismatch: attempting to compare value of type " + value1.getType() + " to value of type " + value2.getType() + ".");
             return new Value(value1.compareTo(value2) <= 0);
@@ -116,7 +136,7 @@ public class BinaryExpression implements Expression {
             return new Value(value1.getBooleanValue() || value2.getBooleanValue());
          
          case MODULUS:
-            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.INT)
                return new Value((int)(value1.getIntValue() % value2.getIntValue()));
             else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
                      (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
@@ -125,8 +145,8 @@ public class BinaryExpression implements Expression {
                throw new GeppettoException("Type mismatch: cannot perform operation " + operator + " with operands of type " + value1.getType() + " and type " + value2.getType() + ".");
 
          case MULTIPLY:
-            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
-               return new Value((int)(value1.getIntValue() * value2.getIntValue()));
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.INT)
+               return new Value(value1.getIntValue() * value2.getIntValue());
             else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
                      (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() * value2.getFloatValue()));
@@ -139,8 +159,8 @@ public class BinaryExpression implements Expression {
             return new Value(!value1.equals(value2));
          
          case SUBTRACT:
-            if (value1.getType() == DataType.INT || value2.getType() == DataType.INT)
-               return new Value((int)(value1.getIntValue() - value2.getIntValue()));
+            if (value1.getType() == DataType.INT && value2.getType() == DataType.INT)
+               return new Value(value1.getIntValue() - value2.getIntValue());
             else if ((value1.getType() == DataType.FLOAT || value1.getType() == DataType.INT) &&
                      (value2.getType() == DataType.FLOAT || value2.getType() == DataType.INT))
                return new Value((float)(value1.getFloatValue() - value2.getFloatValue()));

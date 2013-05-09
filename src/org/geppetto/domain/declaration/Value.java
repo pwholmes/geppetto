@@ -113,7 +113,7 @@ public class Value {
          return false; // equating anything to null is false
       
       if (value1.getType() != value2.getType())
-         return false; // they have to be the same type; VariableType is an enum so you can so this comparison with ==
+         return false;
       
       switch (value1.getType()) {
          case BOOLEAN:
