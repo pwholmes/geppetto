@@ -26,8 +26,15 @@ public class Geppetto {
          // Parse the input file into a GeppettoProgram object (which is effectively our AST)
          yyparser = new Parser(verbose);
          GeppettoProgram program = yyparser.parse(new FileReader(inputFileName));
-         if (program == null)
-            throw new GeppettoException("Parser error, aborting program.");
+         if (program == null) {
+            // BYacc/J's error messages are useless.  Since we have to post a generic error message,
+            // we may as well use our own (relatively) user-friendly error message instead.
+            //if (yyparser.errorMessage != null)
+            //   throw new GeppettoException(yyparser.errorMessage);
+            // else
+               throw new GeppettoException("Error parsing input file, aborting program.");
+         }
+            
          program.setDebug(debug);
 
          // Print the program state to the console.
@@ -50,7 +57,7 @@ public class Geppetto {
          if (args[i].equals("-d") || (args[i].equals("-debug")))
             debug = true;
          else if (args[i].equals("-v") || (args[i].equals("-verbose")))
-            debug = true;
+            verbose = true;
          else if (args[i].equals("-t") || (args[i].equals("-tree")))
             printAST = true;
          else if (i == args.length - 1) {
