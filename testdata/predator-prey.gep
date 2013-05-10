@@ -35,5 +35,6 @@ int approach() {
       fox.pos.y = fox.pos.y - 1;
    if (fox.pos.y < rabbit.pos.y)
       fox.pos.y = fox.pos.y + 1;
-      return 0;
+      
+   return 0;
 }
