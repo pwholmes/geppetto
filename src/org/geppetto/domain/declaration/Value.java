@@ -10,7 +10,9 @@ public class Value {
    private String stringValue = null;
    private boolean booleanValue = false;
    
-   protected Value() {}
+   public Value(DataType type) {
+      this.type = type;
+   }
    
    public Value(int intValue) {
       this.type = DataType.INT;
@@ -95,8 +97,7 @@ public class Value {
    }
 
    public Value copy() {
-      Value value = new Value();
-      value.type = type;
+      Value value = new Value(type);
       value.booleanValue = booleanValue;
       value.intValue = intValue;
       value.floatValue = floatValue;

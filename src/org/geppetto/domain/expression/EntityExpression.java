@@ -11,10 +11,11 @@ public class EntityExpression implements Expression {
    private String entityName;
    private String propertyName;
    private String attributeName;
-   
+
    @SuppressWarnings("unused")
-   private EntityExpression() {}
-   
+   private EntityExpression() {
+   }
+
    public EntityExpression(String entityName, String propertyName) {
       this.entityName = entityName;
       this.propertyName = propertyName;
@@ -45,42 +46,48 @@ public class EntityExpression implements Expression {
 
    @Override
    public void setValue(Value value) {
-      Entity entity = GeppettoProgram.getInstance().getEntity(getEntityName());
-      if (entity == null)
-         throw new GeppettoException("Undeclared entity: " + getEntityName() + ".");
-      Property property = entity.getProperty(getPropertyName());
-      if (property == null)
-         throw new GeppettoException("Entity " + getEntityName() + " missing property: " + getPropertyName() + ".");
-      Attribute attribute = property.getAttribute(getAttributeName());
-      if (attribute == null)
-         throw new GeppettoException("Property " + getPropertyName() + " missing attribute: " + getAttributeName() + ".");
-      attribute.setValue(value);
+      getAttribute().setValue(value);
    }
 
    @Override
    public Value getValue() {
+      return getAttribute().getValue();
+   }
+   
+   private Attribute getAttribute() {
       Entity entity = GeppettoProgram.getInstance().getEntity(getEntityName());
       if (entity == null)
          throw new GeppettoException("Undeclared entity: " + getEntityName() + ".");
+      
       Property property = entity.getProperty(getPropertyName());
       if (property == null)
          throw new GeppettoException("Entity " + getEntityName() + " missing property: " + getPropertyName() + ".");
-      Attribute attribute = property.getAttribute(getAttributeName());
-      if (attribute == null)
-         throw new GeppettoException("Property " + getPropertyName() + " missing attribute: " + getAttributeName() + ".");
-      return attribute.getValue();
+
+      Attribute attribute = null;
+      if (attributeName == null) {
+         if (property.getAttributes().size() == 1)
+            property.getAttributes().get(0);
+         else
+            throw new GeppettoException("Property " + propertyName + " has more than one attribute, but no attribute name was specified.");
+      } else {
+         attribute = property.getAttribute(getAttributeName());
+         if (attribute == null)
+            throw new GeppettoException("Property " + getPropertyName() + " missing attribute: " + getAttributeName() + ".");
+      }
+
+      return attribute;
    }
-   
+
    @Override
    public String toString() {
       StringBuilder sb = new StringBuilder();
-      
+
       sb.append("{").append(this.getClass().getSimpleName()).append(": ");
       sb.append("entityName: ").append(getEntityName());
       sb.append("; propertyName: ").append(getPropertyName());
       sb.append("; attributeName: ").append(getAttributeName());
       sb.append("}");
-      
+
       return sb.toString();
    }
 

@@ -30,6 +30,9 @@
   import org.geppetto.domain.expression.EntityExpression;
   import org.geppetto.domain.expression.Expression;
   import org.geppetto.domain.expression.FunctionExpression;
+  import org.geppetto.domain.expression.InputExpression;
+  import org.geppetto.domain.expression.LengthExpression;
+  import org.geppetto.domain.expression.RandomExpression;
   import org.geppetto.domain.expression.UnaryExpression;
   import org.geppetto.domain.expression.VariableExpression;
   import org.geppetto.domain.expression.VariantExpression;
@@ -59,7 +62,7 @@
 %token IDENTIFIER
 
 /* Reserved words */
-%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR FOREACH GLOBAL IF INPUT INT PRINT PROPERTY RETURN RULE STRING THEN TRUE WHILE 
+%token BOOLEAN ELSE END ENTITY FALSE FLOAT FOR FOREACH GLOBAL IF INPUT INT LENGTH PRINT PROPERTY RANDOM RETURN RULE STRING THEN TRUE WHILE 
 
 %%
 
@@ -133,8 +136,22 @@ entityDeclaration:
     ENTITY identifier '{' propertyList '}' ';'      { Entity entity = new Entity(symbolTable.get($2.ival));
                                                       entity.addProperties((List<Property>) $4.obj);
                                                       $$.obj = entity; }
-    ;    
+    ;
+        
+ruleDeclarationList:
+    rule                                            { ArrayList<Rule> rules = new ArrayList<Rule>();  
+                                                      rules.add((Rule) $1.obj); 
+                                                      $$.obj = rules; }
+    | ruleDeclarationList rule                      { ArrayList<Rule> rules = (ArrayList<Rule>) $1.obj;
+                                                      rules.add((Rule) $2.obj);
+                                                      $$.obj = rules; }
+    ;
 
+rule:
+    RULE '(' expression ')' INFERS statement        { $$.obj = new Rule((Expression) $3.obj, (Statement) $6.obj); }
+    | RULE identifier '(' expression ')' INFERS statement  { $$.obj = new Rule(symbolTable.get($2.ival), (Expression) $4.obj, (Statement) $7.obj); }
+    ;
+    
 functionDefinitionList:
     functionDefinitionList functionDefinition       { ArrayList<FunctionDefinition> functions = (ArrayList<FunctionDefinition>) $1.obj;
                                                       if (functions == null)
@@ -273,35 +290,6 @@ constant:
     | FALSE                                         { $$.obj = new Value(false); }
     ; 
     
-ruleDeclarationList:
-    rule                                            { ArrayList<Rule> rules = new ArrayList<Rule>();  
-                                                      rules.add((Rule) $1.obj); 
-                                                      $$.obj = rules; }
-    | ruleDeclarationList rule                      { ArrayList<Rule> rules = (ArrayList<Rule>) $1.obj;  
-                                                      rules.add((Rule) $2.obj); 
-                                                      $$.obj = rules; }
-    ;
-    
-rule:
-    RULE '(' expression ')' INFERS statement        { $$.obj = new Rule((Expression) $3.obj, (Statement) $6.obj); }
-    | RULE identifier '(' expression ')' INFERS statement  { $$.obj = new Rule(symbolTable.get($2.ival), (Expression) $4.obj, (Statement) $7.obj); }
-    ;
-    
-statement:
-	expressionStatement                             { $$.obj = $1.obj; }
-	| compoundStatement	                            { $$.obj = $1.obj; }
-	| selectionStatement	                        { $$.obj = $1.obj; }
-	| iterationStatement	                        { $$.obj = $1.obj; }
-	| endStatement		                            { $$.obj = $1.obj; }
-	| printStatement                                { $$.obj = $1.obj; }
-    | returnStatement                               { $$.obj = $1.obj; }
-	;
-	
-expressionStatement:
-	expression ';'                                  { $$.obj = new ExpressionStatement((Expression) $1.obj); }
-	| ';'                                           { $$.obj = new NullStatement(); }
-	;
-	
 expression:
 	assignmentExpression                            { $$.obj = $1.obj; }
 	;
@@ -359,6 +347,11 @@ functionExpression:
 	primaryExpression                               { $$.obj = $1.obj; }
 	| identifier '(' ')'                            { $$.obj = new FunctionExpression(symbolTable.get($1.ival), new ArrayList<Expression>()); }
 	| identifier '(' argumentExpressionList ')'     { $$.obj = new FunctionExpression(symbolTable.get($1.ival), (ArrayList<Expression>) $3.obj); }
+	| LENGTH '(' expression ')'                     { $$.obj = new LengthExpression((Expression) $3.obj); }
+	| RANDOM '(' floatList ')'                      { RandomExpression expression = new RandomExpression(); expression.setFloatSet((HashSet<Float>) $3.obj); $$.obj = expression; }
+    | RANDOM '(' integerList ')'                    { RandomExpression expression = new RandomExpression(); expression.setIntegerSet((HashSet<Integer>) $3.obj); $$.obj = expression; }
+    | RANDOM '(' stringList ')'                     { RandomExpression expression = new RandomExpression(); expression.setStringSet((HashSet<String>) $3.obj); $$.obj = expression; }
+	| INPUT '(' ')'                                 { $$.obj = new InputExpression(); }
 	;
 
 primaryExpression:
@@ -372,21 +365,29 @@ primaryExpression:
     ;
     
 argumentExpressionList:
-	argumentExpression                              { ArrayList<Expression> argList = new ArrayList<Expression>(); 
+	expression                                      { ArrayList<Expression> argList = new ArrayList<Expression>(); 
 	                                                  argList.add((Expression) $1.obj); 
 	                                                  $$.obj = argList; }
-	| argumentExpressionList ',' argumentExpression { ArrayList<Expression> argList = (ArrayList<Expression>) $1.obj; 
+	| argumentExpressionList ',' expression         { ArrayList<Expression> argList = (ArrayList<Expression>) $1.obj; 
 	                                                  argList.add((Expression) $3.obj); 
 	                                                  $$.obj = argList; }
 	;
 
-/* In K&R an argumentExpression is defined as an assignmentExpression, but that's because in C an expression can be a comma-delimited 
-   list of assignmentExpressions.  Geppetto doesn't support that syntax, so in our grammar expressions and assignmentExpressions are  
-   synonymous.  Therefore argumentExpressions can just be expressions, which IMO is more intuitive anyway. */
-argumentExpression:
-    expression                                      { $$.obj = $1.obj; }
+statement:
+    expressionStatement                             { $$.obj = $1.obj; }
+    | compoundStatement                             { $$.obj = $1.obj; }
+    | selectionStatement                            { $$.obj = $1.obj; }
+    | iterationStatement                            { $$.obj = $1.obj; }
+    | endStatement                                  { $$.obj = $1.obj; }
+    | printStatement                                { $$.obj = $1.obj; }
+    | returnStatement                               { $$.obj = $1.obj; }
     ;
-
+    
+expressionStatement:
+    expression ';'                                  { $$.obj = new ExpressionStatement((Expression) $1.obj); }
+    | ';'                                           { $$.obj = new NullStatement(); }
+    ;
+    
 compoundStatement:
 	'{' variableDeclarationList statementList '}'	{ $$.obj = new CompoundStatement((ArrayList<VariableDeclaration>) $2.obj, (ArrayList<Statement>) $3.obj); }
 	;

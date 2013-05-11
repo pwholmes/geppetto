@@ -80,8 +80,10 @@ global                  { return Parser.GLOBAL; }
 if                      { return Parser.IF; }
 input                   { return Parser.INPUT; }
 int                     { return Parser.INT; }
+length                  { return Parser.LENGTH; }
 print                   { return Parser.PRINT; }
 property                { return Parser.PROPERTY; }
+random                  { return Parser.RANDOM; }
 return                  { return Parser.RETURN; }
 rule                    { return Parser.RULE; }
 string                  { return Parser.STRING; }

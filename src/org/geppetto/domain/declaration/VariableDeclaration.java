@@ -10,13 +10,13 @@ public class VariableDeclaration {
    public VariableDeclaration(String name, DataType type, Value value) {
       this.name = name;
       this.type = type;
-      this.value = value;
+      this.value = value.convertTo(type);
    }
 
    public VariableDeclaration(String name, DataType type) {
       this.name = name;
       this.type = type;
-      this.value = new Value();
+      this.value = new Value(type); // needs a "default" value
    }
 
    public String getName() {
