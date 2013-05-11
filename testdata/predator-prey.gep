@@ -24,8 +24,6 @@ int eat() {
 }
 
 int approach() {
-int x = 0;
-    x = input();
    print("Moving toward prey...");
    
    if (fox.pos.x > rabbit.pos.x)
