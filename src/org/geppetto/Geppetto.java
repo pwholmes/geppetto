@@ -3,7 +3,6 @@ package org.geppetto;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import org.geppetto.interpreter.Interpreter;
 import org.geppetto.parser.generated.Parser;
 
 public class Geppetto {

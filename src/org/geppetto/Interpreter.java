@@ -1,7 +1,5 @@
-package org.geppetto.interpreter;
+package org.geppetto;
 
-import org.geppetto.GeppettoException;
-import org.geppetto.GeppettoProgram;
 import org.geppetto.domain.DataType;
 import org.geppetto.domain.declaration.Rule;
 import org.geppetto.domain.declaration.Value;
