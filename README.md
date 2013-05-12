@@ -9,9 +9,9 @@ This project builds the Geppetto interpreter, which executes Geppetto programs c
 For details on the Geppetto language itself, see the language reference in docs folder. 
 
 The project is intended to be used in Eclipse, so the Ant build.xml included is only necessary to run
-the code generators used by the project.  To get the project's build.xml to work in Eclipse:
+the code generators used by the project.
 
-1. For Eclipse's built-in Ant to recognize the <jflex> build task, you need to add JFlex.jar to Eclipse's Ant classpath:
+For Eclipse's built-in Ant to recognize the <jflex> build task, you need to add JFlex.jar to Eclipse's Ant classpath:
   a. In the Navigator or Project Explorer view, right-click the project's build.xml file and select "Properties".
   b. Depending on whether and how you've previously tried to build the project, a "launch configuration" for this
      file may already exist.  If so it will be called "geppetto build.xml".  If it exists, select it and click "Edit...".
