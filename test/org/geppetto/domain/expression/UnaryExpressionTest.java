@@ -173,12 +173,12 @@ public class UnaryExpressionTest {
 	@Test
 	public void testToString_1()
 		throws Exception {
-		UnaryExpression fixture = new UnaryExpression(Operator.ADD, new InputExpression());
+		UnaryExpression fixture = new UnaryExpression(Operator.ADD, new ConstantExpression( new Value("constant")));
 
-		String result = fixture.toString();
+		String result = fixture.getOperand().getValue().getStringValue();
 
 		// add additional test code here
-		assertNotNull(result);
+		assertEquals(result, "constant");
 	}
 
 	/**
