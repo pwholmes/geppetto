@@ -83,4 +83,15 @@ public class ProgramContext {
       this.returnValue = returnValue;
    }
    
-}
+   public String toString() {
+      StringBuilder sb = new StringBuilder();
+      
+      sb.append("{").append(this.getClass().getSimpleName()).append(": ");
+      sb.append("name: ").append(getName());
+      sb.append("; variableDeclarations: ").append(getVariableDeclarations());
+      sb.append("; returnCalled: ").append(isReturnCalled());
+      sb.append("; returnValue: ").append(getReturnValue());
+      sb.append("}");
+      
+      return sb.toString();
+   }}

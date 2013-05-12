@@ -57,6 +57,27 @@ public class GeppettoProgram {
       return null;
    }
 
+   /**
+    * Search for a variable in the global context only.
+    */
+   public VariableDeclaration getGlobalVariableDeclaration(String name) {
+      ProgramContext context = contexts.getFirst();
+      for (VariableDeclaration variable : context.getVariableDeclarations()) {
+         if (variable.getName().equals(name))
+            return variable;
+      }
+      return null;
+   }
+
+   /**
+    * Add a variable to the global context.
+    * This is only used for manually setting the "cycle" and "maxCycles" variables.
+    */
+   public void addGlobalVariableDeclaration(VariableDeclaration declaration) {
+      ProgramContext context = contexts.getFirst();
+      context.getVariableDeclarations().add(declaration);
+   }
+
    public ArrayList<PropertyDefinition> getPropertyDefinitions() {
       return propertyDefinitions;
    }

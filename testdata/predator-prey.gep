@@ -16,7 +16,7 @@ int printStatus() {
 }
 
 int eat() {
-   print("Gotcha!");
+   print("Gotcha! on cycle " + cycle);
    fox.state.s = "relaxing";
    rabbit.state.s = "dead";
    printStatus();
