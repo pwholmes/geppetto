@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 /**
  * The class <code>YylexTest</code> contains tests for the class <code>{@link Yylex}</code>.
  *
- * @generatedBy CodePro at 5/12/13 6:06 AM
+ * @generatedBy CodePro at 5/12/13 6:41 PM
  * @author user
  * @version $Revision: 1.0 $
  */
@@ -23,7 +23,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_1()
@@ -33,25 +33,6 @@ public class YylexTest {
 		Yylex result = new Yylex(in);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/parser/generated/Yylex : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
 		assertNotNull(result);
 	}
 
@@ -60,7 +41,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_2()
@@ -70,25 +51,6 @@ public class YylexTest {
 		Yylex result = new Yylex(in);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/parser/generated/Yylex : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
 		assertNotNull(result);
 	}
 
@@ -97,7 +59,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_3()
@@ -109,25 +71,6 @@ public class YylexTest {
 		Yylex result = new Yylex(r, yyparser, symbolTable);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/parser/generated/Yylex : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
 		assertNotNull(result);
 	}
 
@@ -136,7 +79,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYybegin_1()
@@ -156,7 +99,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYycharat_1()
@@ -177,7 +120,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYyclose_1()
@@ -196,7 +139,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYyclose_2()
@@ -215,7 +158,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test(expected = java.io.IOException.class)
 	public void testYyclose_3()
@@ -234,7 +177,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylength_1()
@@ -254,7 +197,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_4()
@@ -274,7 +217,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_5()
@@ -294,270 +237,10 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYylex_6()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_7()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_8()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_9()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_10()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_11()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_12()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_13()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_14()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_15()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_16()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_17()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_18()
-		throws Exception {
-		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
-		fixture.yyreset(new StringReader(""));
-		fixture.yybegin(1);
-
-		int result = fixture.yylex();
-
-		// add additional test code here
-		assertEquals(0, result);
-	}
-
-	/**
-	 * Run the int yylex() method test.
-	 *
-	 * @throws Exception
-	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
-	 */
-	@Test
-	public void testYylex_19()
 		throws Exception {
 		Yylex fixture = new Yylex(new StringReader(""), new Parser(), new ArrayList<String>());
 		fixture.yyreset(new StringReader(""));
@@ -574,7 +257,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYypushback_1()
@@ -594,7 +277,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYypushback_2()
@@ -614,7 +297,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYyreset_1()
@@ -634,7 +317,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYystate_1()
@@ -654,7 +337,7 @@ public class YylexTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testYytext_1()
@@ -675,7 +358,7 @@ public class YylexTest {
 	 * @throws Exception
 	 *         if the initialization fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Before
 	public void setUp()
@@ -689,7 +372,7 @@ public class YylexTest {
 	 * @throws Exception
 	 *         if the clean-up fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@After
 	public void tearDown()
@@ -702,7 +385,7 @@ public class YylexTest {
 	 *
 	 * @param args the command line arguments
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	public static void main(String[] args) {
 		new org.junit.runner.JUnitCore().run(YylexTest.class);

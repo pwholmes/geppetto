@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 /**
  * The class <code>VariantExpressionTest</code> contains tests for the class <code>{@link VariantExpression}</code>.
  *
- * @generatedBy CodePro at 5/12/13 6:06 AM
+ * @generatedBy CodePro at 5/12/13 6:41 PM
  * @author user
  * @version $Revision: 1.0 $
  */
@@ -17,7 +17,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testVariantExpression_1()
@@ -28,25 +28,6 @@ public class VariantExpressionTest {
 		VariantExpression result = new VariantExpression(name, propertyName);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/domain/expression/VariantExpression : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
 		assertNotNull(result);
 	}
 
@@ -55,7 +36,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testVariantExpression_2()
@@ -67,25 +48,6 @@ public class VariantExpressionTest {
 		VariantExpression result = new VariantExpression(name, propertyName, attributeName);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/domain/expression/VariantExpression : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
 		assertNotNull(result);
 	}
 
@@ -94,7 +56,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testGetAttributeName_1()
@@ -112,7 +74,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testGetName_1()
@@ -130,7 +92,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testGetPropertyName_1()
@@ -148,7 +110,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testGetValue_1()
@@ -166,7 +128,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testIsLValue_1()
@@ -184,7 +146,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testSetValue_1()
@@ -202,7 +164,7 @@ public class VariantExpressionTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testToString_1()
@@ -221,7 +183,7 @@ public class VariantExpressionTest {
 	 * @throws Exception
 	 *         if the initialization fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Before
 	public void setUp()
@@ -235,7 +197,7 @@ public class VariantExpressionTest {
 	 * @throws Exception
 	 *         if the clean-up fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@After
 	public void tearDown()
@@ -248,7 +210,7 @@ public class VariantExpressionTest {
 	 *
 	 * @param args the command line arguments
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:06 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	public static void main(String[] args) {
 		new org.junit.runner.JUnitCore().run(VariantExpressionTest.class);

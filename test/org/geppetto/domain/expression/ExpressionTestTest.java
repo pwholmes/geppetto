@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 /**
  * The class <code>ExpressionTestTest</code> contains tests for the class <code>{@link ExpressionTest}</code>.
  *
- * @generatedBy CodePro at 5/12/13 6:20 AM
+ * @generatedBy CodePro at 5/12/13 6:41 PM
  * @author user
  * @version $Revision: 1.0 $
  */
@@ -16,7 +16,7 @@ public class ExpressionTestTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testMain_1()
@@ -33,7 +33,7 @@ public class ExpressionTestTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testSetUp_1()
@@ -50,7 +50,7 @@ public class ExpressionTestTest {
 	 *
 	 * @throws Exception
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Test
 	public void testTearDown_1()
@@ -68,7 +68,7 @@ public class ExpressionTestTest {
 	 * @throws Exception
 	 *         if the initialization fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@Before
 	public void setUp()
@@ -82,7 +82,7 @@ public class ExpressionTestTest {
 	 * @throws Exception
 	 *         if the clean-up fails for some reason
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	@After
 	public void tearDown()
@@ -95,7 +95,7 @@ public class ExpressionTestTest {
 	 *
 	 * @param args the command line arguments
 	 *
-	 * @generatedBy CodePro at 5/12/13 6:20 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	public static void main(String[] args) {
 		new org.junit.runner.JUnitCore().run(ExpressionTestTest.class);

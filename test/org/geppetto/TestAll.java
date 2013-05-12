@@ -9,14 +9,14 @@ import org.junit.runners.Suite;
  * of the tests within its package as well as within any subpackages of its
  * package.
  *
- * @generatedBy CodePro at 5/12/13 11:11 AM
+ * @generatedBy CodePro at 5/12/13 6:41 PM
  * @author user
  * @version $Revision: 1.0 $
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	InterpreterTest.class,
 	ProgramContextTest.class,
+	InterpreterTest.class,
 	org.geppetto.domain.TestAll.class,
 	org.geppetto.parser.TestAll.class,
 })
@@ -27,7 +27,7 @@ public class TestAll {
 	 *
 	 * @param args the command line arguments
 	 *
-	 * @generatedBy CodePro at 5/12/13 11:11 AM
+	 * @generatedBy CodePro at 5/12/13 6:41 PM
 	 */
 	public static void main(String[] args) {
 		JUnitCore.runClasses(new Class[] { TestAll.class });

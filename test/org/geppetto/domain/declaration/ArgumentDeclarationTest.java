@@ -28,25 +28,7 @@ public class ArgumentDeclarationTest {
 		ArgumentDeclaration result = new ArgumentDeclaration(name, type);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/domain/declaration/ArgumentDeclaration : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
+
 		assertEquals(result.getName(), "name");
 	}
 
@@ -66,25 +48,7 @@ public class ArgumentDeclarationTest {
 		ArgumentDeclaration result = new ArgumentDeclaration(name, type);
 
 		// add additional test code here
-		// An unexpected exception was thrown in user code while executing this test:
-		//    java.lang.UnsupportedClassVersionError: org/geppetto/domain/declaration/ArgumentDeclaration : Unsupported major.minor version 51.0
-		//       at java.lang.ClassLoader.defineClass1(Native Method)
-		//       at java.lang.ClassLoader.defineClass(ClassLoader.java:634)
-		//       at java.security.SecureClassLoader.defineClass(SecureClassLoader.java:142)
-		//       at java.net.URLClassLoader.defineClass(URLClassLoader.java:277)
-		//       at java.net.URLClassLoader.access$000(URLClassLoader.java:73)
-		//       at java.net.URLClassLoader$1.run(URLClassLoader.java:212)
-		//       at java.security.AccessController.doPrivileged(Native Method)
-		//       at java.net.URLClassLoader.findClass(URLClassLoader.java:205)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:321)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.UserDefinedClassLoader.loadClass(UserDefinedClassLoader.java:62)
-		//       at java.lang.ClassLoader.loadClass(ClassLoader.java:266)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionContextImpl.getClass(ExecutionContextImpl.java:99)
-		//       at com.instantiations.eclipse.analysis.expression.model.SimpleTypeExpression.execute(SimpleTypeExpression.java:205)
-		//       at com.instantiations.eclipse.analysis.expression.model.InstanceCreationExpression.execute(InstanceCreationExpression.java:425)
-		//       at com.instantiations.assist.eclipse.junit.execution.core.ExecutionRequest.execute(ExecutionRequest.java:286)
-		//       at com.instantiations.assist.eclipse.junit.execution.communication.LocalExecutionClient$1.run(LocalExecutionClient.java:158)
-		//       at java.lang.Thread.run(Thread.java:679)
+
 		assertEquals(result.getType(), DataType.BOOLEAN);
 	}
 
