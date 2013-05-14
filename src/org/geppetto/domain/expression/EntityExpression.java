@@ -66,7 +66,7 @@ public class EntityExpression implements Expression {
       Attribute attribute = null;
       if (attributeName == null) {
          if (property.getAttributes().size() == 1)
-            property.getAttributes().get(0);
+            attribute = property.getAttributes().get(0);
          else
             throw new GeppettoException("Property " + propertyName + " has more than one attribute, but no attribute name was specified.");
       } else {

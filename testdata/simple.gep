@@ -13,7 +13,7 @@ rule incrementX              (true)     -> { x = x + 1; print("x incremented to:
 rule callRecursiveFunction   (true)     -> print("fib("+ x + ") = " + fib(x));
 rule callFunctionInBehavior  (x == 3)   -> test();
 rule callFunctionInCondition (test2(x)) -> { end; }
-rule entityInCondition       (fox.state.s == "hunting") -> { print("Fox is hunting"); }
+rule entityInCondition       (fox.state == "hunting") -> { print("Fox is " + fox.state); }
 
 int test() {
    print("3/4 = " + 3/4);  
