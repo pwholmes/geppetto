@@ -1,9 +1,7 @@
 geppetto
 ========
 
-This is an implementation of a compiler for a new programming language called Geppetto,
-which is a term project for a class called Programming Languages and Translators at Columbia University
-in Spring 2013.
+This is an implementation of a compiler for a new programming language called Geppetto.
 
 This project builds the Geppetto interpreter, which executes Geppetto programs contained in a separate file.
 For details on the Geppetto language itself, see the language reference in docs folder. 
